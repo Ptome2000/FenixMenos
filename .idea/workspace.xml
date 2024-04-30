@@ -4,12 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa8d4c70-4072-4f49-89bf-a12e0b55ea47" name="Changes" comment="">
+    <list default="true" id="fa8d4c70-4072-4f49-89bf-a12e0b55ea47" name="Changes" comment="Path commit">
+      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/assets/img/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/assets/img/profile.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/js/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/css/elegant-icons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/FenixMenos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FenixMenos.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Community/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Community/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FenixMenos/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FenixMenos/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/bootstrap-simple-sidebar/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/bootstrap-simple-sidebar/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +72,10 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -107,9 +128,22 @@
       <workItem from="1713826931127" duration="80000" />
       <workItem from="1713827012406" duration="3177000" />
     </task>
+    <task id="LOCAL-00001" summary="Path commit">
+      <option name="closed" value="true" />
+      <created>1714472165807</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714472165807</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Path commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Path commit" />
   </component>
 </project>
