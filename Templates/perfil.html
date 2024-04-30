@@ -1,0 +1,25 @@
+{% extends 'skeleton.html' %}
+{% block content %}
+    
+    <form>
+        <fieldset>
+            <legend> Informações de Conta </legend>
+            <label for="username" class="form-label"> Username </label>
+            <label for ="email" class="form-label"> Email </label>
+        </fieldset>
+    </form>
+
+    <form>
+        <fieldset disabled>
+            <legend> Informações Pessoais </legend>
+            <label for="genero" class="form-label"> Genero </label>
+            <select class="form-select">
+                <!--     <option> </option>  ADICIONAR GENERO AO MODELO -->
+            </select>
+            
+        </fieldset>
+    </form>
+    
+    <button type="button" class="btn btn-info"> Editar Perfil </button>
+    
+{% endblock %}
