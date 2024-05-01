@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Categoria
 
-# Register your models here.
+# Permite gerir as categorias do site
+admin.site.register(Categoria)

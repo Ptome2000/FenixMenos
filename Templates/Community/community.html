@@ -1,0 +1,35 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block content %}
+
+    {% if lista_categorias %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for categoria in lista_categorias %}
+            <div class="col">
+                <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
+                    <div class="card h-100">
+                        {% if categoria.logo %}
+                            <img src="{{ categoria.logo.url }}" class="card-img-top" alt="logo">
+                            {% else %}
+                            <img style="max-height: 64px; max-width: 32px" src="https://as1.ftcdn.net/v2/jpg/05/12/04/44/1000_F_512044433_p0KqZnsAENoQ5avPXt9rn3YU5JeeYeC3.jpg" class="card-img-top" alt="logo">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"> {{ categoria.designacao }} </h5>
+                            <p class="card-text"> {{ categoria.descricao }}</p>
+                        </div>
+
+                        <div class="card-footer">
+                            <small class="text-muted"> última vez atualizado: </small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+
+
+{% endblock %}
