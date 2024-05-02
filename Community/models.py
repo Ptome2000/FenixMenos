@@ -13,7 +13,6 @@ class Categoria(models.Model):
     designacao = models.CharField(max_length=50)
     descricao = models.TextField()
     logo = models.ImageField(upload_to='Categorias', null=False)
-    postagens = models.IntegerField(default=0)
     grupo = enum.EnumField(GrupoCategoria, default=1)
 
     def __str__(self):
@@ -22,6 +21,9 @@ class Categoria(models.Model):
     def last_posted(self):
         return self.post_set.order_by('-data').last()
 
+    def get_total_posts(self):
+        return self.post_set.count()
+
 
 class Post(models.Model):
     titulo = models.CharField(max_length=200)
@@ -29,8 +31,10 @@ class Post(models.Model):
     data = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    imagem = models.ImageField(upload_to='posts', null=True)
-    comentarios = models.IntegerField(default=0)
+    imagem = models.ImageField(upload_to='posts', blank=True)
+
+    def __str__(self):
+        return self.titulo
 
     def get_user(self):
         return self.user.username
@@ -38,13 +42,26 @@ class Post(models.Model):
     def get_last_commented(self):
         return self.comentario_set.order_by('data').last()
 
+    def get_total_comments(self):
+        return self.comentario_set.count()
+
+
+    '''
+    
+    Sugestão
+    Posts podem ser 2 tipos:
+        - Discussão (Meramente textos com imagens como opcao)
+        - Poll (Terá descricao como o acima, mas terá também a possibilidade de criar opções para as pessoas votarem, os utilizados podem votar sem comentar)
+    
+    '''
+
 
 class Comentario(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField()
     data = models.DateTimeField(auto_now_add=True)
-    imagem = models.ImageField(upload_to='comentarios', null=True)
+    imagem = models.ImageField(upload_to='comentarios', blank=True)
 
     def get_user(self):
         return self.user.username

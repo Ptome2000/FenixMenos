@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from Community.models import Categoria
+from Community.models import Categoria, Post
 
 
 def community(request):
@@ -11,4 +11,5 @@ def community(request):
 
 def categoria(request, categoria_dgn):
     categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
-    return render(request, 'community/categoria.html', {'categoria': categoria, })
+    lista_posts = Post.objects.filter(categoria=categoria)
+    return render(request, 'community/categoria.html', {'categoria': categoria, 'lista_posts': lista_posts})
