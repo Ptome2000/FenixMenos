@@ -3,33 +3,55 @@
 {% block content %}
 
     {% if lista_categorias %}
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for categoria in lista_categorias %}
-            <div class="col">
-                <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
-                    <div class="card h-100">
-                        {% if categoria.logo %}
-                            <img src="{{ categoria.logo.url }}" class="card-img-top" alt="logo">
-                            {% else %}
-                            <img style="max-height: 64px; max-width: 32px" src="https://as1.ftcdn.net/v2/jpg/05/12/04/44/1000_F_512044433_p0KqZnsAENoQ5avPXt9rn3YU5JeeYeC3.jpg" class="card-img-top" alt="logo">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title"> {{ categoria.designacao }} </h5>
-                            <p class="card-text"> {{ categoria.descricao }}</p>
-                        </div>
-
-                        <div class="card-footer">
-                            <small class="text-muted"> última vez atualizado: </small>
-                        </div>
-                    </div>
-                </a>
+        {% for grupo in grupos_categorias %}
+            <div id="group-{{ grupo.1 }}-header" class="fs-4">
+                <i id="arrow" class="bi bi-caret-right-fill"></i>
+                {{ grupo.0 }} <!-- Desta forma obtemos o nome no Enum -->
             </div>
+            <div id="group-{{ grupo.1 }}-content" class="row row-cols-4 mb-3">
+                {% for categoria in lista_categorias %}
+                    {% if categoria.grupo == grupo.1 %}
+                        <div class="col g-3">
+                            <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
+                                <div class="card border-dark h-100">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ categoria.get_total_posts }}
+                            </span>
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-1 mt-1"> {{ categoria.designacao }} </h5>
+                                    </div>
 
+                                    <div class="card-body">
+
+                                        {% if categoria.logo %}
+                                            <img src="{{ categoria.logo.url }}" class="card-img-top" alt="Logo">
+                                        {% else %}
+                                            <img src="{% static 'Community/Imagens/missing.png' %}" alt="Logo">
+                                        {% endif %}
+                                        <p class="card-text"> {{ categoria.descricao }}</p>
+
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <small class="text-muted"> Última vez atualizado: </small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endfor %}
-
     {% endif %}
 
-</div>
-
-
 {% endblock %}
+
+<script>
+    $(document).ready(function() {
+        $("#group-{{ grupo.1 }}-header").click(function() {
+            const contentElement = $(this).attr("id").replace("-header", "-content");
+            contentElement.fadeToggle(1000);
+        });
+    });
+</script>

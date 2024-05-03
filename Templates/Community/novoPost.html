@@ -1,0 +1,15 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="row">
+        <h2 class="display-6 pb-2"> Criar novo Post <a class="btn btn-outline-dark float-end" href="{% url 'Community:categoria' categoria.designacao %}" role="button"> Cancelar </a> </h2>
+    </div>
+
+    <hr class="my-2">
+    
+
+        <hr class="my-4">
+        <button class="w-100 btn btn-outline-dark btn-lg" type="submit"> Submeter </button>
+
+{% endblock %}

@@ -10,9 +10,9 @@ class GrupoCategoria(enum.Enum):
 
 
 class Categoria(models.Model):
-    designacao = models.CharField(max_length=50)
+    designacao = models.CharField(max_length=50, unique=True)
     descricao = models.TextField()
-    logo = models.ImageField(upload_to='Categorias', null=False)
+    logo = models.ImageField(upload_to='Categorias', blank=True)
     grupo = enum.EnumField(GrupoCategoria, default=1)
 
     def __str__(self):
@@ -27,11 +27,8 @@ class Categoria(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=200)
-    descricao = models.TextField()
-    data = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    imagem = models.ImageField(upload_to='posts', blank=True)
 
     def __str__(self):
         return self.titulo
@@ -61,7 +58,7 @@ class Comentario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField()
     data = models.DateTimeField(auto_now_add=True)
-    imagem = models.ImageField(upload_to='comentarios', blank=True)
+    imagem = models.ImageField(upload_to='Comentarios', blank=True, null=True)
 
     def get_user(self):
         return self.user.username
