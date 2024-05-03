@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from Community.models import *
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def community(request):
@@ -25,8 +27,17 @@ def post(request, categoria_dgn, post_Id):
 
 
 def criarPost(request, categoria_dgn):
+    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
     if request.method == 'GET':
-        categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
         return render(request, 'community/novoPost.html', {'categoria': categoria})
     else:
-        titulo = request.POST['titulo']
+        try:
+            titulo = request.POST['title']
+            texto = request.POST['message']
+            imagem = request.POST['ImageFile']
+            post = Post(titulo=titulo, texto=texto, imagem=imagem)
+        except KeyError:
+            return render(request, '')
+        else:
+            return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
+

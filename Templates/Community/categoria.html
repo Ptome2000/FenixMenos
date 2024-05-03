@@ -13,11 +13,12 @@
 
         <div class="row">
             <h1 class="display-6 pb-2"> {{ categoria }}
-                <a class="btn btn-outline-dark float-end" href="{% url 'Community:criarPost' categoria.designacao %}" role="button"> Criar novo Post </a>
+                <a class="btn btn-outline-dark float-end" href="{% url 'Community:criarPost' categoria.designacao %}" role="button"> Criar nova Discussão </a>
+                <a class="btn btn-outline-dark float-end" href="" role="button"> Criar novo Poll </a>
             </h1>
         </div>
 
-    <hr class="my-2">
+        <hr class="my-2">
 
 
         <div class="table-responsive">

@@ -8,10 +8,10 @@
                 <i id="arrow" class="bi bi-caret-right-fill"></i>
                 {{ grupo.0 }} <!-- Desta forma obtemos o nome no Enum -->
             </div>
-            <div id="group-{{ grupo.1 }}-content" class="row row-cols-4 mb-3">
+            <div id="group-{{ grupo.1 }}-content" class="row row-cols-4 mb-3 bg-dark">
                 {% for categoria in lista_categorias %}
                     {% if categoria.grupo == grupo.1 %}
-                        <div class="col g-3">
+                        <div class="col">
                             <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
                                 <div class="card border-dark h-100">
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
