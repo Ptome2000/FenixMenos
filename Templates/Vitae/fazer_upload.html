@@ -1,0 +1,15 @@
+{% load static %}
+<form method="post" enctype="multipart/form-data" action="{% url 'votacao:fazer_upload' %}">
+    {% csrf_token %}  <!-- Token de segurança para prevenir ataques de CSRF -->
+    <input type="file" name="myfile">  <!-- Campo de seleção de arquivo -->
+    <input type="submit" value="Upload">  <!-- Botão para enviar o formulário -->
+</form>
+
+{% if uploaded_file_url %}
+    <p>Feito o upload para:
+        <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>
+    </p>
+{% endif %}
+<p>
+    <a href="{% url 'Vitae:perfil' %}">Voltar ao início</a>
+</p>
