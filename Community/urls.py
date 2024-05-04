@@ -9,7 +9,8 @@ urlpatterns = [
     path("", views.community, name="community"),
     path("Categoria/<str:categoria_dgn>", views.categoria, name="categoria"),
     path("Categoria/<str:categoria_dgn>/<int:post_Id>", views.post, name="post"),
-    path("Categoria/<str:categoria_dgn>/Novo-Post", views.criarPost, name="criarPost"),
+    path("Categoria/<str:categoria_dgn>/Nova-Discussão", views.criarDiscussao, name="criarDiscussao"),
+    path("Categoria/<str:categoria_dgn>/Nova-Votacao", views.criarVotacao, name="criarVotacao"),
 ]
 
 if settings.DEBUG:

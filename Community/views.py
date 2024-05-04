@@ -26,10 +26,10 @@ def post(request, categoria_dgn, post_Id):
     return render(request, 'community/post.html', context)
 
 
-def criarPost(request, categoria_dgn):
+def criarDiscussao(request, categoria_dgn):
     categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
     if request.method == 'GET':
-        return render(request, 'community/novoPost.html', {'categoria': categoria})
+        return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
     else:
         try:
             titulo = request.POST['title']
@@ -41,3 +41,18 @@ def criarPost(request, categoria_dgn):
         else:
             return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
 
+
+def criarVotacao(request, categoria_dgn):
+    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+    if request.method == 'GET':
+        return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
+    else:
+        try:
+            titulo = request.POST['title']
+            texto = request.POST['message']
+            imagem = request.POST['ImageFile']
+            post = Post(titulo=titulo, texto=texto, imagem=imagem)
+        except KeyError:
+            return render(request, '')
+        else:
+            return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
