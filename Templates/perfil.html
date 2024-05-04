@@ -1,25 +1,49 @@
 {% extends 'skeleton.html' %}
-{% block content %}
-    
-    <form>
-        <fieldset>
-            <legend> Informações de Conta </legend>
-            <label for="username" class="form-label"> Username </label>
-            <label for ="email" class="form-label"> Email </label>
-        </fieldset>
-    </form>
 
-    <form>
-        <fieldset disabled>
-            <legend> Informações Pessoais </legend>
-            <label for="genero" class="form-label"> Genero </label>
-            <select class="form-select">
-                <!--     <option> </option>  ADICIONAR GENERO AO MODELO -->
-            </select>
-            
-        </fieldset>
-    </form>
-    
-    <button type="button" class="btn btn-info"> Editar Perfil </button>
-    
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if user.professor %}
+            <h2>Perfil do Professor</h2>
+            #Formulário professor
+            <form>
+                <fieldset>
+                    <legend>Informações de Conta</legend>
+                    <label for="username" class="form-label">Username: {{ user.username }}</label><br>
+                    <label for ="email" class="form-label">Email: {{ user.email }}</label><br>
+                </fieldset>
+            </form>
+
+            <form>
+                <fieldset disabled>
+                    <legend>Informações Pessoais</legend>
+                    <label for="genero" class="form-label">Gênero: {{ user.professor.genero.label }}</label>
+                </fieldset>
+            </form>
+
+            <button type="button" class="btn btn-info">Editar Perfil</button>
+        {% elif user.aluno %}
+            <h2>Perfil do Aluno</h2>
+            #Formulário aluno
+            <form>
+                <fieldset>
+                    <legend>Informações de Conta</legend>
+                    <label for="username" class="form-label">Username: {{ user.username }}</label><br>
+                    <label for ="email" class="form-label">Email: {{ user.email }}</label><br>
+                </fieldset>
+            </form>
+
+            <form>
+                <fieldset disabled>
+                    <legend>Informações Pessoais</legend>
+                    <label for="genero" class="form-label">Gênero: {{ user.aluno.genero.label }}</label>
+                </fieldset>
+            </form>
+
+            <button type="button" class="btn btn-info">Editar Perfil</button>
+        {% else %}
+            <p>No permition</p>
+        {% endif %}
+    {% else %}
+        <p>No Login</p>
+    {% endif %}
 {% endblock %}
