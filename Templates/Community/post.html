@@ -1,0 +1,17 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="row">
+
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
+                <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
+                <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:categoria' categoria.designacao %}"> {{ categoria }} </a></li>
+                <li class="breadcrumb-item active" aria-current="page"> {{ post }} </li>
+            </ol>
+        </nav>
+        
+    </div>
+
+{% endblock %}
