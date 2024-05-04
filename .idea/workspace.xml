@@ -5,28 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa8d4c70-4072-4f49-89bf-a12e0b55ea47" name="Changes" comment="Path commit">
-      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/assets/img/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/assets/img/profile.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/bootstrap-resume/js/scripts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/css/elegant-icons.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/ElegantIcons.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helpers/css-footer-button/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FenixMenos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FenixMenos.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Static/FenixMenos/CSS/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Static/FenixMenos/JavaScript/Skeleton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Helpers/bootstrap-simple-sidebar/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/bootstrap-simple-sidebar/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/skeleton.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/skeleton.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +25,26 @@
       <list>
         <option value="HTML File" />
         <option value="Python Script" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pipsromao"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Ptome2000/FenixMenos.git",
+    "accountId": "d5a57c3a-274f-4a63-b0ba-981855396a75"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -64,18 +62,18 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "django.template.preview.state": "SHOW_EDITOR",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Faculdade",
+    "last_opened_file_path": "C:/Users/firomao/PycharmProjects/siteiscte",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-    ]
+    "ChangesTree.GroupingKeys": []
   }
 }]]></component>
   <component name="RecentsManager">
@@ -113,7 +111,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PY-241.15989.155" />
+        <option value="bundled-python-sdk-babbdf50b680-7c6932dee5e4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.15989.155" />
       </set>
     </attachedChunks>
   </component>
@@ -127,6 +126,8 @@
       <updated>1713826929970</updated>
       <workItem from="1713826931127" duration="80000" />
       <workItem from="1713827012406" duration="3177000" />
+      <workItem from="1714843233364" duration="163000" />
+      <workItem from="1714843766438" duration="4666000" />
     </task>
     <task id="LOCAL-00001" summary="Path commit">
       <option name="closed" value="true" />

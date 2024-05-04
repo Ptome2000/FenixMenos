@@ -1,0 +1,12 @@
+.dropdown-menu {
+    min-width: 200px;  /* Defina a largura mínima do dropdown */
+}
+
+.dropdown-item {
+    color: #333;       /* Cor do texto dos itens do dropdown */
+    text-align: center; /* Centraliza o texto dos itens do dropdown */
+}
+
+.navbar {
+    z-index: 1020;    /* Garante que a navbar esteja sobre outros conteúdos, ajuste conforme necessário */
+}

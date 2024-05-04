@@ -9,8 +9,11 @@
     <script src="https://kit.fontawesome.com/7f8c1f8b68.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     {% load static %}
-    <script src="{% static 'JavaScript/scripts.js'  %}"></script>
     <title> {% block title %} Template {% endblock %} </title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'FenixMenos/CSS/style.css' %}">
+    <script src="{% static 'FenixMenos/JavaScript/Skeleton.js' %}" defer></script>
+
     <style>
         fieldset {
             background-color: #eeeeee;
@@ -71,25 +74,30 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <a class="navbar-brand" href=" {% url 'index' %}"> Home </a>
-
-
+    
     <search>
         <form>
             <input name="search" placeholder="Search">
         </form>
     </search>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#!">Action</a>
-            <a class="dropdown-item" href="#!">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#!">Something else here</a>
-        </div>
-    </li>
+    
+        <div class="ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button">Dropdown</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" id="myDropdown">
+                        <a class="dropdown-item" href="#!">Action</a>
+                        <a class="dropdown-item" href="#!">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#!">Something else here</a>
+                    </div>
+                </li>
+            </div>
+    
 </nav>
 
 <main>
+
+
 
 <div class="container-fluid">
     <div class="row">
