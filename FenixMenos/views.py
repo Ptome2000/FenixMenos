@@ -4,7 +4,7 @@ from FenixMenos import settings
 
 
 def index(request):
-    return render(request, 'index.html', {'MEDIA_URL': settings.MEDIA_URL})
+    return render(request, 'index.html')
 
 
 def login(request):
