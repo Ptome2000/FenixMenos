@@ -33,24 +33,26 @@
         <table class="table table-hover">
             <thead class="table-light">
             <tr>
-                <th scope="col" colspan="4"> Tópico </th>
+                <th scope="col" class="text-center"> Tipo </th>
+                <th scope="col" colspan="5"> Tópico </th>
                 <th scope="col" colspan="2"> Autor </th>
                 <th scope="col" class="text-center"> Comentários </th>
-                <th scope="col" class="text-center"> Data </th>
+                <th scope="col" class="text-center"> Última atualização </th>
             </tr>
             </thead>
             <tbody>
             {% if not lista_posts %}
                 <tr>
-                    <td colspan="8" class="table-active text-center"> Ainda não foram adicionados novos posts </td>
+                    <td colspan="10" class="table-active text-center"> Ainda não foram adicionados novos posts </td>
                 </tr>
             {% else %}
                 {% for post in lista_posts %}
                     <tr>
-                        <td colspan="4"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:post' categoria.designacao post.id %}">{{ post }}</a></td>
+                        <td class="text-center">  </td>
+                        <td colspan="5"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:post' categoria.designacao post.id %}">{{ post }}</a></td>
                         <td colspan="2"> {{ post.get_user }} </td>
                         <td class="text-center"> {{ post.get_total_comments }} </td>
-                        <td class="text-center"> {{ post.data }} </td>
+                        <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
                     </tr>
                 {% endfor %}
             {% endif %}

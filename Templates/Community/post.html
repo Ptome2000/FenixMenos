@@ -3,7 +3,6 @@
 {% block content %}
 
     <div class="row">
-
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
                 <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
@@ -11,7 +10,54 @@
                 <li class="breadcrumb-item active" aria-current="page"> {{ post }} </li>
             </ol>
         </nav>
-        
+    </div>
+
+    <div class="row">
+        <div class="col d-flex align-items-start">
+            <h1 class="display-6 pb-2"> {{ post }} </h1>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button id="togglePostOptions" class="btn btn-outline-dark">
+                Responder
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-2">
+
+    <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
+        <table class="table" style="width:1280px">
+            <tbody>
+            {% for comentario in lista_comentarios %}
+                {% if request.user.is_superuser %}
+                    <tr class="border-primary table-active">
+                {% else %}
+                    <tr>
+                {% endif %}
+                    <td>
+                        <div class="d-flex align-items-center">
+                            {% if request.user.is_superuser %}
+                                <img id="CategoryIcon" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar" style="width:70px; height: 70px;">
+                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
+                            {% else %}
+                                <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        {% if comentario.imagem %}
+                            <img src="{{ comentario.imagem.url }}" alt="Imagem de Post" class="rounded mx-auto d-block p-4" style="max-width: 788px; max-height: 443.25px">
+                        {% endif %}
+                        {{ comentario.texto }}
+                    </td>
+                    <td>
+                        <p> #{{ forloop.counter }} </p>
+                        <span> {{ comentario.data|date:"M j" }} </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

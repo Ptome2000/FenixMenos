@@ -19,7 +19,9 @@ class Categoria(models.Model):
         return self.designacao
 
     def last_posted(self):
-        return self.post_set.order_by('-data').last()
+        posts = self.post_set.get()
+        comentario = posts.get_last_commented()
+        return comentario
 
     def get_total_posts(self):
         return self.post_set.count()
@@ -36,8 +38,11 @@ class Post(models.Model):
     def get_user(self):
         return self.user.username
 
-    def get_last_commented(self):
-        return self.comentario_set.order_by('data').last()
+    def get_last_commented_user(self):
+        return self.comentario_set.order_by('data').last().user
+
+    def get_last_commented_date(self):
+        return self.comentario_set.order_by('data').last().data
 
     def get_total_comments(self):
         return self.comentario_set.count()

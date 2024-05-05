@@ -2,51 +2,63 @@
 {% load static %}
 {% block content %}
 
-    {% if lista_categorias %}
-        {% for grupo in grupos_categorias %}
-            
-            <div id="group-{{ grupo.1|safe }}-header" class="group-header fs-2 bg-light mb-3">
-                <i id="arrow" class="bi bi-caret-right-fill"></i>
-                {{ grupo.0 }} <!-- Desta forma obtemos o nome no Enum -->
-            </div>
-            
-            <div id="group-{{ grupo.1|safe }}-content" class="group-content row row-cols-4 mb-3">
-                {% for categoria in lista_categorias %}
-                    {% if categoria.grupo == grupo.1 %}
-                        
-                        <div class="col">
-                            <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
-                                <div class="card border-dark h-100">
+    <main>
+
+        <h1 class="display-6 pb-2"> Categorias </h1>
+        <hr class="my-2">
+
+        <div style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
+            <div class="container mb-3 bg-light">
+
+                {% if lista_categorias %}
+                    {% for grupo in grupos_categorias %}
+
+                        <div id="group-{{ grupo.1|safe }}-header" class="group-header fs-2 mb-3">
+                            <i id="arrow" class="bi bi-caret-right-fill"></i>
+                            {{ grupo.0 }} <!-- Desta forma obtemos o nome no Enum -->
+                        </div>
+
+                        <div id="group-{{ grupo.1|safe }}-content" class="group-content row row-cols-4 mb-3">
+                            {% for categoria in lista_categorias %}
+                                {% if categoria.grupo == grupo.1 %}
+
+                                    <div class="col">
+                                        <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
+                                            <div class="card border-dark h-100">
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 {{ categoria.get_total_posts }}
                             </span>
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-1 mt-1"> {{ categoria.designacao }} {% if categoria.logo %}
-                                            <img id="CategoryIcon" src="{{ categoria.logo.url }}" class="card-img-top" alt="Logo" style="width:16px; height: 16px;">
-                                        {% else %}
-                                            <img id="CategoryIcon" src="{% static 'Community/Imagens/missing.png' %}" alt="Logo" style="width:16px; height: 16px;"> </h5>
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-1 mt-1"> {{ categoria.designacao }} {% if categoria.logo %}
+                                                        <img id="CategoryIcon" src="{{ categoria.logo.url }}" class="card-img-top" alt="Logo" style="width:16px; height: 16px;">
+                                                    {% else %}
+                                                        <img id="CategoryIcon" src="{% static 'Community/Imagens/missing.png' %}" alt="Logo" style="width:16px; height: 16px;"> </h5>
 
-                                            <!-- Adicionar este style ao ficheiro CSS -->
+                                                        <!-- Adicionar este style ao ficheiro CSS -->
 
-                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <p class="card-text"> {{ categoria.descricao }}</p>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small class="text-muted"> Última vez atualizado: </small>
+                                                </div>
+
+                                            </div>
+                                        </a>
                                     </div>
 
-                                    <div class="card-body">
-                                        <p class="card-text"> {{ categoria.descricao }}</p>
-                                    </div>
-
-                                    <div class="card-footer">
-                                        <small class="text-muted"> Última vez atualizado: </small>
-                                    </div>
-
-                                </div>
-                            </a>
+                                {% endif %}
+                            {% endfor %}
                         </div>
-
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
-        {% endfor %}
-    {% endif %}
+        </div>
 
+    </main>
 {% endblock %}
+
