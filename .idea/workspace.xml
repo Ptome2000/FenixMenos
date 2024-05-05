@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa8d4c70-4072-4f49-89bf-a12e0b55ea47" name="Changes" comment="Path commit">
-      <change afterPath="$PROJECT_DIR$/Static/Vitae/Imagens/PerfilDefault.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vitae/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Vitae/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Static/Vitae/Imagens/PerfilDefault.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/Static/Vitae/Imagens/PerfilDefault.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/perfil.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +126,7 @@
       <workItem from="1713827012406" duration="3177000" />
       <workItem from="1714843233364" duration="163000" />
       <workItem from="1714843766438" duration="4666000" />
-      <workItem from="1714921416354" duration="5022000" />
+      <workItem from="1714921416354" duration="5893000" />
     </task>
     <task id="LOCAL-00001" summary="Path commit">
       <option name="closed" value="true" />
