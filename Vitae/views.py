@@ -1,4 +1,8 @@
+
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.contrib import messages
 from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular
 
 def perfil(request):
@@ -10,7 +14,7 @@ def perfil(request):
         notas = Nota.objects.filter(aluno=aluno)
         recomendacoes = aluno.recomendacao_set.all()
         curso = aluno.curso
-        genero = aluno.user.professor.genero.name  # Acessando o enum pelo nome
+        genero = aluno.user.professor.genero.name
         context = {
             'usuario': aluno,
             'genero': genero,
@@ -23,7 +27,7 @@ def perfil(request):
         professor = get_object_or_404(Professor, user=user)
         ucs = UC.objects.filter(coordenador=professor)
         recomendacoes = Recomendacao.objects.filter(professor=professor)
-        genero = professor.genero.name  # Acessando o enum pelo nome
+        genero = professor.genero.name
         gabinete = professor.gabinete
         context = {
             'usuario': professor,
@@ -44,8 +48,7 @@ def detalhes_curso(request, codigo):
 def detalhes_uc(request, acronimo):
     uc = get_object_or_404(UC, acronimo=acronimo)
     skills = uc.skills.all()
-    planos_curriculares = PlanoCurricular.objects.filter(uc=uc).select_related(
-        'curso')
+    planos_curriculares = PlanoCurricular.objects.filter(uc=uc).select_related('curso')
 
     cursos_info = {}
     for plano in planos_curriculares:
@@ -68,3 +71,12 @@ def detalhes_matricula(request, numero_aluno):
         'matriculas': matriculas
     }
     return render(request, 'detalhes_matricula.html', context)
+
+def fazer_upload(request):
+    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+        myfile = request.FILES['myfile']
+        a = Aluno.objects.get(user=request.user)
+        a.avatar = myfile
+        a.save()
+        messages.success(request, "A sua foto foi carregada com sucesso")
+    return HttpResponseRedirect(reverse('Vitae:perfil'))
