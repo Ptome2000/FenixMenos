@@ -1,49 +1,49 @@
 {% extends 'skeleton.html' %}
 
+{% block title %}
+    Página de Perfil
+{% endblock %}
+
 {% block content %}
-    {% if user.is_authenticated %}
-        {% if user.professor %}
-            <h2>Perfil do Professor</h2>
-            #Formulário professor
-            <form>
-                <fieldset>
-                    <legend>Informações de Conta</legend>
-                    <label for="username" class="form-label">Username: {{ user.username }}</label><br>
-                    <label for ="email" class="form-label">Email: {{ user.email }}</label><br>
-                </fieldset>
-            </form>
-
-            <form>
-                <fieldset disabled>
-                    <legend>Informações Pessoais</legend>
-                    <label for="genero" class="form-label">Gênero: {{ user.professor.genero.label }}</label>
-                </fieldset>
-            </form>
-
-            <button type="button" class="btn btn-info">Editar Perfil</button>
-        {% elif user.aluno %}
-            <h2>Perfil do Aluno</h2>
-            #Formulário aluno
-            <form>
-                <fieldset>
-                    <legend>Informações de Conta</legend>
-                    <label for="username" class="form-label">Username: {{ user.username }}</label><br>
-                    <label for ="email" class="form-label">Email: {{ user.email }}</label><br>
-                </fieldset>
-            </form>
-
-            <form>
-                <fieldset disabled>
-                    <legend>Informações Pessoais</legend>
-                    <label for="genero" class="form-label">Gênero: {{ user.aluno.genero.label }}</label>
-                </fieldset>
-            </form>
-
-            <button type="button" class="btn btn-info">Editar Perfil</button>
+    <div class="container mt-4">
+        {% if user.is_authenticated %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        {% if user.professor and user.professor.foto %}
+                            <img src="{{ user.professor.foto.url }}" alt="Foto do professor" class="img-fluid img-thumbnail">
+                        {% elif user.aluno and user.aluno.foto %}
+                            <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                        {% else %}
+                            <img src="{% static 'Vitae/Imagens/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data" action="{% url 'fazer_upload' %}">
+                            {% csrf_token %}
+                            <div class="form-group mt-2">
+                                <label for="fileInput">Alterar foto:</label>
+                                <input type="file" class="form-control-file" id="fileInput" name="file">
+                                <button type="submit" class="btn btn-primary mt-2">Submeter fotografia</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="profile-details">
+                        <h2>Informações do {{ user.get_full_name }}</h2>
+                        <div class="mb-3"><strong>Username:</strong> {{ user.username }}</div>
+                        <div class="mb-3"><strong>Email:</strong> {{ user.email }}</div>
+                        {% if user.professor %}
+                            <div class="mb-3"><strong>Gênero:</strong> {{ user.professor.genero.get_label_display }}</div>
+                        {% elif user.aluno %}
+                            <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
+                            <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
+                        {% endif %}
+                        <button type="button" class="btn btn-info">Editar Perfil</button>
+                    </div>
+                </div>
+            </div>
         {% else %}
-            <p>No permition</p>
+            <p class="alert alert-warning">Você precisa estar logado para ver esta página.</p>
         {% endif %}
-    {% else %}
-        <p>No Login</p>
-    {% endif %}
+    </div>
 {% endblock %}

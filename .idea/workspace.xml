@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa8d4c70-4072-4f49-89bf-a12e0b55ea47" name="Changes" comment="Path commit">
-      <change afterPath="$PROJECT_DIR$/Static/FenixMenos/CSS/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Static/FenixMenos/JavaScript/Skeleton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_24_2024_6_27_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Templates/skeleton.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/skeleton.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Static/Vitae/Imagens/PerfilDefault.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/Static/Vitae/Imagens/PerfilDefault.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/perfil.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,16 +30,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "pipsromao"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pipsromao&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Ptome2000/FenixMenos.git",
-    "accountId": "d5a57c3a-274f-4a63-b0ba-981855396a75"
+    "accountId": "6803ab2c-80bb-41ab-8fb2-187f0532738c"
   }
 }]]></component>
   <component name="ProjectColorInfo">{
@@ -62,7 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "django.template.preview.state": "SHOW_EDITOR",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/firomao/PycharmProjects/siteiscte",
+    "last_opened_file_path": "C:/Users/gncbo/OneDrive/Documentos/Nova pasta/FenixMenos",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -78,6 +75,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gncbo\OneDrive\Documentos\Nova pasta\FenixMenos\Static\Vitae\Imagens" />
       <recent name="E:\Faculdade\FenixMenos" />
     </key>
   </component>
@@ -111,8 +109,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PY-241.15989.155" />
-        <option value="bundled-python-sdk-babbdf50b680-7c6932dee5e4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.15989.155" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-PY-241.14494.241" />
+        <option value="bundled-python-sdk-0509580d9d50-28c9f5db9ffe-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.14494.241" />
       </set>
     </attachedChunks>
   </component>
@@ -128,6 +126,7 @@
       <workItem from="1713827012406" duration="3177000" />
       <workItem from="1714843233364" duration="163000" />
       <workItem from="1714843766438" duration="4666000" />
+      <workItem from="1714921416354" duration="5893000" />
     </task>
     <task id="LOCAL-00001" summary="Path commit">
       <option name="closed" value="true" />
