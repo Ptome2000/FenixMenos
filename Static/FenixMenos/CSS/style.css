@@ -273,3 +273,28 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+
+        /* CSS para o container do carrossel */
+#carouselExampleIndicators {
+    width: 40%; /* Define a largura para 60% da largura do container pai */
+    margin: auto; /* Centraliza o carrossel horizontalmente */
+    height: auto; /* Altura ajustável baseada na proporção das imagens */
+    overflow: hidden; /* Esconde qualquer conteúdo que saia dos limites */
+}
+
+/* Ajusta as imagens dentro dos itens do carrossel */
+#carouselExampleIndicators .carousel-item img {
+    width: 100%; /* Garante que a imagem ocupe toda a largura do item do carrossel */
+    height: auto; /* Mantém a proporção das imagens, ajusta a altura automaticamente */
+    object-fit: cover; /* As imagens cobrirão o espaço disponível sem perder a proporção */
+}
+
+/* Responsividade: Carrossel ocupa 100% da largura em dispositivos menores */
+@media (max-width: 768px) {
+    #carouselExampleIndicators {
+        width: 100%; /* Ocupa 100% da largura em dispositivos menores */
+    }
+}
+
+
