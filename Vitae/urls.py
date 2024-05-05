@@ -3,5 +3,7 @@ from . import views
 
 urlpatterns = [
     path("perfil", views.perfil, name="perfil"),
-    path('Vitae/fazer_upload', views.fazer_upload, name='fazer_upload'),
+    path('curso/detalhes/<str:codigo>/', views.detalhes_curso, name='detalhes_curso'),
+    path('uc/detalhes/<str:acronimo>/', views.detalhes_uc, name='detalhes_uc'),
+    path('aluno/detalhes_matricula/<int:numero_aluno>/', views.detalhes_matricula, name='detalhes_matricula'),
 ]

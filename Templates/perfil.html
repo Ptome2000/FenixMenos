@@ -1,5 +1,5 @@
 {% extends 'skeleton.html' %}
-
+{% load static %}
 {% block title %}
     Página de Perfil
 {% endblock %}
@@ -15,7 +15,7 @@
                         {% elif user.aluno and user.aluno.foto %}
                             <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
                         {% else %}
-                            <img src="{% static 'Vitae/Imagens/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
+                            <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
                         {% endif %}
                         <form method="post" enctype="multipart/form-data" action="{% url 'fazer_upload' %}">
                             {% csrf_token %}
@@ -43,7 +43,7 @@
                 </div>
             </div>
         {% else %}
-            <p class="alert alert-warning">Você precisa estar logado para ver esta página.</p>
+            <p class="alert alert-warning">Faça Login!!</p>
         {% endif %}
     </div>
 {% endblock %}
