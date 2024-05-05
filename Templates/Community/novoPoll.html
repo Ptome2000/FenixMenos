@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
 
+    <div id="page-content-wrapper">    
+
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
             <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
@@ -40,5 +42,5 @@
         </div>
 
             <!-- ADICIONAR MODAL -->
-    
+    </div>
 {% endblock %}

@@ -189,15 +189,27 @@ form.form-inline button:hover {
 
 
 
-
 .main-content {
     margin-top: 50px;  /* Ajuste esse valor para corresponder à altura do seu cabeçalho */
     padding: 20px;  /* Ajuste conforme necessário para o padding interno */
+    margin-left: 20px;
+}
+
+.main {
+    margin-left: 60px;
+    padding: 20px; /* Espaço interno */
+    background-color: #757474; /* Fundo branco para o conteúdo principal */
+}
+
+#page-content-wrapper {
+    margin-left: 25px;
+    padding: 20px;
 }
 
 /* Garante que a área do conteúdo não fique escondida sob o cabeçalho */
 body {
     padding-top: 50px;  /* Isso deve ser igual ou um pouco maior que a altura do cabeçalho */
+
 }
 
 
