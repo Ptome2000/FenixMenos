@@ -1,12 +1,263 @@
+.header, .navbar {
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    background-color: #007bff;  // Cor de fundo do cabeçalho
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+}
+
+
+
+/* dropdown */
 .dropdown-menu {
-    min-width: 200px;  /* Defina a largura mínima do dropdown */
+    min-width: 200px;
 }
 
 .dropdown-item {
-    color: #333;       /* Cor do texto dos itens do dropdown */
-    text-align: center; /* Centraliza o texto dos itens do dropdown */
+    color: #333;
+    text-align: center;
 }
 
 .navbar {
-    z-index: 1020;    /* Garante que a navbar esteja sobre outros conteúdos, ajuste conforme necessário */
+    z-index: 1020;
+}
+
+.navbar-center-right {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.navbar-center-right .dropdown {
+    margin-left: auto;
+}
+
+form.form-inline {
+    position: relative;
+}
+
+form.form-inline input[type="search"] {
+    padding-right: 30px; /* Espaço para o ícone da lupa */
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box .form-control {
+    padding-right: 40px; /* Espaço para o botão da lupa */
+}
+
+.search-box .search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: none;
+    background: none;
+    color: #333;
+    outline: none;
+    padding: 0 12px;
+}
+
+/* Ajustes para o ícone para garantir que esteja no centro verticalmente */
+.search-box .search-btn .fa {
+    line-height: 38px; /* Altura da linha igual à altura do campo de entrada */
+}
+
+form.form-inline button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    color: #333;
+}
+
+form.form-inline button {
+    background: none;
+    border: none;
+}
+
+form.form-inline button:hover {
+    background: none;
+    border: none;
+}
+
+.search-input {
+    width: 180px; /* Reduz a largura do campo de pesquisa */
+}
+
+/* Estiliza o dropdown para adicionar margem à esquerda */
+.navbar .dropdown {
+    margin-left: 20px; /* Espaço entre o campo de pesquisa e o dropdown */
+}
+
+/* Botão de pesquisa sem borda e fundo */
+.navbar .btn-outline-success {
+    border: none;
+    background: transparent;
+    color: #FFF; /* Ajuste a cor conforme necessário */
+}
+
+
+
+
+/* Parte de sidebar lateral */
+
+/* Estilo básico da sidebar */
+.sidebar {
+    width: 60px; /* Largura inicial */
+    min-height: 100vh; /* Garante que a sidebar se estenda pela altura total da viewport */
+    background-color: #343a40; /* Cor de fundo escura */
+    position: fixed; /* Fixa a sidebar na viewport */
+    top: 50px; /* Inicia no topo da viewport */
+    overflow-x: hidden; /* Esconde o conteúdo horizontal extra */
+    overflow-y: auto; /* Permite scroll na sidebar se necessário */
+    transition: width 0.5s; /* Suaviza a transição da largura */
+    z-index: 1000; /* Garante que a sidebar fique sobre outros conteúdos */
+}
+
+/* Expandir a sidebar ao passar o mouse */
+.sidebar:hover {
+    width: 250px; /* Largura expandida */
+}
+
+/* Estilo para os links dentro da sidebar */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 10px; /* Ajuste para menor padding à direita */
+}
+
+/* Estilo para ícones e textos dentro da sidebar */
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    font-size: 1.2em; /* Tamanho fixo dos ícones */
+    min-width: 30px; /* Largura mínima para ícones, garante alinhamento */
+    text-align: center; /* Centraliza o ícone */
+
+}
+
+/* Mostrar textos somente quando expandido */
+.sidebar:hover ul li a span {
+    display: inline;
+}
+
+/* Ajuste para ícones ficarem alinhados à esquerda na versão colapsada */
+.sidebar ul li a i {
+    text-align: left; /* Alinha ícones à esquerda */
+    width: auto; /* Remove largura total para evitar centralização */
+}
+
+.sidebar ul li a span {
+    display: none; /* Esconde o texto */
+    width: 0; /* Reduz a largura do texto para zero */
+    overflow: hidden; /* Evita qualquer sobreposição de texto */
+    transition: width 0.3s ease; /* Suaviza a transição de largura */
+}
+
+/* Estilo para mostrar o texto quando a sidebar está expandida */
+.sidebar:hover ul li a span {
+    display: inline; /* Mostra o texto */
+    width: auto; /* Permite que o texto assuma a largura necessária */
+}
+
+/* Estilo para submenus */
+.submenu ul {
+    display: none; /* Esconde submenus */
+}
+
+.submenu:hover ul {
+    display: block; /* Mostra submenus no hover */
+}
+
+
+
+
+.main-content {
+    margin-top: 50px;  /* Ajuste esse valor para corresponder à altura do seu cabeçalho */
+    padding: 20px;  /* Ajuste conforme necessário para o padding interno */
+}
+
+/* Garante que a área do conteúdo não fique escondida sob o cabeçalho */
+body {
+    padding-top: 50px;  /* Isso deve ser igual ou um pouco maior que a altura do cabeçalho */
+}
+
+
+
+
+
+
+
+        fieldset {
+            background-color: #eeeeee;
+        }
+
+        legend {
+            background-color: gray;
+            color: white;
+            padding: 5px 10px;
+        }
+
+        .footer {
+        /*    position: fixed; */
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+
+        input {
+            margin: 5px;
+        }
+
+        .page-up {
+            position: absolute;
+            left: 50%;
+            top: -25px;
+            margin-left: -25px;
+        }
+
+        .page-up a {
+            display: inline-block;
+            font-size: 36px;
+            color: #ffffff;
+            height: 50px;
+            width: 50px;
+            background: #3495dc;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 50%;
+        }
+
+        .page-up a span {
+            position: relative;
+            top: 2px;
+            left: -1px;
+        }
+
+
+        body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }

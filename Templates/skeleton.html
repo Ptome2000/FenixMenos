@@ -4,6 +4,8 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- -->
     <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/7f8c1f8b68.js" crossorigin="anonymous"></script>
@@ -14,128 +16,72 @@
     <link rel="stylesheet" href="{% static 'FenixMenos/CSS/style.css' %}">
     <script src="{% static 'FenixMenos/JavaScript/Skeleton.js' %}" defer></script>
 
-    <style>
-        fieldset {
-            background-color: #eeeeee;
-        }
 
-        legend {
-            background-color: gray;
-            color: white;
-            padding: 5px 10px;
-        }
-
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: #3a3535;
-            color: white;
-            text-align: center;
-        }
-
-        input {
-            margin: 5px;
-        }
-
-        .page-up {
-            position: absolute;
-            left: 50%;
-            top: -25px;
-            margin-left: -25px;
-        }
-
-        .page-up a {
-            display: inline-block;
-            font-size: 36px;
-            color: #ffffff;
-            height: 50px;
-            width: 50px;
-            background: #3495dc;
-            line-height: 50px;
-            text-align: center;
-            border-radius: 50%;
-        }
-
-        .page-up a span {
-            position: relative;
-            top: 2px;
-            left: -1px;
-        }
-
-    </style>
 </head>
 <body>
 
 <header>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Home</a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <div class="search-box">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </li>
+            <!-- Dropdown -->
+            <li class="nav-item dropdown ml-3">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand" href=" {% url 'index' %}"> Home </a>
-    
-    <search>
-        <form>
-            <input name="search" placeholder="Search">
-        </form>
-    </search>
-    
-        <div class="ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button">Dropdown</a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" id="myDropdown">
-                        <a class="dropdown-item" href="#!">Action</a>
-                        <a class="dropdown-item" href="#!">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#!">Something else here</a>
-                    </div>
-                </li>
-            </div>
-    
-</nav>
+
+<div class="sidebar" id="mySidebar">
+    <ul>
+        <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li class="submenu">
+            <a href="#"><i class="fa fa-user"></i><span>ISCTE.solutions</span></a>
+            <ul>
+                <li><a href="#">Subitem 1</a></li>
+                <li><a href="#">Subitem 2</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="#"><i class="fa fa-envelope"></i><span>Candidato</span></a>
+            <ul>
+                <li><a href="#">Candidaturas</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-gear"></i><span>myFenix</span></a></li>
+    </ul>
+</div>
+
+
+
 
 <main>
 
 
+</main>
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Conteúdo Principal -->
-        <div class="col-lg-8">
-            <!-- Aqui entra o conteúdo principal da página, por exemplo, posts ou informações do usuário -->
-        </div>
-
-        <!-- Coluna Lateral com Widgets -->
-        <div class="col-lg-4">
-            <!-- Widget 1 -->
-            <div class="card mb-4 shadow-sm" style="margin-top: 20px;"> <!-- Ajuste '20px' conforme necessário -->
-                <div class="card-body">
-                    <h5 class="card-title">Ultimos Posts da Comunidade?</h5>
-                    <ul class="list-unstyled">
-                        <li>Judy Nguyen - Jornalista</li>
-                        <li>Amanda Reed - Desenvolvedora Web</li>
-                        <li>Billy Vasquez - Jornalista</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Widget 2 -->
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Top Alunos</h5>
-                    <p>Ten questions you should answer truthfully</p>
-                    <p>Five unbelievable facts about money</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <!--  Podemos usar isto para o nível das skills   -->
+    <!--  Podemos usar isto para o nível das skills   
     <progress value="2" max="5"> </progress>
-
+-->
     <section>
         <div class="row-form-errors"> <!-- Div for messages -->
             {% if messages %}
@@ -162,9 +108,9 @@
     </aside>
 
 
-</main>
 
-<footer class="footer" style="width: 100%; background-color: #3a3535; color: white; text-align: center; position: relative;">
+
+<footer class="footer">
     <div class="page-up">
         <a href="#"><i class="fa-solid fa-angle-up"></i></a>
     </div>

@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Toggle dropdown
     var dropdownToggle = document.getElementById('navbarDropdown');
-
     dropdownToggle.addEventListener('click', function(event) {
         event.preventDefault();  // Impede o link de navegar
         document.getElementById("myDropdown").classList.toggle("show");
@@ -28,6 +27,30 @@ document.addEventListener('DOMContentLoaded', function() {
   $('#togglePostOptions').click(function() {
     $('#PostOptions').toggle();
   });
+
+    document.querySelector('.form-inline').addEventListener('submit', function(e) {
+    e.preventDefault(); // Impede o envio do formulário
+    var searchValue = document.querySelector('.form-inline input[type="search"]').value;
+    // Aqui você pode adicionar o código para realizar a pesquisa
+    console.log("Pesquisando por:", searchValue);
+    // Por exemplo, redirecionar para uma URL com o termo de pesquisa
+    window.location.href = '/search/?q=' + encodeURIComponent(searchValue);
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var submenus = document.querySelectorAll('.submenu > a');
+    submenus.forEach(function(submenu) {
+        submenu.addEventListener('click', function(e) {
+            e.preventDefault();
+            var childMenu = this.nextElementSibling;
+            if (childMenu.style.display === 'block') {
+                childMenu.style.display = 'none';
+            } else {
+                childMenu.style.display = 'block';
+            }
+        });
+    });
+});
 
 
 });
