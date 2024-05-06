@@ -20,8 +20,8 @@ class Categoria(models.Model):
 
     def last_posted(self):
         posts = self.post_set.get()
-        comentario = posts.get_last_commented()
-        return comentario
+        data = posts.get_last_commented_date()
+        return data
 
     def get_total_posts(self):
         return self.post_set.count()
