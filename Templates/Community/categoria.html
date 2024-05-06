@@ -2,63 +2,63 @@
 {% load static %}
 {% block content %}
 
-<div id="page-content-wrapper">    
-    <div class="row">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
-                <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
-                <li class="breadcrumb-item active" aria-current="page"> {{ categoria }} </li>
-            </ol>
-        </nav>
-    </div>
-
-    <div class="row">
-        <div class="col d-flex align-items-start">
-            <h1 class="display-6 pb-2"> {{ categoria }} </h1>
+    <div id="page-content-wrapper">
+        <div class="row">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
+                    <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> {{ categoria }} </li>
+                </ol>
+            </nav>
         </div>
-        <div class="col">
-            <button id="togglePostOptions" class="btn btn-outline-dark dropdown-toggle mx-auto p-2" type="button">
-                Criar novo Post
-            </button>
-            <div class="dropdown-menu" id="PostOptions">
-                <a class="dropdown-item" href="{% url 'Community:criarDiscussao' categoria.designacao %}"> Criar Discussão </a>
-                <a class="dropdown-item" href="#"> Criar Poll </a>
+
+        <div class="row">
+            <div class="col d-flex align-items-start">
+                <h1 class="display-6 pb-2"> {{ categoria }} </h1>
+            </div>
+            <div class="col">
+                <button id="togglePostOptions" class="btn btn-outline-dark dropdown-toggle mx-auto p-2" type="button">
+                    Criar novo Post
+                </button>
+                <div class="dropdown-menu" id="PostOptions">
+                    <a class="dropdown-item" href="{% url 'Community:criarDiscussao' categoria.designacao %}"> Criar Discussão </a>
+                    <a class="dropdown-item" href="{% url 'Community:criarVotacao' categoria.designacao %}"> Criar Poll </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <hr class="my-2">
+        <hr class="my-2">
 
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-light">
-            <tr>
-                <th scope="col" class="text-center"> Tipo </th>
-                <th scope="col" colspan="5"> Tópico </th>
-                <th scope="col" colspan="2"> Autor </th>
-                <th scope="col" class="text-center"> Comentários </th>
-                <th scope="col" class="text-center"> Última atualização </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if not lista_posts %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
                 <tr>
-                    <td colspan="10" class="table-active text-center"> Ainda não foram adicionados novos posts </td>
+                    <th scope="col" class="text-center"> Tipo </th>
+                    <th scope="col" colspan="5"> Tópico </th>
+                    <th scope="col" colspan="2"> Autor </th>
+                    <th scope="col" class="text-center"> Comentários </th>
+                    <th scope="col" class="text-center"> Última atualização </th>
                 </tr>
-            {% else %}
-                {% for post in lista_posts %}
+                </thead>
+                <tbody>
+                {% if not lista_posts %}
                     <tr>
-                        <td class="text-center">  </td>
-                        <td colspan="5"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:post' categoria.designacao post.id %}">{{ post }}</a></td>
-                        <td colspan="2"> {{ post.get_user }} </td>
-                        <td class="text-center"> {{ post.get_total_comments }} </td>
-                        <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
+                        <td colspan="10" class="table-active text-center"> Ainda não foram adicionados novos posts </td>
                     </tr>
-                {% endfor %}
-            {% endif %}
-            </tbody>
-        </table>
+                {% else %}
+                    {% for post in lista_posts %}
+                        <tr>
+                            <td class="text-center">  </td>
+                            <td colspan="5"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:post' categoria.designacao post.id %}">{{ post }}</a></td>
+                            <td colspan="2"> {{ post.get_user }} </td>
+                            <td class="text-center"> {{ post.get_total_comments }} </td>
+                            <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}

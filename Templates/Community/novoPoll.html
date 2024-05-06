@@ -2,21 +2,21 @@
 {% load static %}
 {% block content %}
 
-    <div id="page-content-wrapper">    
+    <div id="page-content-wrapper">
 
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
-            <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
-            <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:categoria' categoria.designacao %}"> {{ categoria }} </a></li>
-            <li class="breadcrumb-item active" aria-current="page"> Criar novo Post </li>
-        </ol>
-    </nav>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
+                <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:community' %}"> {{ categoria.grupo }} </a></li>
+                <li class="breadcrumb-item"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:categoria' categoria.designacao %}"> {{ categoria }} </a></li>
+                <li class="breadcrumb-item active" aria-current="page"> Criar novo Post </li>
+            </ol>
+        </nav>
 
-    <div class="row">
-        <h2 class="display-6 pb-2"> Criar novo Post </h2>
-    </div>
+        <div class="row">
+            <h2 class="display-6 pb-2"> Criar novo Post </h2>
+        </div>
 
-    <hr class="my-2">
+        <hr class="my-2">
 
         <div class="container p-3">
             <form method="post">
@@ -41,6 +41,6 @@
 
         </div>
 
-            <!-- ADICIONAR MODAL -->
+        <!-- ADICIONAR MODAL -->
     </div>
 {% endblock %}

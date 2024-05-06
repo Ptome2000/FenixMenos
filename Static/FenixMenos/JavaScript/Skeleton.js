@@ -19,38 +19,53 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-      $(".group-header ").click(function() {
-    let element = $(this).next();
-    element.fadeToggle(500);
-  })
+    $(".group-header ").click(function() {
+        let content = $(this).next();
+        content.fadeToggle(500);
+        let arrow = $(this).children("i");
+        if (arrow.attr('class') === "bi-caret-down-fill") {
+            arrow.classList.remove("bi-caret-down-fill");
+            arrow.classList.add("bi-caret-right-fill");
+        } else {
+            arrow.removeClass("bi-caret-right-fill").addClass("bi-caret-down-fill")
+        }
+    })
 
-  $('#togglePostOptions').click(function() {
-    $('#PostOptions').toggle();
-  });
+    $('#togglePostOptions').click(function() {
+        $('#PostOptions').toggle();
+    });
+
+    $('#openModal').click(function() {
+        $('#AnswerModal').css('display', 'block');
+    })
+
+    $('#closeModal').click(function() {
+        $('#AnswerModal').css('display', 'none');
+    })
 
     document.querySelector('.form-inline').addEventListener('submit', function(e) {
-    e.preventDefault(); // Impede o envio do formulário
-    var searchValue = document.querySelector('.form-inline input[type="search"]').value;
-    // Aqui você pode adicionar o código para realizar a pesquisa
-    console.log("Pesquisando por:", searchValue);
-    // Por exemplo, redirecionar para uma URL com o termo de pesquisa
-    window.location.href = '/search/?q=' + encodeURIComponent(searchValue);
-});
+        e.preventDefault(); // Impede o envio do formulário
+        var searchValue = document.querySelector('.form-inline input[type="search"]').value;
+        // Aqui você pode adicionar o código para realizar a pesquisa
+        console.log("Pesquisando por:", searchValue);
+        // Por exemplo, redirecionar para uma URL com o termo de pesquisa
+        window.location.href = '/search/?q=' + encodeURIComponent(searchValue);
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
-    var submenus = document.querySelectorAll('.submenu > a');
-    submenus.forEach(function(submenu) {
-        submenu.addEventListener('click', function(e) {
-            e.preventDefault();
-            var childMenu = this.nextElementSibling;
-            if (childMenu.style.display === 'block') {
-                childMenu.style.display = 'none';
-            } else {
-                childMenu.style.display = 'block';
-            }
+        var submenus = document.querySelectorAll('.submenu > a');
+        submenus.forEach(function(submenu) {
+            submenu.addEventListener('click', function(e) {
+                e.preventDefault();
+                var childMenu = this.nextElementSibling;
+                if (childMenu.style.display === 'block') {
+                    childMenu.style.display = 'none';
+                } else {
+                    childMenu.style.display = 'block';
+                }
+            });
         });
     });
-});
 
 
 });

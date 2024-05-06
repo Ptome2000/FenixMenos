@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from Community.models import *
 from django.http import HttpResponseRedirect
@@ -21,9 +22,22 @@ def categoria(request, categoria_dgn):
 def post(request, categoria_dgn, post_Id):
     categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
     post = get_object_or_404(Post, id=post_Id)
-    lista_comentarios = Comentario.objects.filter(post=post_Id)
-    context = {'post': post, 'lista_comentarios': lista_comentarios, 'categoria': categoria}
-    return render(request, 'community/post.html', context)
+    try:
+        if request.method == 'POST':
+            texto = request.POST.get('message')
+            imagem = request.POST.get('ImageFile')
+            Comentario.objects.create(post=post, user=request.user, texto=texto, data=datetime.now(), imagem=imagem)
+
+            # ADICIONAR MENSAGEM DE SUCESSO
+
+        lista_comentarios = Comentario.objects.filter(post=post_Id)
+        context = {'post': post, 'lista_comentarios': lista_comentarios, 'categoria': categoria}
+        return render(request, 'community/post.html', context)
+    except KeyError:
+
+        # ADICIONAR MENSAGEM DE ERRO
+
+        return render(request, '')
 
 
 def criarDiscussao(request, categoria_dgn):
@@ -35,10 +49,9 @@ def criarDiscussao(request, categoria_dgn):
             titulo = request.POST['title']
             texto = request.POST['message']
             imagem = request.POST['ImageFile']
-            post = Post(titulo=titulo, texto=texto, imagem=imagem)
+            post = Post.objects.create(titulo=titulo, categoria=categoria, user=request.user)
+            Comentario.objects.create(post=post, user=request.user, texto=texto, data=datetime.now(), imagem=imagem)
         except KeyError:
-            return render(request, '')
-        else:
             return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
 
 
