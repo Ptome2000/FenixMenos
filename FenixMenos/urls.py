@@ -25,7 +25,10 @@ urlpatterns = [
     path('Vitae/', include('Vitae.urls')),
     path('Community/', include('Community.urls')),
     path("FenixMenos/", views.index, name="index"),
-    path("FenixMenos/login", views.login, name="login"),
+    path("FenixMenos/login", views.loginform, name="login"),
+    path("FenixMenos/registar", views.registro, name="registro"),
+    path("FenixMenos/logout", views.logoutForm, name="logout"),
+
 ]
 
 if settings.DEBUG:
