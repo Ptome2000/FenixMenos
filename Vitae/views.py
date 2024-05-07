@@ -1,6 +1,6 @@
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular, Matricula
@@ -64,12 +64,14 @@ def detalhes_uc(request, acronimo):
     }
     return render(request, 'detalhes_uc.html', context)
 
-def detalhes_matricula(request, numero_aluno):
-    aluno = get_object_or_404(Aluno, numeroAluno=numero_aluno)
-    matriculas = aluno.matricula_set.all()
-    context = {
-        'aluno': aluno,
-        'matriculas': matriculas
-    }
-    return render(request, 'detalhes_matricula.html', context)
-
+def fazer_upload(request):
+    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+        myfile = request.FILES['myfile']
+        aluno = Aluno.objects.get(user=request.user)
+        aluno.avatar = myfile
+        aluno.save()
+        messages.success(request, "A sua foto foi carregada com sucesso!")
+        return redirect(reverse('Vitae:perfil'))
+    else:
+        messages.error(request, "Erro ao fazer o upload.")
+        return redirect(reverse('Vitae:perfil'))
