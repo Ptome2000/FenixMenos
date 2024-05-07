@@ -14,71 +14,73 @@
             </nav>
         </div>
 
-        <div class="row">
-            <div class="col d-flex align-items-start">
-                <h1 class="display-6 pb-2"> {{ post }} </h1>
+        <form>
+
+            <div class="row">
+                <div class="col d-flex align-items-start">
+                    <h1 class="display-6 pb-2"> {{ post }} </h1>
+                </div>
+                <div class="col d-flex justify-content-end m-2">
+                    <button id="AnswerPost" class="btn btn-outline-dark mx-2">
+                        Responder
+                    </button>
+
+                    {% if request.user.is_superuser %}
+                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                        <button type="submit" id="DeleteComments" name="action" value="ApagarComentarios" class="btn btn-outline-warning mx-2" style="display: none;"> Apagar Comentários </button>
+                    {% elif request.user == post.user %}
+                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                    {% endif %}
+                </div>
             </div>
-            <div class="col d-flex justify-content-end m-2">
-                <button id="AnswerPost" class="btn btn-outline-dark mx-2">
-                    Responder
-                </button>
 
-                {% if request.user.is_superuser or request.user == post.user %}
-                    <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
-                    <button id="DeleteComments" class="btn btn-outline-warning mx-2" style="display:none"> Apagar Comentários </button>
-                {% endif %}
-            </div>
-        </div>
+            <hr class="my-2">
 
-        <hr class="my-2">
+            <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
+                <table class="table" style="width:1280px">
+                    <tbody>
+                    {% for comentario in post.comentario_set.all %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    {% if comentario.user.is_superuser %}
+                                        <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
+                                        <figure>
+                                            <blockquote class="blockquote">
+                                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
+                                            </blockquote>
+                                            <figcaption class="blockquote-footer">
+                                                Admin
+                                            </figcaption>
+                                        </figure>
+                                    {% elif comentario.user.is_professor %}
 
-        <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
-            <table class="table" style="width:1280px">
-                <tbody>
-                {% for comentario in post.comentario_set.all %}
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                {% if comentario.user.is_superuser %}
-                                    <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
-                                    <figure>
-                                        <blockquote class="blockquote">
-                                            <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
-                                        </blockquote>
-                                        <figcaption class="blockquote-footer">
-                                            Admin
-                                        </figcaption>
-                                    </figure>
-                                {% elif comentario.user.is_professor %}
-
-                                {% else %}
-                                    <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
-                                    <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                    {% else %}
+                                        <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
+                                        <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td colspan="2" class="text-center">
+                                {% if comentario.imagem %}
+                                    <img src="{{ comentario.imagem.url }}" alt="Imagem de Post" class="rounded mx-auto d-block p-4" style="max-width: 788px; max-height: 443.25px">
                                 {% endif %}
-                            </div>
-                        </td>
-                        <td colspan="2">
-                            {% if comentario.imagem %}
-                                <img src="{{ comentario.imagem.url }}" alt="Imagem de Post" class="rounded mx-auto d-block p-4" style="max-width: 788px; max-height: 443.25px">
-                            {% endif %}
-                            {{ comentario.texto }}
-                        </td>
-                        <td>
-                            <span> #{{ forloop.counter }} | </span>
-                            <span> {{ comentario.data|date:"M j" }} </span>
-                            {% if request.user.is_superuser %}
-                                <input type="checkbox" id="btn-check-{{ post.id }}" class="btn-check" autocomplete="off" value="{{ comentario.id }}">
-                                <label class="btn btn-outline-warning ms-4" for="btn-check-{{ post.id }}"> X </label>
-                            {% endif %}
-                        </td>
-
-
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
+                                {{ comentario.texto }}
+                            </td>
+                            <td class="text-end">
+                                <span> #{{ forloop.counter }} | </span>
+                                <span> {{ comentario.data|date:"M j" }} </span>
+                                {% if request.user.is_superuser %}
+                                    <input type="checkbox" id="btn-check-{{ comentario.id }}" name="selectedPost" class="btn-check" autocomplete="off" value="{{ comentario.id }}">
+                                    <label class="btn btn-outline-warning ms-4" for="btn-check-{{ comentario.id }}"> X </label>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </div>
 
     {% include 'Community/responderPost.html' %}

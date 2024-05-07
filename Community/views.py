@@ -27,6 +27,9 @@ def post(request, categoria_dgn, post_Id):
             if request.POST['action'] == 'Apagar':
                 post.delete()
                 return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+            elif request.POST['action'] == 'ApagarComentarios':
+                selected = request.POST.getlist('selectedPost')
+                return HttpResponseRedirect(reverse('Community:', args=[categoria.designacao, post.id, selected]))
             elif request.POST['action'] == 'Responder':
                 texto = request.POST.get('message')
                 imagem = request.POST.get('ImageFile')
@@ -72,4 +75,9 @@ def criarVotacao(request, categoria_dgn):
             return HttpResponseRedirect(reverse('Community:post', args=[categoria.designacao, post.id]))
         except KeyError:
             return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+
+def apagarComentarios(self, categoria_dgn, post_Id, comentarios):
+    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+    post = get_object_or_404(Post, id=post_Id)
+
 

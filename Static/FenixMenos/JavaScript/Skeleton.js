@@ -22,13 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     $(".group-header ").click(function() {
         let content = $(this).next();
         content.fadeToggle(500);
-        let arrow = $(this).children("i");
-        if (arrow.attr('class') ===
-            "bi-caret-down-fill") {
-            arrow.classList.remove("bi-caret-down-fill");
-            arrow.classList.add("bi-caret-right-fill");
-        } else {
-            arrow.removeClass("bi-caret-right-fill").addClass("bi-caret-down-fill")
+    })
+
+    $('.group-content').each(function() {
+        console.log(!this.hasChildNodes());
+        if (!this.hasChildNodes()) {
+            let header = $(this).attr('id').replace('content', 'header');
+            header.remove();
+            $(this).remove();
         }
     })
 
@@ -50,6 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#closeDeleteModal').click(function() {
         $('#DeleteModal').css('display', 'none');
+    })
+
+    $('#DeleteComments').click(function() {
+        $('#DeleteCommentsModal').css('display', 'block');
+    })
+
+    $('#closeDeleteCommentsModal').click(function() {
+        $('#DeleteCommentsModal').css('display', 'none');
     })
 
     $('.btn-check').click(function() {
