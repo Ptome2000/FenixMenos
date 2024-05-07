@@ -65,11 +65,17 @@ def detalhes_uc(request, acronimo):
     return render(request, 'detalhes_uc.html', context)
 
 def fazer_upload(request):
+    user = request.user
     if request.method == 'POST' and request.FILES.get('myfile') is not None:
         myfile = request.FILES['myfile']
-        aluno = Aluno.objects.get(user=request.user)
-        aluno.avatar = myfile
-        aluno.save()
+        if hasattr(user, 'aluno'):
+            aluno = Aluno.objects.get(user=request.user)
+            aluno.avatar = myfile
+            aluno.save()
+        elif hasattr(user, 'professor'):
+            professor = Professor.objects.get(user=request.user)
+            professor.avatar = myfile
+            professor.save()
         messages.success(request, "A sua foto foi carregada com sucesso!")
         return redirect(reverse('Vitae:perfil'))
     else:
