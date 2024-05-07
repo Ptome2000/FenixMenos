@@ -58,10 +58,8 @@
                             <td class="text-center"> {{ post.get_total_comments }} </td>
                             <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
                             {% if request.user.is_superuser %}
-                                <td><button class="deleteModal w-5 btn btn-outline-danger float-end"> X </button></td>
+                                <td><button id="deleteModal" class="w-5 btn btn-outline-danger btn-sm float-end"> X </button></td>
                                 
-                                {% include 'Community/apagarPost.html' with obj=post %}
-
                             {% endif %}
                         </tr>
                     {% endfor %}

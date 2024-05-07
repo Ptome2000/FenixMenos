@@ -19,12 +19,13 @@
                 <h1 class="display-6 pb-2"> {{ post }} </h1>
             </div>
             <div class="col d-flex justify-content-end m-2">
-                <button id="openModal" class="btn btn-outline-dark mx-2">
+                <button id="AnswerPost" class="btn btn-outline-dark mx-2">
                     Responder
                 </button>
 
                 {% if request.user.is_superuser or request.user == post.user %}
-                    <button id="deleteModal" class="btn btn-outline-danger mx-2"> Apagar </button>
+                    <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                    <button id="DeleteComments" class="btn btn-outline-warning mx-2" style="display:none"> Apagar Comentários </button>
                 {% endif %}
             </div>
         </div>
@@ -34,7 +35,7 @@
         <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
             <table class="table" style="width:1280px">
                 <tbody>
-                {% for comentario in lista_comentarios %}
+                {% for comentario in post.comentario_set.all %}
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
@@ -63,9 +64,15 @@
                             {{ comentario.texto }}
                         </td>
                         <td>
-                            <p> #{{ forloop.counter }} </p>
+                            <span> #{{ forloop.counter }} | </span>
                             <span> {{ comentario.data|date:"M j" }} </span>
+                            {% if request.user.is_superuser %}
+                                <input type="checkbox" id="btn-check-{{ post.id }}" class="btn-check" autocomplete="off" value="{{ comentario.id }}">
+                                <label class="btn btn-outline-warning ms-4" for="btn-check-{{ post.id }}"> X </label>
+                            {% endif %}
                         </td>
+
+
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -75,30 +82,6 @@
     </div>
 
     {% include 'Community/responderPost.html' %}
-
-    <div id="ConfirmationModal" class="modal-dialog">
-
-        <div class="modal-content">
-            <form method="post">
-                {% csrf_token %}
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"> Tem a certeza de que deseja apagar o tópico: </h5>
-                    <button type="button" id="closeConfirmationModal" class="btn-close"></button>
-                </div>
-
-                <hr class="my-2">
-
-                <div class="modal-body">
-                    {{ post }} criado por {{ post.user }}
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-outline-success mx-3" type="submit"> Sim </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    {% include 'Community/apagarPost.html' %}
 
 {% endblock %}
