@@ -36,21 +36,33 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#PostOptions').toggle();
     });
 
-    $('#openModal').click(function() {
+    $('#AnswerPost').click(function() {
         $('#AnswerModal').css('display', 'block');
     })
 
-    $('#deleteModal').click(function() {
-        $('#ConfirmationModal').css('display', 'block');
-    })
-
-    $('#closeModal').click(function() {
+    $('#closeAnswerModal').click(function() {
         $('#AnswerModal').css('display', 'none');
     })
 
-    $('#closeConfirmationModal').click(function() {
-        $('#ConfirmationModal').css('display', 'none');
+    $('#DeletePost').click(function() {
+        $('#DeleteModal').css('display', 'block');
     })
+
+    $('#closeDeleteModal').click(function() {
+        $('#DeleteModal').css('display', 'none');
+    })
+
+    $('.btn-check').click(function() {
+        // Check if any element with class "btn-check" is checked
+        let isChecked = $('.btn-check').is(':checked');
+
+        // Check the result
+        if (isChecked) {
+            $('#DeleteComments').css('display', 'block');
+        } else {
+            $('#DeleteComments').css('display', 'none');
+        }
+    });
 
     document.querySelector('.form-inline').addEventListener('submit', function(e) {
         e.preventDefault(); // Impede o envio do formulário

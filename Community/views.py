@@ -24,14 +24,17 @@ def post(request, categoria_dgn, post_Id):
     post = get_object_or_404(Post, id=post_Id)
     try:
         if request.method == 'POST':
-            texto = request.POST.get('message')
-            imagem = request.POST.get('ImageFile')
-            Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
+            if request.POST['action'] == 'Apagar':
+                post.delete()
+                return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+            elif request.POST['action'] == 'Responder':
+                texto = request.POST.get('message')
+                imagem = request.POST.get('ImageFile')
+                Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
 
-            # ADICIONAR MENSAGEM DE SUCESSO
+                # ADICIONAR MENSAGEM DE SUCESSO
 
-        lista_comentarios = Comentario.objects.filter(post=post_Id)
-        context = {'post': post, 'lista_comentarios': lista_comentarios, 'categoria': categoria}
+        context = {'post': post, 'categoria': categoria}
         return render(request, 'community/post.html', context)
     except KeyError:
 
@@ -41,8 +44,8 @@ def post(request, categoria_dgn, post_Id):
 
 
 def criarDiscussao(request, categoria_dgn):
+    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
     try:
-        categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
         if request.method == 'POST':
             titulo = request.POST.get('title')
             texto = request.POST.get('message')
@@ -53,7 +56,7 @@ def criarDiscussao(request, categoria_dgn):
         else:
             return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
     except KeyError:
-        return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
+        return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
 
 
 def criarVotacao(request, categoria_dgn):
@@ -66,7 +69,7 @@ def criarVotacao(request, categoria_dgn):
             texto = request.POST['message']
             imagem = request.POST['ImageFile']
             post = Post(titulo=titulo, texto=texto, imagem=imagem)
+            return HttpResponseRedirect(reverse('Community:post', args=[categoria.designacao, post.id]))
         except KeyError:
-            return render(request, '')
-        else:
-            return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
+            return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+
