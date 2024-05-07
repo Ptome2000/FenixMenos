@@ -21,6 +21,7 @@ class EstadoSub(enum.Enum):
     Recusada = 2
 
 
+
 class Professor(models.Model):
     numeroProfessor = models.IntegerField(primary_key=True)
     foto = models.ImageField(upload_to='professores')
