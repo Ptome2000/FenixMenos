@@ -1,41 +1,42 @@
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
-from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular
+from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular, Matricula
 
 def perfil(request):
     user = request.user
     context = {}
-    if hasattr(user, 'aluno'):
-        aluno = get_object_or_404(Aluno, user=user)
-        matriculas = aluno.matricula_set.all()
-        notas = Nota.objects.filter(aluno=aluno)
-        recomendacoes = aluno.recomendacao_set.all()
-        curso = aluno.curso
-        genero = aluno.user.professor.genero.name
-        context = {
-            'usuario': aluno,
-            'genero': genero,
-            'curso': curso,
-            'matriculas': matriculas,
-            'notas': notas,
-            'recomendacoes': recomendacoes
-        }
-    elif hasattr(user, 'professor'):
-        professor = get_object_or_404(Professor, user=user)
-        ucs = UC.objects.filter(coordenador=professor)
-        recomendacoes = Recomendacao.objects.filter(professor=professor)
-        genero = professor.genero.name
-        gabinete = professor.gabinete
-        context = {
-            'usuario': professor,
-            'genero': genero,
-            'gabinete': gabinete,
-            'ucs': ucs,
-            'recomendacoes': recomendacoes
-        }
+    if user.is_authenticated:
+        if hasattr(user, 'aluno'):
+            aluno = get_object_or_404(Aluno, user=user)
+            matriculas = Matricula.objects.filter(aluno=aluno)
+            notas = Nota.objects.filter(aluno=aluno)
+            recomendacoes = Recomendacao.objects.filter(aluno=aluno)
+            curso = aluno.curso
+            genero = aluno.user.professor.genero.name
+            context = {
+                'usuario': aluno,
+                'genero': genero,
+                'curso': curso,
+                'matriculas': matriculas,
+                'notas': notas,
+                'recomendacoes': recomendacoes
+            }
+        elif hasattr(user, 'professor'):
+            professor = get_object_or_404(Professor, user=user)
+            ucs = UC.objects.filter(coordenador=professor)
+            genero = professor.genero.name
+            gabinete = professor.gabinete
+            context = {
+                'usuario': professor,
+                'genero': genero,
+                'gabinete': gabinete,
+                'ucs': ucs,
+            }
+    else:
+        return HttpResponseRedirect(reverse('login'))
     return render(request, 'perfil.html', context)
 
 def detalhes_curso(request, codigo):
@@ -63,20 +64,20 @@ def detalhes_uc(request, acronimo):
     }
     return render(request, 'detalhes_uc.html', context)
 
-def detalhes_matricula(request, numero_aluno):
-    aluno = get_object_or_404(Aluno, numeroAluno=numero_aluno)
-    matriculas = aluno.matricula_set.all()
-    context = {
-        'aluno': aluno,
-        'matriculas': matriculas
-    }
-    return render(request, 'detalhes_matricula.html', context)
-
 def fazer_upload(request):
+    user = request.user
     if request.method == 'POST' and request.FILES.get('myfile') is not None:
         myfile = request.FILES['myfile']
-        a = Aluno.objects.get(user=request.user)
-        a.avatar = myfile
-        a.save()
-        messages.success(request, "A sua foto foi carregada com sucesso")
-    return HttpResponseRedirect(reverse('Vitae:perfil'))
+        if hasattr(user, 'aluno'):
+            aluno = Aluno.objects.get(user=request.user)
+            aluno.avatar = myfile
+            aluno.save()
+        elif hasattr(user, 'professor'):
+            professor = Professor.objects.get(user=request.user)
+            professor.avatar = myfile
+            professor.save()
+        messages.success(request, "A sua foto foi carregada com sucesso!")
+        return redirect(reverse('Vitae:perfil'))
+    else:
+        messages.error(request, "Erro ao fazer o upload.")
+        return redirect(reverse('Vitae:perfil'))

@@ -13,13 +13,21 @@
         </nav>
 
         <div class="row">
-            <h2 class="display-6 pb-2"> Criar novo Post </h2>
+            <div class="col d-flex align-items-start">
+                <h2 class="display-6 pb-2"> Criar novo Post </h2>
+            </div>
+            <div class="col d-flex justify-content-end m-2">
+                <a class="btn btn-outline-danger btn-lg" type="button" href="{% url 'Community:categoria' categoria.designacao %}" role="button"> Cancelar </a>
+            </div>
         </div>
+
+
 
         <hr class="my-2">
 
         <div class="container p-3">
             <form method="post">
+                {% csrf_token %}
                 <div class="form-group mb-3">
                     <label for="title"> Tópico: </label>
                     <input type="text" name="title" class="form-control" id="title" required>
@@ -30,13 +38,9 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="ImageFile" class="form-label"> Inserir imagem caso necessário </label>
-                    <input class="form-control" type="file" id="ImageFile">
+                    <input class="form-control" name="ImageFile" type="file" id="ImageFile">
                 </div>
-                <div class="btn-group justify-content-between">
                     <button class="w-100 btn btn-outline-success btn-lg" type="submit"> Submeter </button>
-                    <a class="w-100 btn btn-outline-danger btn-lg" type="button" href="{% url 'Community:categoria' categoria.designacao %}" role="button"> Cancelar </a>
-                </div>
-
             </form>
 
         </div>

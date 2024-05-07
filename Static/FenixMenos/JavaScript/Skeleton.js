@@ -22,12 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     $(".group-header ").click(function() {
         let content = $(this).next();
         content.fadeToggle(500);
-        let arrow = $(this).children("i");
-        if (arrow.attr('class') === "bi-caret-down-fill") {
-            arrow.classList.remove("bi-caret-down-fill");
-            arrow.classList.add("bi-caret-right-fill");
-        } else {
-            arrow.removeClass("bi-caret-right-fill").addClass("bi-caret-down-fill")
+    })
+
+    $('.group-content').each(function() {
+        console.log(!this.hasChildNodes());
+        if (!this.hasChildNodes()) {
+            let header = $(this).attr('id').replace('content', 'header');
+            header.remove();
+            $(this).remove();
         }
     })
 
@@ -35,13 +37,41 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#PostOptions').toggle();
     });
 
-    $('#openModal').click(function() {
+    $('#AnswerPost').click(function() {
         $('#AnswerModal').css('display', 'block');
     })
 
-    $('#closeModal').click(function() {
+    $('#closeAnswerModal').click(function() {
         $('#AnswerModal').css('display', 'none');
     })
+
+    $('#DeletePost').click(function() {
+        $('#DeleteModal').css('display', 'block');
+    })
+
+    $('#closeDeleteModal').click(function() {
+        $('#DeleteModal').css('display', 'none');
+    })
+
+    $('#DeleteComments').click(function() {
+        $('#DeleteCommentsModal').css('display', 'block');
+    })
+
+    $('#closeDeleteCommentsModal').click(function() {
+        $('#DeleteCommentsModal').css('display', 'none');
+    })
+
+    $('.btn-check').click(function() {
+        // Check if any element with class "btn-check" is checked
+        let isChecked = $('.btn-check').is(':checked');
+
+        // Check the result
+        if (isChecked) {
+            $('#DeleteComments').css('display', 'block');
+        } else {
+            $('#DeleteComments').css('display', 'none');
+        }
+    });
 
     document.querySelector('.form-inline').addEventListener('submit', function(e) {
         e.preventDefault(); // Impede o envio do formulário

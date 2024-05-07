@@ -11,6 +11,7 @@ urlpatterns = [
     path("Categoria/<str:categoria_dgn>/<int:post_Id>", views.post, name="post"),
     path("Categoria/<str:categoria_dgn>/Nova-Discussão", views.criarDiscussao, name="criarDiscussao"),
     path("Categoria/<str:categoria_dgn>/Nova-Votacao", views.criarVotacao, name="criarVotacao"),
+    path("Categoria/<str:categoria_dgn>/<int:post_Id>/Apagar-Comentarios", views.apagarComentarios, name="apagarComentarios"),
 ]
 
 if settings.DEBUG:

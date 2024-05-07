@@ -1,0 +1,14 @@
+{% extends 'skeleton.html' %}
+{% block title %}{{ curso.designacao }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ curso.designacao }}</h1>
+    <h2>Unidades Curriculares</h2>
+    <ul>
+        {% for uc in ucs %}
+            <li><a href="{% url 'detalhes_uc' acronimo=uc.acronimo %}">{{ uc.designacao }} ({{ uc.acronimo }})</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

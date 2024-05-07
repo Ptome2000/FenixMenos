@@ -1,0 +1,23 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block content %}
+
+    <div id="page-content-wrapper">
+
+        <div class="row">
+            <div class="col d-flex align-items-start">
+                <h1 class="display-6 pb-2"> Tem a certeza de que deseja apagar os comentários selecionados? </h1>
+            </div>
+            <div class="col d-flex justify-content-end m-2">
+                <form>
+
+
+                    <button class="btn btn-outline-success mx-3" type="submit" name="action" value="Apagar"> Sim </button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

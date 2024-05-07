@@ -1,49 +1,55 @@
-{% extends 'skeleton.html' %}
+{% extends "skeleton.html" %}
 {% load static %}
+
 {% block title %}
     Página de Perfil
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-4">
-        {% if user.is_authenticated %}
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img">
-                        {% if user.professor and user.professor.foto %}
-                            <img src="{{ user.professor.foto.url }}" alt="Foto do professor" class="img-fluid img-thumbnail">
-                        {% elif user.aluno and user.aluno.foto %}
-                            <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
-                        {% else %}
-                            <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
-                        {% endif %}
-                        <form method="post" enctype="multipart/form-data" action="{% url 'fazer_upload' %}">
-                            {% csrf_token %}
-                            <div class="form-group mt-2">
-                                <label for="fileInput">Alterar foto:</label>
-                                <input type="file" class="form-control-file" id="fileInput" name="file">
-                                <button type="submit" class="btn btn-primary mt-2">Submeter fotografia</button>
-                            </div>
-                        </form>
-                    </div>
+<div class="container mt-4">
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    {% if user.aluno.avatar %}
+                        <img src="{{ user.aluno.avatar.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                    {% else %}
+                        <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
+                    {% endif %}
                 </div>
-                <div class="col-md-8">
-                    <div class="profile-details">
-                        <h2>Informações do {{ user.get_full_name }}</h2>
-                        <div class="mb-3"><strong>Username:</strong> {{ user.username }}</div>
-                        <div class="mb-3"><strong>Email:</strong> {{ user.email }}</div>
-                        {% if user.professor %}
-                            <div class="mb-3"><strong>Gênero:</strong> {{ user.professor.genero.get_label_display }}</div>
-                        {% elif user.aluno %}
-                            <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
-                            <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
-                        {% endif %}
-                        <button type="button" class="btn btn-info">Editar Perfil</button>
-                    </div>
+                <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
+                    {% csrf_token %}
+                    <input type="file" name="myfile" class="form-control mt-3">
+                    <button type="submit" class="btn btn-info mt-2">Upload Foto</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <div class="profile-details">
+                    <h2>Informações do {{ user.get_full_name }}</h2>
+                    <div class="mb-3"><strong>Username:</strong> {{ user.username }}</div>
+                    <div class="mb-3"><strong>Email:</strong> {{ user.email }}</div>
+                    {% if user.professor %}
+                        <div class="mb-3"><strong>Gênero:</strong> {{ user.professor.genero.get_label_display }}</div>
+                        <div class="mb-3"><strong>Número:</strong> {{ user.professor.numeroProfessor }}</div>
+                        <div class="mb-3"><strong>Gabinete:</strong> {{ user.professor.gabinete }}</div>
+                        <div class="mb-4">
+                            <strong>Unidades Curriculares:</strong>
+                            <ul>
+                                {% for uc in user.professor.uc_set.all %}
+                                    <li>{{ uc.designacao }} ({{ uc.acronimo }})</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% elif user.aluno %}
+                        <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
+                        <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
+                    {% endif %}
+                    <button type="button" class="btn btn-primary">Editar Perfil</button>
                 </div>
             </div>
-        {% else %}
-            <p class="alert alert-warning">Faça Login!!</p>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}" class="alert alert-warning">Faça Login!</a>
+    {% endif %}
+</div>
 {% endblock %}
