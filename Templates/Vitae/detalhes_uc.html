@@ -1,0 +1,17 @@
+{% extends 'skeleton.html' %}
+{% block title %}{{ uc.designacao }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ uc.designacao }} ({{ uc.acronimo }})</h1>
+    <p><strong>Credits:</strong> {{ uc.creditos }}</p>
+    <p><strong>Description:</strong> {{ uc.descricao }}</p>
+    <p><strong>Coordinator:</strong> {{ uc.coordenador.user.get_full_name }}</p>
+    <h3>Skills Covered:</h3>
+    <ul>
+        {% for skill in uc.skills.all %}
+            <li>{{ skill.designacao }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
