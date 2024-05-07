@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime as dt
 from django.shortcuts import render, get_object_or_404
 from Community.models import *
 from django.http import HttpResponseRedirect
@@ -6,9 +6,9 @@ from django.urls import reverse
 
 
 def community(request):
-    grupos_categorias = GrupoCategoria.items()
+    grupos = GrupoCategoria.items()
     lista_categorias = Categoria.objects.all()
-    context = {'lista_categorias': lista_categorias, 'grupos_categorias': grupos_categorias}
+    context = {'lista_categorias': lista_categorias, 'grupos_categorias': grupos}
     return render(request, "community/community.html", context)
 
 
@@ -26,7 +26,7 @@ def post(request, categoria_dgn, post_Id):
         if request.method == 'POST':
             texto = request.POST.get('message')
             imagem = request.POST.get('ImageFile')
-            Comentario.objects.create(post=post, user=request.user, texto=texto, data=datetime.now(), imagem=imagem)
+            Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
 
             # ADICIONAR MENSAGEM DE SUCESSO
 
@@ -41,18 +41,19 @@ def post(request, categoria_dgn, post_Id):
 
 
 def criarDiscussao(request, categoria_dgn):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
-    if request.method == 'GET':
-        return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
-    else:
-        try:
-            titulo = request.POST['title']
-            texto = request.POST['message']
-            imagem = request.POST['ImageFile']
+    try:
+        categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+        if request.method == 'POST':
+            titulo = request.POST.get('title')
+            texto = request.POST.get('message')
+            imagem = request.POST.get('ImageFile')
             post = Post.objects.create(titulo=titulo, categoria=categoria, user=request.user)
-            Comentario.objects.create(post=post, user=request.user, texto=texto, data=datetime.now(), imagem=imagem)
-        except KeyError:
-            return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
+            Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
+            return HttpResponseRedirect(reverse('Community:post', args=[categoria.designacao, post.id]))
+        else:
+            return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
+    except KeyError:
+        return HttpResponseRedirect(reverse('Community:categoria', args=(categoria)))
 
 
 def criarVotacao(request, categoria_dgn):

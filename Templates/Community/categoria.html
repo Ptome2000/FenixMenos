@@ -39,6 +39,9 @@
                     <th scope="col" colspan="2"> Autor </th>
                     <th scope="col" class="text-center"> Comentários </th>
                     <th scope="col" class="text-center"> Última atualização </th>
+                    {% if request.user.is_superuser %}
+                        <th class="text-end"> Apagar </th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -54,6 +57,12 @@
                             <td colspan="2"> {{ post.get_user }} </td>
                             <td class="text-center"> {{ post.get_total_comments }} </td>
                             <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
+                            {% if request.user.is_superuser %}
+                                <td><button class="deleteModal w-5 btn btn-outline-danger float-end"> X </button></td>
+                                
+                                {% include 'Community/apagarPost.html' with obj=post %}
+
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 {% endif %}

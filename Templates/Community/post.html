@@ -22,7 +22,10 @@
                 <button id="openModal" class="btn btn-outline-dark mx-2">
                     Responder
                 </button>
-                <button class="btn btn-outline-danger mx-2"> Apagar </button>
+
+                {% if request.user.is_superuser or request.user == post.user %}
+                    <button id="deleteModal" class="btn btn-outline-danger mx-2"> Apagar </button>
+                {% endif %}
             </div>
         </div>
 
@@ -32,82 +35,69 @@
             <table class="table" style="width:1280px">
                 <tbody>
                 {% for comentario in lista_comentarios %}
-                    {% if comentario.user.is_superuser %}
-                        <tr class="border-primary table-active">
-                            {% else %}
-                        <tr>
-                    {% endif %}
-                <td>
-                    <div class="d-flex align-items-center">
-                        {% if comentario.user.is_superuser %}
-                            <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
-                            <figure>
-                                <blockquote class="blockquote">
-                                    <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
-                                </blockquote>
-                                <figcaption class="blockquote-footer">
-                                    Admin
-                                </figcaption>
-                            </figure>
-                        {% elif comentario.user.is_professor %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {% if comentario.user.is_superuser %}
+                                    <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
+                                    <figure>
+                                        <blockquote class="blockquote">
+                                            <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
+                                        </blockquote>
+                                        <figcaption class="blockquote-footer">
+                                            Admin
+                                        </figcaption>
+                                    </figure>
+                                {% elif comentario.user.is_professor %}
 
-                        {% else %}
-                            <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
-                            <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
-                        {% endif %}
-                    </div>
-                </td>
-                <td colspan="2">
-                    {% if comentario.imagem %}
-                        <img src="{{ comentario.imagem.url }}" alt="Imagem de Post" class="rounded mx-auto d-block p-4" style="max-width: 788px; max-height: 443.25px">
-                    {% endif %}
-                    {{ comentario.texto }}
-                </td>
-                <td>
-                    <p> #{{ forloop.counter }} </p>
-                    <span> {{ comentario.data|date:"M j" }} </span>
-                </td>
-                </tr>
+                                {% else %}
+                                    <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
+                                    <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td colspan="2">
+                            {% if comentario.imagem %}
+                                <img src="{{ comentario.imagem.url }}" alt="Imagem de Post" class="rounded mx-auto d-block p-4" style="max-width: 788px; max-height: 443.25px">
+                            {% endif %}
+                            {{ comentario.texto }}
+                        </td>
+                        <td>
+                            <p> #{{ forloop.counter }} </p>
+                            <span> {{ comentario.data|date:"M j" }} </span>
+                        </td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
 
-        <div id="AnswerModal" class="modal-dialog">
+    </div>
 
-            <div class="modal-content">
-                <form method="post">
-                    {% csrf_token %}
+    {% include 'Community/responderPost.html' %}
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"> Deixe uma resposta </h5>
-                        <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+    <div id="ConfirmationModal" class="modal-dialog">
 
-                    <hr class="my-2">
+        <div class="modal-content">
+            <form method="post">
+                {% csrf_token %}
 
-                    <div class="modal-body">
-                        <div class="form-group mb-3">
-                            <label for="message"> Mensagem: </label>
-                            <textarea name="message" class="form-control" id="message" rows="10" required></textarea>
-                        </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"> Tem a certeza de que deseja apagar o tópico: </h5>
+                    <button type="button" id="closeConfirmationModal" class="btn-close"></button>
+                </div>
 
-                        <div class="form-group mb-3">
-                            <label for="ImageFile" class="form-label"> Inserir imagem caso necessário </label>
-                            <input class="form-control" type="file" id="ImageFile">
-                        </div>
+                <hr class="my-2">
 
-                    </div>
+                <div class="modal-body">
+                    {{ post }} criado por {{ post.user }}
+                </div>
 
-                    <div class="modal-footer">
-                        <button class="w-100 btn btn-outline-success btn-lg" type="submit"> Submeter </button>
-                    </div>
-
-                </form>
-
-            </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-success mx-3" type="submit"> Sim </button>
+                </div>
+            </form>
         </div>
-
     </div>
 
 

@@ -12,15 +12,13 @@
 
                 {% if lista_categorias %}
                     {% for grupo in grupos_categorias %}
-                        
-                        <!-- ARRANJAR FORMAR DE CASO UM GRUPO NÃO EXISTA EM NENHUMA CATEGORIA APARECER MENSAGEM COMO TAL -->
 
-                        <div id="group-{{ grupo.1|safe }}-header" class="group-header fs-2 mb-3">
+                        <div id="group-{{ grupo.1}}-header" class="group-header fs-2 mb-3">
                             <i id="arrow" class="bi bi-caret-down-fill"></i>
                             {{ grupo.0 }} <!-- Desta forma obtemos o nome no Enum -->
                         </div>
 
-                        <div id="group-{{ grupo.1|safe }}-content" class="group-content row row-cols-4 mb-3">
+                        <div id="group-{{ grupo.1 }}-content" class="group-content row row-cols-4 mb-3">
                             {% for categoria in lista_categorias %}
                                 {% if categoria.grupo == grupo.1 %}
 
@@ -43,8 +41,8 @@
                                                 </div>
 
                                                 <div class="card-footer">
-                                                    {% if categoria.last_posted %}
-                                                        <small class="text-muted"> Última vez atualizado: {{ categoria.last_posted|date:"d M Y" }} </small>
+                                                    {% if categoria.get_last_posted %}
+                                                        <small class="text-muted"> Última vez atualizado: {{ categoria.get_last_posted|date:"d M Y" }} </small>
                                                     {% else %}
                                                         <small class="text-muted"> Última vez atualizado: Nunca </small>
                                                     {% endif %}

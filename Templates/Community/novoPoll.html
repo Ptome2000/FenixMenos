@@ -20,6 +20,7 @@
 
         <div class="container p-3">
             <form method="post">
+                {% csrf_token %}
                 <div class="form-group mb-3">
                     <label for="title"> Tópico: </label>
                     <input type="text" name="title" class="form-control" id="title" required>

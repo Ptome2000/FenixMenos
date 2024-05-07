@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django_enumfield import enum
@@ -18,10 +20,16 @@ class Categoria(models.Model):
     def __str__(self):
         return self.designacao
 
-    def last_posted(self):
-        posts = self.post_set.get()
-        data = posts.get_last_commented_date()
-        return data
+    def get_last_posted(self):
+        datas = self.post_set.filter()
+        if datas:
+            last = datetime.datetime(1000, 1, 1, tzinfo=datetime.timezone.utc)
+            for data in datas:
+                if data.get_last_commented_date() > last:
+                    last = data.get_last_commented_date()
+            return last
+        else:
+            return None
 
     def get_total_posts(self):
         return self.post_set.count()
@@ -39,10 +47,15 @@ class Post(models.Model):
         return self.user.username
 
     def get_last_commented_user(self):
-        return self.comentario_set.order_by('data').last().user
+        if self.get_last_comment() is not None:
+            return self.get_last_comment().user
 
     def get_last_commented_date(self):
-        return self.comentario_set.order_by('data').last().data
+        if self.get_last_comment() is not None:
+            return self.get_last_comment().data
+
+    def get_last_comment(self):
+        return self.comentario_set.order_by('data').last()
 
     def get_total_comments(self):
         return self.comentario_set.count()

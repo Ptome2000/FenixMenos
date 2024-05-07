@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let content = $(this).next();
         content.fadeToggle(500);
         let arrow = $(this).children("i");
-        if (arrow.attr('class') === "bi-caret-down-fill") {
+        if (arrow.attr('class') ===
+            "bi-caret-down-fill") {
             arrow.classList.remove("bi-caret-down-fill");
             arrow.classList.add("bi-caret-right-fill");
         } else {
@@ -39,8 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#AnswerModal').css('display', 'block');
     })
 
+    $('#deleteModal').click(function() {
+        $('#ConfirmationModal').css('display', 'block');
+    })
+
     $('#closeModal').click(function() {
         $('#AnswerModal').css('display', 'none');
+    })
+
+    $('#closeConfirmationModal').click(function() {
+        $('#ConfirmationModal').css('display', 'none');
     })
 
     document.querySelector('.form-inline').addEventListener('submit', function(e) {
