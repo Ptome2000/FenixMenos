@@ -73,7 +73,7 @@ class PlanoCurricular(models.Model):
 
 class Aluno(models.Model):
     numeroAluno = models.IntegerField(primary_key=True)
-    foto = models.ImageField(upload_to='alunos')  # Definir após pasta static definida
+    foto = models.ImageField(upload_to='alunos', blank=True, null=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
