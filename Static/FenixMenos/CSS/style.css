@@ -9,7 +9,18 @@
     z-index: 1100;
 }
 
+.nav-item {
+    padding: 8px 12px; /* Ajuste conforme necessário para centralizar verticalmente */
+}
 
+.nav-link {
+    padding: 8px 12px;
+}
+
+
+.btn-primary {
+    padding: 8px 12px;
+}
 
 /* dropdown */
 .dropdown-menu {
