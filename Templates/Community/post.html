@@ -14,27 +14,33 @@
             </nav>
         </div>
 
-        <form>
-
-            <div class="row">
-                <div class="col d-flex align-items-start">
-                    <h1 class="display-6 pb-2"> {{ post }} </h1>
-                </div>
-                <div class="col d-flex justify-content-end m-2">
-                    <button id="AnswerPost" class="btn btn-outline-dark mx-2">
-                        Responder
-                    </button>
-
-                    {% if request.user.is_superuser %}
-                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
-                        <button type="submit" id="DeleteComments" name="action" value="ApagarComentarios" class="btn btn-outline-warning mx-2" style="display: none;"> Apagar Comentários </button>
-                    {% elif request.user == post.user %}
-                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
-                    {% endif %}
-                </div>
+        <div class="row">
+            <div class="col d-flex align-items-start">
+                <h1 class="display-6 pb-2"> {{ post }} </h1>
             </div>
 
-            <hr class="my-2">
+            <div class="col d-flex justify-content-end m-2">
+
+                {% if request.user.is_superuser and request.user == post.user %}
+                    <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                {% endif %}
+
+                <button id="AnswerPost" class="btn btn-outline-dark mx-2">
+                    Responder
+                </button>
+
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="row">
+                {% if request.user.is_superuser %}
+                    <div class="col align-self-end">
+                        <button id="DeleteComments" type="submit" name="action" value="ApagarLista" class="btn btn-outline-warning mx-2 float-end" style="display: none;"> Apagar Comentários </button>
+                    </div>
+                {% endif %}
+                <hr class="my-2">
+            </div>
 
             <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
                 <table class="table" style="width:1280px">

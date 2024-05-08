@@ -23,14 +23,16 @@ def post(request, categoria_dgn, post_Id):
     categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
     post = get_object_or_404(Post, id=post_Id)
     try:
-        if request.method == 'POST':
-            if request.POST['action'] == 'Apagar':
+        if request.method == 'POST' and 'action' in request.POST:
+            action = request.POST['action']
+            if action == 'Apagar':
                 post.delete()
                 return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
-            elif request.POST['action'] == 'ApagarComentarios':
+            elif action == 'ApagarLista':
                 selected = request.POST.getlist('selectedPost')
-                return HttpResponseRedirect(reverse('Community:', args=[categoria.designacao, post.id, selected]))
-            elif request.POST['action'] == 'Responder':
+                request.session['commentsToDelete'] = selected
+                return HttpResponseRedirect(reverse('Community:apagarComentarios', args=[post.id]))
+            elif action == 'Responder':
                 texto = request.POST.get('message')
                 imagem = request.POST.get('ImageFile')
                 Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
@@ -76,8 +78,19 @@ def criarVotacao(request, categoria_dgn):
         except KeyError:
             return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
 
-def apagarComentarios(self, categoria_dgn, post_Id, comentarios):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+
+def apagarComentarios(request, post_Id):
     post = get_object_or_404(Post, id=post_Id)
-
-
+    try:
+        selected = request.session.get('commentsToDelete')
+        if request.method == 'POST':
+            for c in selected:
+                comentario = Comentario.objects.get(id=c)
+                post.comentario_set.get(id=comentario.id).delete()
+            return HttpResponseRedirect(reverse('Community:post', args=[post.categoria.designacao, post.id]))
+        else:
+            comentarios = post.comentario_set.filter(pk__in=selected)
+            context = {'post': post, 'comentarios': comentarios}
+            return render(request, 'community/apagarComentarios.html', context)
+    except KeyError:
+        return HttpResponseRedirect(reverse('Community:categoria', args=[post.categoria.designacao]))
