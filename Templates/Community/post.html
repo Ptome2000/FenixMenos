@@ -50,21 +50,34 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     {% if comentario.user.is_superuser %}
-                                        <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
-                                        <figure>
-                                            <blockquote class="blockquote">
-                                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
-                                            </blockquote>
-                                            <figcaption class="blockquote-footer">
-                                                Admin
-                                            </figcaption>
-                                        </figure>
-                                    {% elif comentario.user.is_professor %}
-
+                                        <img src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar" class="PostAvatar">
+                                    {% elif comentario.user.professor.avatar or comentario.user.aluno.avatar %}
+                                        <img src="{{ comentario.user.foto.url }}" alt="Avatar" class="PostAvatar" >
                                     {% else %}
-                                        <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
-                                        <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                        <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Avatar" class="PostAvatar">
                                     {% endif %}
+                                    <figure class="ms-2">
+                                        <blockquote class="blockquote">
+                                            {% if comentario.user.is_superuser %}
+                                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
+                                            {% elif cometario.user.is_professor %}
+                                                <p class="lead text-danger fw-bold fs-5"> {{ comentario.user }} </p>
+                                            {% else %}
+                                                
+                                                <!--  ADICIONAR CAMINHO PARA PERFIL DO UTILIZADOR  -->
+                                                
+                                                <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                            {% endif %}
+                                        </blockquote>
+
+                                        {% if comentario.user.is_superuser %}
+                                            <figcaption class="blockquote-footer"> Admin </figcaption>
+                                        {% elif cometario.user.is_professor %}
+                                            <figcaption class="blockquote-footer"> Professor </figcaption>
+                                        {% endif %}
+                                    
+                                    </figure>
+
                                 </div>
                             </td>
                             <td colspan="2" class="text-center">
