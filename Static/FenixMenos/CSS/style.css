@@ -230,7 +230,7 @@ body {
     height: 16px;
 }
 
-#PostAvatar {
+img.PostAvatar {
     width:70px;
     height: 70px;
 }
