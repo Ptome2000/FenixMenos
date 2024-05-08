@@ -15,7 +15,7 @@ def perfil(request):
             notas = Nota.objects.filter(aluno=aluno)
             recomendacoes = Recomendacao.objects.filter(aluno=aluno)
             curso = aluno.curso
-            genero = aluno.user.professor.genero.name
+            genero = aluno.genero
             context = {
                 'usuario': aluno,
                 'genero': genero,
@@ -27,7 +27,7 @@ def perfil(request):
         elif hasattr(user, 'professor'):
             professor = get_object_or_404(Professor, user=user)
             ucs = UC.objects.filter(coordenador=professor)
-            genero = professor.genero.name
+            genero = professor.genero
             gabinete = professor.gabinete
             context = {
                 'usuario': professor,

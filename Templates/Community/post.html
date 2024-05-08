@@ -14,27 +14,33 @@
             </nav>
         </div>
 
-        <form>
-
-            <div class="row">
-                <div class="col d-flex align-items-start">
-                    <h1 class="display-6 pb-2"> {{ post }} </h1>
-                </div>
-                <div class="col d-flex justify-content-end m-2">
-                    <button id="AnswerPost" class="btn btn-outline-dark mx-2">
-                        Responder
-                    </button>
-
-                    {% if request.user.is_superuser %}
-                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
-                        <button type="submit" id="DeleteComments" name="action" value="ApagarComentarios" class="btn btn-outline-warning mx-2" style="display: none;"> Apagar Comentários </button>
-                    {% elif request.user == post.user %}
-                        <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
-                    {% endif %}
-                </div>
+        <div class="row">
+            <div class="col d-flex align-items-start">
+                <h1 class="display-6 pb-2"> {{ post }} </h1>
             </div>
 
-            <hr class="my-2">
+            <div class="col d-flex justify-content-end m-2">
+
+                {% if request.user.is_superuser and request.user == post.user %}
+                    <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                {% endif %}
+
+                <button id="AnswerPost" class="btn btn-outline-dark mx-2">
+                    Responder
+                </button>
+
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="row">
+                {% if request.user.is_superuser %}
+                    <div class="col align-self-end">
+                        <button id="DeleteComments" type="submit" name="action" value="ApagarLista" class="btn btn-outline-warning mx-2 float-end" style="display: none;"> Apagar Comentários </button>
+                    </div>
+                {% endif %}
+                <hr class="my-2">
+            </div>
 
             <div class="table-responsive d-flex justify-content-center mb-3" style="background-image: url({% static 'Community/Imagens/Post_BG3.jpg' %})">
                 <table class="table" style="width:1280px">
@@ -44,21 +50,34 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     {% if comentario.user.is_superuser %}
-                                        <img id="PostAvatar" src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar">
-                                        <figure>
-                                            <blockquote class="blockquote">
-                                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
-                                            </blockquote>
-                                            <figcaption class="blockquote-footer">
-                                                Admin
-                                            </figcaption>
-                                        </figure>
-                                    {% elif comentario.user.is_professor %}
-
+                                        <img src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar" class="PostAvatar">
+                                    {% elif comentario.user.professor.avatar or comentario.user.aluno.avatar %}
+                                        <img src="{{ comentario.user.foto.url }}" alt="Avatar" class="PostAvatar" >
                                     {% else %}
-                                        <img id="PostAvatar" src="{{ comentario.user.foto.url }}" alt="Avatar">
-                                        <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                        <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Avatar" class="PostAvatar">
                                     {% endif %}
+                                    <figure class="ms-2">
+                                        <blockquote class="blockquote">
+                                            {% if comentario.user.is_superuser %}
+                                                <p class="lead text-primary fw-bold fs-5"> {{ comentario.user }} </p>
+                                            {% elif cometario.user.is_professor %}
+                                                <p class="lead text-danger fw-bold fs-5"> {{ comentario.user }} </p>
+                                            {% else %}
+                                                
+                                                <!--  ADICIONAR CAMINHO PARA PERFIL DO UTILIZADOR  -->
+                                                
+                                                <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
+                                            {% endif %}
+                                        </blockquote>
+
+                                        {% if comentario.user.is_superuser %}
+                                            <figcaption class="blockquote-footer"> Admin </figcaption>
+                                        {% elif cometario.user.is_professor %}
+                                            <figcaption class="blockquote-footer"> Professor </figcaption>
+                                        {% endif %}
+                                    
+                                    </figure>
+
                                 </div>
                             </td>
                             <td colspan="2" class="text-center">
