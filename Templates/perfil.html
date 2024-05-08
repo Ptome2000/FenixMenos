@@ -48,8 +48,59 @@
                 </div>
             </div>
         </div>
+       
+        <div class="row mt-4">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown ml-3">
+                                <a class="nav-link dropdown-toggle" id="coursesDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Cursos
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="coursesDropdown">
+                                    {% for curso in cursos %}
+                                    <li>
+                                        <a class="dropdown-item dropdown-toggle" href="#" id="curso{{ curso.codigo }}" data-bs-toggle="dropdown" aria-expanded="false" onclick="loadUCs('{{ curso.codigo }}', this); return false;">
+                                            {{ curso.designacao }}
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="curso{{ curso.codigo }}">
+                                            <!-- UCs will be loaded here by JavaScript -->
+                                        </ul>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
     {% else %}
         <a href="{% url 'login' %}" class="alert alert-warning">Faça Login!</a>
     {% endif %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function loadUCs(courseCode, courseElement) {
+        fetch(`/api/curso/${courseCode}/ucs/`)
+            .then(response => response.json())
+            .then(ucs => {
+                const submenu = courseElement.nextElementSibling; 
+                submenu.innerHTML = ''; 
+                ucs.forEach(uc => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `/detalhes_uc/${uc.acronimo}`; 
+                    a.classList.add('dropdown-item');
+                    a.textContent = uc.designacao;
+                    li.appendChild(a);
+                    submenu.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading UCs:', error));
+    }
+</script>
 {% endblock %}
