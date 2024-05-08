@@ -3,7 +3,7 @@
 {% block content %}
 
     <div id="page-content-wrapper">
-
+        
         <div class="row">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
@@ -63,9 +63,9 @@
                                             {% elif cometario.user.is_professor %}
                                                 <p class="lead text-danger fw-bold fs-5"> {{ comentario.user }} </p>
                                             {% else %}
-                                                
+
                                                 <!--  ADICIONAR CAMINHO PARA PERFIL DO UTILIZADOR  -->
-                                                
+
                                                 <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
                                             {% endif %}
                                         </blockquote>
@@ -75,7 +75,7 @@
                                         {% elif cometario.user.is_professor %}
                                             <figcaption class="blockquote-footer"> Professor </figcaption>
                                         {% endif %}
-                                    
+
                                     </figure>
 
                                 </div>
