@@ -11,18 +11,21 @@ def perfil(request):
     if user.is_authenticated:
         if hasattr(user, 'aluno'):
             aluno = get_object_or_404(Aluno, user=user)
-            matriculas = Matricula.objects.filter(aluno=aluno)
-            notas = Nota.objects.filter(aluno=aluno)
+            aluno_skills = Skills.objects.filter(aluno=aluno)
+            matriculas = Matricula.objects.filter(aluno=aluno).select_related('curso')
+            notas = Nota.objects.filter(aluno=aluno).select_related('uc')
+            uc_notas = {nota.uc.acronimo: nota.nota for nota in notas}
             recomendacoes = Recomendacao.objects.filter(aluno=aluno)
             curso = aluno.curso
             genero = aluno.genero
             context = {
                 'usuario': aluno,
+                'skills': aluno_skills,
+                'matriculas': matriculas,
+                'notas': uc_notas,  # pass this dictionary to the template
+                'recomendacoes': recomendacoes,
                 'genero': genero,
                 'curso': curso,
-                'matriculas': matriculas,
-                'notas': notas,
-                'recomendacoes': recomendacoes
             }
         elif hasattr(user, 'professor'):
             professor = get_object_or_404(Professor, user=user)
@@ -38,7 +41,6 @@ def perfil(request):
     else:
         return HttpResponseRedirect(reverse('login'))
     return render(request, 'perfil.html', context)
-
 def detalhes_curso(request, codigo):
     curso = get_object_or_404(Curso, codigo=codigo)
     ucs = curso.uc_set.all()

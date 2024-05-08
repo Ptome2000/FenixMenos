@@ -11,8 +11,10 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    {% if user.aluno.avatar %}
-                        <img src="{{ user.aluno.avatar.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                    {% if user.aluno and user.aluno.foto %}
+                        <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                    {% elif user.professor and user.professor.foto %}
+                        <img src="{{ user.professor.foto.url }}" alt="Foto do professor" class="img-fluid img-thumbnail">
                     {% else %}
                         <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
                     {% endif %}
@@ -40,40 +42,28 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        <!-- Form for professors to assign skills to students -->
                     {% elif user.aluno %}
                         <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
                         <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
+                        <div class="mb-3"><strong>Skills:</strong>
+                            <ul>
+                                {% for skill in user.aluno.skills %}
+                                    <li>{{ skill.skill.designacao }} - Level: {{ skill.nivel }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="mb-4">
+                            <strong>Unidades Curriculares e Notas:</strong>
+                            <ul>
+                                {% for uc in user.aluno.curso.uc_set.all %}
+                                    <li>{{ uc.designacao }} ({{ uc.acronimo }}) - Nota: {{ notas|get_digit:uc.acronimo|default:"Não Avaliado" }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endif %}
                     <button type="button" class="btn btn-primary">Editar Perfil</button>
                 </div>
-            </div>
-        </div>
-       
-        <div class="row mt-4">
-            <div class="col-12">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item dropdown ml-3">
-                                <a class="nav-link dropdown-toggle" id="coursesDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Cursos
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="coursesDropdown">
-                                    {% for curso in cursos %}
-                                    <li>
-                                        <a class="dropdown-item dropdown-toggle" href="#" id="curso{{ curso.codigo }}" data-bs-toggle="dropdown" aria-expanded="false" onclick="loadUCs('{{ curso.codigo }}', this); return false;">
-                                            {{ curso.designacao }}
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="curso{{ curso.codigo }}">
-                                            <!-- UCs will be loaded here by JavaScript -->
-                                        </ul>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
             </div>
         </div>
     {% else %}
