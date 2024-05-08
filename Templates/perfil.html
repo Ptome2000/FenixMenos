@@ -11,8 +11,10 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    {% if user.aluno.avatar %}
-                        <img src="{{ user.aluno.avatar.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                    {% if user.aluno and user.aluno.foto %}
+                        <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
+                    {% elif user.professor and user.professor.foto %}
+                        <img src="{{ user.professor.foto.url }}" alt="Foto do professor" class="img-fluid img-thumbnail">
                     {% else %}
                         <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
                     {% endif %}
@@ -40,9 +42,25 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        <!-- Form for professors to assign skills to students -->
                     {% elif user.aluno %}
                         <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
                         <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
+                        <div class="mb-3"><strong>Skills:</strong>
+                            <ul>
+                                {% for skill in user.aluno.skills %}
+                                    <li>{{ skill.skill.designacao }} - Level: {{ skill.nivel }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="mb-4">
+                            <strong>Unidades Curriculares e Notas:</strong>
+                            <ul>
+                                {% for uc in user.aluno.curso.uc_set.all %}
+                                    <li>{{ uc.designacao }} ({{ uc.acronimo }}) - Nota: {{ notas|get_digit:uc.acronimo|default:"Não Avaliado" }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endif %}
                     <button type="button" class="btn btn-primary">Editar Perfil</button>
                 </div>
@@ -52,4 +70,27 @@
         <a href="{% url 'login' %}" class="alert alert-warning">Faça Login!</a>
     {% endif %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function loadUCs(courseCode, courseElement) {
+        fetch(`/api/curso/${courseCode}/ucs/`)
+            .then(response => response.json())
+            .then(ucs => {
+                const submenu = courseElement.nextElementSibling; 
+                submenu.innerHTML = ''; 
+                ucs.forEach(uc => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `/detalhes_uc/${uc.acronimo}`; 
+                    a.classList.add('dropdown-item');
+                    a.textContent = uc.designacao;
+                    li.appendChild(a);
+                    submenu.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading UCs:', error));
+    }
+</script>
 {% endblock %}
