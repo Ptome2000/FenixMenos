@@ -3,7 +3,7 @@
 {% block content %}
 
     <div id="page-content-wrapper">
-        
+
         <div class="row">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
@@ -33,6 +33,7 @@
         </div>
 
         <form method="post">
+            {% csrf_token %}
             <div class="row">
                 {% if request.user.is_superuser %}
                     <div class="col align-self-end">

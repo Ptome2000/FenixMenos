@@ -79,7 +79,7 @@ def apagarComentarios(request, post_Id):
             for c in selected:
                 comentario = Comentario.objects.get(id=c)
                 post.comentario_set.get(id=comentario.id).delete()
-            messages.warning(request, "Comentários apagado com sucesso")
+            messages.success(request, "Comentários apagado com sucesso")
             return HttpResponseRedirect(reverse('Community:post', args=[post.categoria.designacao, post.id]))
         else:
             comentarios = post.comentario_set.filter(pk__in=selected)
