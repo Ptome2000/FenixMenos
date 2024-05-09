@@ -1,0 +1,28 @@
+{% if messages %}
+
+    <div class="toast-container position-absolute top-0 end-0 p-3">
+        {% for message in messages %}
+
+            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto"> {{ message.tags|capfirst }} Level: {{ message.level }} </strong>
+                    <small class="text-muted">  </small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            <!-- With this implementation it's possible to use 3 Django message tags combined with Bootstrap!
+             Those being: Success | Warning | Info -->
+                <div {% if message.tags %} class="toast-body alert alert-{{ message.tags }}" role="alert"> {% endif %}
+                    {{ message }}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+{% endif %}
+
+<script>
+    
+    
+    
+</script>

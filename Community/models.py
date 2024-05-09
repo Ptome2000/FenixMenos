@@ -80,3 +80,6 @@ class Comentario(models.Model):
 
     def get_user(self):
         return self.user.username
+
+    def __str__(self):
+        return self.texto[:20] + "... por " + self.user.username + " a " + self.data.strftime("%d/%m/%Y")

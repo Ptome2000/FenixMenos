@@ -61,11 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#DeleteCommentsModal').css('display', 'none');
     })
 
-    $('.btn-check').click(function() {
-        // Check if any element with class "btn-check" is checked
-        let isChecked = $('.btn-check').is(':checked');
+    if ($('.alert-success').length) {
+        
+    }
 
-        // Check the result
+    $('.btn-check').click(function() {
+        let isChecked = $('.btn-check').is(':checked');
         if (isChecked) {
             $('#DeleteComments').css('display', 'block');
         } else {
