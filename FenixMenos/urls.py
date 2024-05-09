@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
+
+from serializers import CursoViewSet
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from frontend import build
+from .views import  register
+
+router = DefaultRouter()
+router.register(r'cursos', CursoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,9 +35,10 @@ urlpatterns = [
     path('Community/', include('Community.urls')),
     path("FenixMenos/", views.index, name="index"),
     path("FenixMenos/login", views.loginform, name="login"),
-    path("FenixMenos/registar", views.registro, name="registo"),
+    path("FenixMenos/registar", views.registo, name="registo"),
     path("FenixMenos/logout", views.logoutForm, name="logout"),
-
+    path('api/', include(router.urls)),
+    path('register/', register, name='register'),
 ]
 
 if settings.DEBUG:
