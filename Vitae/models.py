@@ -26,7 +26,7 @@ class Professor(models.Model):
     numeroProfessor = models.IntegerField(primary_key=True)
     foto = models.ImageField(upload_to='professores', default='', blank=True)
     gabinete = models.CharField(max_length=10)
-    genero = enum.EnumField(Genero, default=0)
+    #genero = enum.EnumField(Genero, default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -76,7 +76,7 @@ class Aluno(models.Model):
     numeroAluno = models.IntegerField(primary_key=True)
     foto = models.ImageField(upload_to='alunos', default='', blank=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    genero = enum.EnumField(Genero, default=0)
+    #genero = enum.EnumField(Genero, default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
