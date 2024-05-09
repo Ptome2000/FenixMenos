@@ -3,7 +3,7 @@
 {% block content %}
 
     <div id="page-content-wrapper">
-    
+
         <div class="row">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="p-2 bg-info-subtle breadcrumb pb-2 border-bottom">
@@ -35,14 +35,10 @@
             <table class="table table-hover">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col" class="text-center"> Tipo </th>
                     <th scope="col" colspan="5"> Tópico </th>
                     <th scope="col" colspan="2"> Autor </th>
                     <th scope="col" class="text-center"> Comentários </th>
                     <th scope="col" class="text-center"> Última atualização </th>
-                    {% if request.user.is_superuser %}
-                        <th class="text-end"> Apagar </th>
-                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -53,14 +49,10 @@
                 {% else %}
                     {% for post in lista_posts %}
                         <tr>
-                            <td class="text-center">  </td>
                             <td colspan="5"><a class="link-underline link-underline-opacity-0" href="{% url 'Community:post' categoria.designacao post.id %}">{{ post }}</a></td>
                             <td colspan="2"> {{ post.get_user }} </td>
                             <td class="text-center"> {{ post.get_total_comments }} </td>
                             <td class="text-center"> A {{ post.get_last_commented_date|date:"j/n/Y f" }} por {{ post.get_last_commented_user }} </td>
-                            {% if request.user.is_superuser %}
-                                <td><button id="deleteModal" class="w-5 btn btn-outline-danger btn-sm float-end"> X </button></td>
-                            {% endif %}
                         </tr>
                     {% endfor %}
                 {% endif %}

@@ -1,4 +1,4 @@
-{% extends 'skeleton.html' %}
+x{% extends 'skeleton.html' %}
 {% load static %}
 {% block content %}
 
@@ -26,7 +26,7 @@
         <hr class="my-2">
 
         <div class="container p-3">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group mb-3">
                     <label for="title"> Tópico: </label>

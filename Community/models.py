@@ -1,8 +1,10 @@
 import datetime
-
+import os
 from django.db import models
 from django.contrib.auth.models import User
 from django_enumfield import enum
+from django.conf import settings
+
 
 class GrupoCategoria(enum.Enum):
     AEISCTE = 0
@@ -60,14 +62,13 @@ class Post(models.Model):
     def get_total_comments(self):
         return self.comentario_set.count()
 
-
     '''
-    
     Sugestão
     Posts podem ser 2 tipos:
         - Discussão (Meramente textos com imagens como opcao)
-        - Poll (Terá descricao como o acima, mas terá também a possibilidade de criar opções para as pessoas votarem, os utilizados podem votar sem comentar)
-    
+        - Poll (Terá descricao como o acima, mas terá também a possibilidade de criar opções para as pessoas votarem, 
+            os utilizados podem votar sem comentar)
+
     '''
 
 
@@ -76,10 +77,18 @@ class Comentario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     texto = models.TextField()
     data = models.DateTimeField(auto_now_add=True)
-    imagem = models.ImageField(upload_to='Comentarios', blank=True, null=True)
+    imagem = models.ImageField(upload_to='Comentarios', blank=True)
 
     def get_user(self):
         return self.user.username
 
     def __str__(self):
         return self.texto[:20] + "... por " + self.user.username + " a " + self.data.strftime("%d/%m/%Y")
+
+    def delete(self, *args, **kwargs):
+        # Override to delete associated image when the Comentario instance is deleted
+        if self.imagem:
+            file_path = os.path.join(settings.MEDIA_ROOT, str(self.imagem))
+            if os.path.exists(file_path):
+                os.remove(file_path)
+        super(Comentario, self).delete(*args, **kwargs)

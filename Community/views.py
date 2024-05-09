@@ -14,33 +14,33 @@ def community(request):
 
 
 def categoria(request, categoria_dgn):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
-    lista_posts = Post.objects.filter(categoria=categoria)
-    context = {'categoria': categoria, 'lista_posts': lista_posts}
+    c = get_object_or_404(Categoria, designacao=categoria_dgn)
+    lista_posts = Post.objects.filter(categoria=c)
+    context = {'categoria': c, 'lista_posts': lista_posts}
     return render(request, 'community/categoria.html', context)
 
 
 def post(request, categoria_dgn, post_Id):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
-    post = get_object_or_404(Post, id=post_Id)
+    c = get_object_or_404(Categoria, designacao=categoria_dgn)
+    p = get_object_or_404(Post, id=post_Id)
     try:
         if request.method == 'POST' and 'action' in request.POST:
             action = request.POST['action']
             if action == 'Apagar':
-                post.delete()
+                p.delete()
                 messages.success(request, 'Tópico apagado com sucesso')
-                return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+                return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
             elif action == 'ApagarLista':
                 selected = request.POST.getlist('selectedPost')
                 request.session['commentsToDelete'] = selected
-                return HttpResponseRedirect(reverse('Community:apagarComentarios', args=[post.id]))
+                return HttpResponseRedirect(reverse('Community:apagarComentarios', args=[p.id]))
             elif action == 'Responder':
                 texto = request.POST.get('message')
-                imagem = request.POST.get('ImageFile')
-                Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
+                imagem = request.FILES.get('ImageFile')
+                Comentario.objects.create(post=p, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
                 messages.success(request, 'Resposta publicada com sucesso')
 
-        context = {'post': post, 'categoria': categoria}
+        context = {'post': p, 'categoria': c}
         return render(request, 'community/post.html', context)
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
@@ -48,43 +48,50 @@ def post(request, categoria_dgn, post_Id):
 
 
 def criarDiscussao(request, categoria_dgn):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+    c = get_object_or_404(Categoria, designacao=categoria_dgn)
     try:
         if request.method == 'POST':
             titulo = request.POST.get('title')
             texto = request.POST.get('message')
-            imagem = request.POST.get('ImageFile')
-            post = Post.objects.create(titulo=titulo, categoria=categoria, user=request.user)
-            Comentario.objects.create(post=post, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
+            imagem = request.FILES.get('ImageFile')
+            p = Post.objects.create(titulo=titulo, categoria=c, user=request.user)
+            Comentario.objects.create(post=p, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
             messages.success(request, 'Tópico criado com sucesso')
-            return HttpResponseRedirect(reverse('Community:post', args=[categoria.designacao, post.id]))
+            return HttpResponseRedirect(reverse('Community:post', args=[c.designacao, p.id]))
         else:
-            return render(request, 'community/novaDiscussion.html', {'categoria': categoria})
+            return render(request, 'community/novaDiscussion.html', {'categoria': c})
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
-        return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+        return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
 
 
 def criarVotacao(request, categoria_dgn):
-    categoria = get_object_or_404(Categoria, designacao=categoria_dgn)
+    c = get_object_or_404(Categoria, designacao=categoria_dgn)
     messages.warning(request, "Recurso a ser implementado em breve. Pedimos desculpa pelo incómodo")
-    return HttpResponseRedirect(reverse('Community:categoria', args=[categoria.designacao]))
+    return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
 
 
 def apagarComentarios(request, post_Id):
-    post = get_object_or_404(Post, id=post_Id)
+    p = get_object_or_404(Post, id=post_Id)
     try:
         selected = request.session.get('commentsToDelete')
         if request.method == 'POST':
+            first = p.comentario_set.first()
+            count = 0
             for c in selected:
-                comentario = Comentario.objects.get(id=c)
-                post.comentario_set.get(id=comentario.id).delete()
-            messages.success(request, "Comentários apagado com sucesso")
-            return HttpResponseRedirect(reverse('Community:post', args=[post.categoria.designacao, post.id]))
+                c = Comentario.objects.get(id=c)
+                if c == first:
+                    messages.warning(request, 'Erro: Tentou apagar o primeiro comentário')
+                else:
+                    p.comentario_set.get(id=c.id).delete()
+                    count += 1
+            if count > 0:
+                messages.success(request, str(count) + " comentários apagado com sucesso")
+            return HttpResponseRedirect(reverse('Community:post', args=[p.categoria.designacao, p.id]))
         else:
-            comentarios = post.comentario_set.filter(pk__in=selected)
-            context = {'post': post, 'comentarios': comentarios}
+            c = p.comentario_set.filter(pk__in=selected)
+            context = {'post': p, 'comentarios': c}
             return render(request, 'community/apagarComentarios.html', context)
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
-        return HttpResponseRedirect(reverse('Community:categoria', args=[post.categoria.designacao]))
+        return HttpResponseRedirect(reverse('Community:categoria', args=[p.categoria.designacao]))
