@@ -1,17 +1,101 @@
 {% extends 'skeleton.html' %}
+{% load static %}
 {% block title %}{{ uc.designacao }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>{{ uc.designacao }} ({{ uc.acronimo }})</h1>
-    <p><strong>Credits:</strong> {{ uc.creditos }}</p>
-    <p><strong>Description:</strong> {{ uc.descricao }}</p>
-    <p><strong>Coordinator:</strong> {{ uc.coordenador.user.get_full_name }}</p>
-    <h3>Skills Covered:</h3>
-    <ul>
-        {% for skill in uc.skills.all %}
-            <li>{{ skill.designacao }}</li>
-        {% endfor %}
-    </ul>
-</div>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h1>{{ uc.designacao }} ({{ uc.acronimo }})</h1>
+            <hr class="mt-2">
+
+            <div class="row d-flex">
+
+                <div class="col-md-9">
+                    <fieldset>
+                        <legend> Informação </legend>
+                        <div class="ps-2">
+                            <p><strong> Crétidos: </strong> {{ uc.creditos }}</p>
+                            <details>
+                                <summary><strong> Descrição: </strong></summary>
+                                <p> {{ uc.descricao }} </p>
+                            </details>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend> Competências </legend>
+                        <div class="ps-2">
+                            <p> Esta Unidade tem as seguintes competências: </p>
+                            <ul>
+                                {% for skill in uc.skills.all %}
+                                    <li>{{ skill.designacao }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-md-3">
+                    <fieldset class="text-center">
+                        <legend> Coordenador </legend>
+                        <figure class="figure d-inline-block mx-auto">
+                            {% if uc.coordenador.foto %}
+                                <img src="{{ uc.coordenador.foto.url }}" class="fotoCoorenador figure-img rounded img-thumbnail" alt="Coordenador">
+                            {% else %}
+                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoorenador rounded figure-img img-thumbnail" alt="Coordenador">
+                            {% endif %}
+                            <figcaption class="figure-caption"> {{ uc.coordenador }}</figcaption>
+                        </figure>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="row d-flex">
+                <div class="col">
+                    <fieldset>
+                        <legend> Cursos </legend>
+                        <div class="ps-2">
+                            <p> Esta Unidade está presente em {{ uc.get_count_curso }} curso(s): </p>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col"> Curso </th>
+                                    <th scope="col"> Ano </th>
+                                    <th scope="col"> Semestre </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for plano in planos_curriculares %}
+                                    <tr>
+                                        <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.codigo %}"> {{ plano.curso }} </a></td>
+                                        <td> {{ plano.ano }}</td>
+                                        <td> {{ plano.semestre }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col">
+                    <fieldset>
+                        <legend> Equipa Docente </legend>
+                        <div class="ps-2">
+                            <p> Esta Unidade tem as seguintes competências: </p>
+                            <ul>
+                                {% for skill in uc.skills.all %}
+                                    <li>{{ skill.designacao }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

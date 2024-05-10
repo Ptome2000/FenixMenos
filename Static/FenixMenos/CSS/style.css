@@ -3,7 +3,7 @@
     height: 50px;
     position: fixed;
     background-color: #0d28c2;  // Cor de fundo do cabeçalho
-    position: fixed;
+position: fixed;
     top: 0;
     left: 0;
     z-index: 1100;
@@ -243,15 +243,37 @@ body {
 
 }
 
+/****************** Vitae CSS ******************/
+
+.fotoCoorenador {
+    width: 226px;
+    height: 228px;
+}
+
+fieldset {
+    background-color: #eeeeee;
+    margin-bottom: 24px;
+}
+
+legend {
+    background-color: gray;
+    color: white;
+    padding: 5px 10px;
+}
+
+.table-sm {
+    max-width: 700px;
+}
+
 /****************** Community CSS ******************/
 
 #CategoryIcon {
-    width:16px;
+    width: 16px;
     height: 16px;
 }
 
 img.PostAvatar {
-    width:70px;
+    width: 70px;
     height: 70px;
 }
 
@@ -259,102 +281,92 @@ img.PostAvatar {
 
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /**************************************************/
 
-        fieldset {
-            background-color: #eeeeee;
-        }
+.footer {
+    /*    position: fixed; */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+}
 
-        legend {
-            background-color: gray;
-            color: white;
-            padding: 5px 10px;
-        }
+input {
+    margin: 5px;
+}
 
-        .footer {
-        /*    position: fixed; */
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-        }
+.page-up {
+    position: absolute;
+    left: 50%;
+    top: -25px;
+    margin-left: -25px;
+}
 
-        input {
-            margin: 5px;
-        }
+.page-up a {
+    display: inline-block;
+    font-size: 36px;
+    color: #ffffff;
+    height: 50px;
+    width: 50px;
+    background: #3495dc;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+}
 
-        .page-up {
-            position: absolute;
-            left: 50%;
-            top: -25px;
-            margin-left: -25px;
-        }
-
-        .page-up a {
-            display: inline-block;
-            font-size: 36px;
-            color: #ffffff;
-            height: 50px;
-            width: 50px;
-            background: #3495dc;
-            line-height: 50px;
-            text-align: center;
-            border-radius: 50%;
-        }
-
-        .page-up a span {
-            position: relative;
-            top: 2px;
-            left: -1px;
-        }
+.page-up a span {
+    position: relative;
+    top: 2px;
+    left: -1px;
+}
 
 
-        body {
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 
-        /* CSS para o container do carrossel */
+/* CSS para o container do carrossel */
 #carouselExampleIndicators {
     width: 40%; /* Define a largura para 60% da largura do container pai */
     margin: auto; /* Centraliza o carrossel horizontalmente */
