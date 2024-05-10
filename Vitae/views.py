@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
-from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular, Matricula
+from .models import *
 
 def perfil(request):
     user = request.user
@@ -49,8 +49,9 @@ def detalhes_curso(request, codigo):
 def detalhes_uc(request, acronimo):
     uc = get_object_or_404(UC, acronimo=acronimo)
     planos_curriculares = PlanoCurricular.objects.filter(uc=uc)
+    equipa = EquipaDocente.objects.filter(uc=uc)
 
-    context = {'uc': uc, 'planos_curriculares': planos_curriculares}
+    context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa}
     return render(request, 'Vitae/detalhes_uc.html', context)
 
 
