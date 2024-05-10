@@ -54,9 +54,9 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'Vitae:perfil' %}">Perfil</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="{% url 'Vitae:fazer_upload' %}">Another action</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
                         </ul>
                     </li>
                 {% else %}
