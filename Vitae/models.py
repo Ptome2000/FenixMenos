@@ -21,7 +21,6 @@ class EstadoSub(enum.Enum):
     Recusada = 2
 
 
-
 class Professor(models.Model):
     numeroProfessor = models.IntegerField(primary_key=True)
     foto = models.ImageField(upload_to='professores', default='', blank=True)
@@ -30,7 +29,7 @@ class Professor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.first_name + self.user.last_name
+        return self.user.first_name + " " + self.user.last_name
 
 
 class Curso(models.Model):
@@ -54,7 +53,7 @@ class Skills(models.Model):
 
 
 class UC(models.Model):
-    acronimo = models.CharField(max_length=6)
+    acronimo = models.CharField(max_length=6, unique=True)
     designacao = models.CharField(max_length=100)
     creditos = models.IntegerField()
     descricao = models.TextField()
@@ -64,12 +63,32 @@ class UC(models.Model):
     def __str__(self):
         return self.designacao
 
+    def get_count_curso(self):
+        return PlanoCurricular.objects.filter(uc=self).count()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        EquipaDocente.objects.get_or_create(uc=self, professor=self.coordenador)
+
 
 class PlanoCurricular(models.Model):
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     ano = models.IntegerField()
     semestre = models.IntegerField()
+
+    def __str__(self):
+        return self.curso.designacao + " - " + self.uc.designacao
+
+
+class EquipaDocente(models.Model):
+    uc = models.ForeignKey(UC, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['uc', 'professor'], name='unique_equipe_docente'),
+        ]
 
 
 class Aluno(models.Model):
@@ -79,14 +98,19 @@ class Aluno(models.Model):
     #genero = enum.EnumField(Genero, default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.first_name + " " +  self.user.last_name
 
 class Matricula(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
-    ano = models.IntegerField()
+    ano = models.IntegerField(default=1)
 
     def passar_ano(self):
         self.ano = self.ano + 1
+
+    def __str__(self):
+        return str(self.aluno.numeroAluno) + " - " + self.curso.designacao
 
 
 class Nota(models.Model):

@@ -17,54 +17,42 @@ def perfil(request):
             uc_notas = {nota.uc.acronimo: nota.nota for nota in notas}
             recomendacoes = Recomendacao.objects.filter(aluno=aluno)
             curso = aluno.curso
-            genero = aluno.genero
             context = {
                 'usuario': aluno,
                 'skills': aluno_skills,
                 'matriculas': matriculas,
                 'notas': uc_notas,  # pass this dictionary to the template
                 'recomendacoes': recomendacoes,
-                'genero': genero,
                 'curso': curso,
             }
         elif hasattr(user, 'professor'):
             professor = get_object_or_404(Professor, user=user)
             ucs = UC.objects.filter(coordenador=professor)
-            genero = professor.genero
             gabinete = professor.gabinete
             context = {
                 'usuario': professor,
-                'genero': genero,
                 'gabinete': gabinete,
                 'ucs': ucs,
             }
     else:
         return HttpResponseRedirect(reverse('login'))
     return render(request, 'perfil.html', context)
+
+
 def detalhes_curso(request, codigo):
     curso = get_object_or_404(Curso, codigo=codigo)
     ucs = curso.uc_set.all()
     context = {'curso': curso, 'ucs': ucs}
-    return render(request, 'detalhes_curso.html', context)
+    return render(request, 'Vitae/detalhes_curso.html', context)
 
 
 def detalhes_uc(request, acronimo):
     uc = get_object_or_404(UC, acronimo=acronimo)
-    skills = uc.skills.all()
-    planos_curriculares = PlanoCurricular.objects.filter(uc=uc).select_related('curso')
+    planos_curriculares = PlanoCurricular.objects.filter(uc=uc)
 
-    cursos_info = {}
-    for plano in planos_curriculares:
-        if plano.curso.designacao not in cursos_info:
-            cursos_info[plano.curso.designacao] = []
-        cursos_info[plano.curso.designacao].append((plano.ano, plano.semestre))
+    context = {'uc': uc, 'planos_curriculares': planos_curriculares}
+    return render(request, 'Vitae/detalhes_uc.html', context)
 
-    context = {
-        'uc': uc,
-        'skills': skills,
-        'planos_curriculares': cursos_info
-    }
-    return render(request, 'detalhes_uc.html', context)
 
 def fazer_upload(request):
     user = request.user
