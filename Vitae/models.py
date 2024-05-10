@@ -42,6 +42,8 @@ class Curso(models.Model):
     def __str__(self):
         return self.designacao
 
+    def get_count_uc(self):
+        return PlanoCurricular.objects.filter(curso=self).count()
 
 class Skills(models.Model):
     designacao = models.CharField(max_length=100)
@@ -57,7 +59,7 @@ class UC(models.Model):
     designacao = models.CharField(max_length=100)
     creditos = models.IntegerField()
     descricao = models.TextField()
-    coordenador = models.OneToOneField(Professor, on_delete=models.CASCADE)
+    coordenador = models.ForeignKey(Professor, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skills)
 
     def __str__(self):

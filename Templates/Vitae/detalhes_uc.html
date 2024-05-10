@@ -43,16 +43,16 @@
                                 <thead>
                                 <tr>
                                     <th scope="col"> Curso </th>
-                                    <th scope="col"> Ano </th>
-                                    <th scope="col"> Semestre </th>
+                                    <th scope="col" class="text-center"> Ano </th>
+                                    <th scope="col" class="text-center"> Semestre </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for plano in planos_curriculares %}
                                     <tr>
                                         <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.codigo %}" class="link-underline link-underline-opacity-0"> {{ plano.curso }} </a></td>
-                                        <td> {{ plano.ano }}</td>
-                                        <td> {{ plano.semestre }}</td>
+                                        <td class="text-center"> {{ plano.ano }}</td>
+                                        <td class="text-center"> {{ plano.semestre }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -66,9 +66,9 @@
                         <legend class="border rounded"> Coordenador </legend>
                         <figure class="figure d-inline-block mx-auto">
                             {% if uc.coordenador.foto %}
-                                <img src="{{ uc.coordenador.foto.url }}" class="fotoCoorenador figure-img rounded img-thumbnail" alt="Coordenador">
+                                <img src="{{ uc.coordenador.foto.url }}" class="fotoCoordenador figure-img rounded img-thumbnail" alt="Coordenador">
                             {% else %}
-                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoorenador rounded figure-img img-thumbnail" alt="Coordenador">
+                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoordenador rounded figure-img img-thumbnail" alt="Coordenador">
                             {% endif %}
                             <figcaption class="figure-caption"> {{ uc.coordenador }}</figcaption>
                         </figure>

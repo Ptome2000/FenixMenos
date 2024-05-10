@@ -41,8 +41,8 @@ def perfil(request):
 
 def detalhes_curso(request, codigo):
     curso = get_object_or_404(Curso, codigo=codigo)
-    ucs = curso.uc_set.all()
-    context = {'curso': curso, 'ucs': ucs}
+    planos_curriculares = PlanoCurricular.objects.filter(curso=curso)
+    context = {'curso': curso, 'planos_curriculares': planos_curriculares}
     return render(request, 'Vitae/detalhes_curso.html', context)
 
 
@@ -53,6 +53,15 @@ def detalhes_uc(request, acronimo):
 
     context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa}
     return render(request, 'Vitae/detalhes_uc.html', context)
+
+
+# Adicionar validaão que tem que ser prof
+def UnidadesCurriculares(request):
+        unidades = EquipaDocente.objects.filter(professor=request.user.professor)
+
+        context = {'unidades': unidades}
+        return render(request, 'Vitae/listar_prof_uc.html', context)
+
 
 
 def fazer_upload(request):

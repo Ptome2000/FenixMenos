@@ -1,14 +1,73 @@
 {% extends 'skeleton.html' %}
+{% load static %}
 {% block title %}{{ curso.designacao }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>{{ curso.designacao }}</h1>
-    <h2>Unidades Curriculares</h2>
-    <ul>
-        {% for uc in ucs %}
-            <li><a href="{% url 'detalhes_uc' acronimo=uc.acronimo %}">{{ uc.designacao }} ({{ uc.acronimo }})</a></li>
-        {% endfor %}
-    </ul>
-</div>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h1>{{ curso.codigo }} - {{ curso.designacao }}</h1>
+            <hr class="mt-2">
+
+            <div class="row d-flex">
+
+                <div class="col-md-9">
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Informação </legend>
+                        <div class="ps-2">
+                            <p><strong> Total de Crétidos: </strong> {{ curso.creditos }}</p>
+                            <details>
+                                <summary><strong> Descrição: </strong></summary>
+                                <p> {{ curso.descricao }} </p>
+                            </details>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Unidades Curriculares </legend>
+                        <div class="ps-2">
+                            <p> Este Curso está presente em {{ curso.get_count_uc }} UC: </p>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col"> Unidade Curricular </th>
+                                    <th scope="col" class="text-center"> Créditos </th>
+                                    <th scope="col" class="text-center"> Ano </th>
+                                    <th scope="col" class="text-center"> Semestre </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for plano in planos_curriculares %}
+                                    <tr>
+                                        <td><a href="{% url 'Vitae:detalhes_uc' plano.uc.acronimo %}" class="link-underline link-underline-opacity-0"> {{ plano.uc }} </a></td>
+                                        <td class="text-center"> {{ plano.uc.creditos }} </td>
+                                        <td class="text-center"> {{ plano.ano }}</td>
+                                        <td class="text-center"> {{ plano.semestre }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-md-3">
+                    <fieldset class="border rounded text-center">
+                        <legend class="border rounded"> Coordenador </legend>
+                        <figure class="figure d-inline-block mx-auto">
+                            {% if curso.coordenador.foto %}
+                                <img src="{{ curso.coordenador.foto.url }}" class="fotoCoordenador figure-img rounded img-thumbnail" alt="Coordenador">
+                            {% else %}
+                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoordenador rounded figure-img img-thumbnail" alt="Coordenador">
+                            {% endif %}
+                            <figcaption class="figure-caption"> {{ curso.coordenador }}</figcaption>
+                        </figure>
+                    </fieldset>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

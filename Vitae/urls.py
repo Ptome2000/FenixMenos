@@ -6,4 +6,5 @@ urlpatterns = [
     path('curso/<str:codigo>/', views.detalhes_curso, name='detalhes_curso'),
     path('uc/<str:acronimo>/', views.detalhes_uc, name='detalhes_uc'),
     path('fazer_upload/', views.fazer_upload, name='fazer_upload'),
+    path('Unidades/', views.UnidadesCurriculares, name='UnidadesCurriculares'),
 ]
