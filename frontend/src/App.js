@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import RegistrationForm from './components/Register';
 import Register from "./components/Register";
 
 

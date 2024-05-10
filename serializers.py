@@ -30,17 +30,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserAlunoSerializer(serializers.ModelSerializer):
     curso = serializers.PrimaryKeyRelatedField(queryset=Curso.objects.all())
-    genero = serializers.ChoiceField(choices= Genero.choices())
     foto = serializers.ImageField(required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'curso', 'genero', 'foto']
+        fields = ('foto', 'curso')
 
     def create(self, validated_data):
         curso = validated_data.pop('curso')
-        genero = validated_data.pop('genero')
         foto = validated_data.pop('foto', None)
         user = User.objects.create_user(**validated_data)
-        Aluno.objects.create(user=user, curso=curso, genero=genero, foto=foto)
+        Aluno.objects.create(user=user, curso=curso, foto=foto)
         return user

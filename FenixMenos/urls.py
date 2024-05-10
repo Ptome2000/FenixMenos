@@ -23,8 +23,8 @@ from serializers import CursoViewSet
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-#from frontend import build
-from .views import  register
+from frontend import build
+from .views import register, RegistoAluno
 
 router = DefaultRouter()
 router.register(r'cursos', CursoViewSet)
@@ -38,7 +38,7 @@ urlpatterns = [
     path("FenixMenos/registar", views.registo, name="registo"),
     path("FenixMenos/logout", views.logoutForm, name="logout"),
     path('api/', include(router.urls)),
-    path('register/', register, name='register'),
+    path('register/', RegistoAluno, name='register'),
 ]
 
 if settings.DEBUG:
