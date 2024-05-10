@@ -117,5 +117,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    $(document).ready(function () {
+        $('.user-photo').hover(
+            function () { // Mouse over
+                $(this).next('.user-data').slideDown(400); // Usa slideDown para mostrar
+            },
+            function () { // Mouse out
+                $(this).next('.user-data').slideUp(400); // Usa slideUp para ocultar
+            }
+        );
+    });
+
 
 });

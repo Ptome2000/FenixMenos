@@ -1,6 +1,7 @@
 from django.urls import include, path
 from . import views
 app_name = 'Vitae'
+
 urlpatterns = [
     path("perfil", views.perfil, name="perfil"),
     path('curso/<str:codigo>/', views.detalhes_curso, name='detalhes_curso'),

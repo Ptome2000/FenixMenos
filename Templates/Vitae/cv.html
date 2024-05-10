@@ -78,12 +78,12 @@
         fetch(`/api/curso/${courseCode}/ucs/`)
             .then(response => response.json())
             .then(ucs => {
-                const submenu = courseElement.nextElementSibling; 
-                submenu.innerHTML = ''; 
+                const submenu = courseElement.nextElementSibling;
+                submenu.innerHTML = '';
                 ucs.forEach(uc => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = `/detalhes_uc/${uc.acronimo}`; 
+                    a.href = `/detalhes_uc/${uc.acronimo}`;
                     a.classList.add('dropdown-item');
                     a.textContent = uc.designacao;
                     li.appendChild(a);

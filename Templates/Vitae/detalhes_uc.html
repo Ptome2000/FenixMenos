@@ -12,8 +12,8 @@
             <div class="row d-flex">
 
                 <div class="col-md-9">
-                    <fieldset>
-                        <legend> Informação </legend>
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Informação </legend>
                         <div class="ps-2">
                             <p><strong> Crétidos: </strong> {{ uc.creditos }}</p>
                             <details>
@@ -23,8 +23,8 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
-                        <legend> Competências </legend>
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Competências </legend>
                         <div class="ps-2">
                             <p> Esta Unidade tem as seguintes competências: </p>
                             <ul>
@@ -34,44 +34,25 @@
                             </ul>
                         </div>
                     </fieldset>
-                </div>
 
-                <div class="col-md-3">
-                    <fieldset class="text-center">
-                        <legend> Coordenador </legend>
-                        <figure class="figure d-inline-block mx-auto">
-                            {% if uc.coordenador.foto %}
-                                <img src="{{ uc.coordenador.foto.url }}" class="fotoCoorenador figure-img rounded img-thumbnail" alt="Coordenador">
-                            {% else %}
-                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoorenador rounded figure-img img-thumbnail" alt="Coordenador">
-                            {% endif %}
-                            <figcaption class="figure-caption"> {{ uc.coordenador }}</figcaption>
-                        </figure>
-                    </fieldset>
-                </div>
-
-            </div>
-
-            <div class="row d-flex">
-                <div class="col">
-                    <fieldset>
-                        <legend> Cursos </legend>
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Cursos </legend>
                         <div class="ps-2">
                             <p> Esta Unidade está presente em {{ uc.get_count_curso }} curso(s): </p>
                             <table class="table table-sm table-hover">
                                 <thead>
                                 <tr>
                                     <th scope="col"> Curso </th>
-                                    <th scope="col"> Ano </th>
-                                    <th scope="col"> Semestre </th>
+                                    <th scope="col" class="text-center"> Ano </th>
+                                    <th scope="col" class="text-center"> Semestre </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for plano in planos_curriculares %}
                                     <tr>
-                                        <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.codigo %}"> {{ plano.curso }} </a></td>
-                                        <td> {{ plano.ano }}</td>
-                                        <td> {{ plano.semestre }}</td>
+                                        <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.codigo %}" class="link-underline link-underline-opacity-0"> {{ plano.curso }} </a></td>
+                                        <td class="text-center"> {{ plano.ano }}</td>
+                                        <td class="text-center"> {{ plano.semestre }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -80,14 +61,26 @@
                     </fieldset>
                 </div>
 
-                <div class="col">
-                    <fieldset>
-                        <legend> Equipa Docente </legend>
+                <div class="col-md-3">
+                    <fieldset class="border rounded text-center">
+                        <legend class="border rounded"> Coordenador </legend>
+                        <figure class="figure d-inline-block mx-auto">
+                            {% if uc.coordenador.foto %}
+                                <img src="{{ uc.coordenador.foto.url }}" class="fotoCoordenador figure-img rounded img-thumbnail" alt="Coordenador">
+                            {% else %}
+                                <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" class="fotoCoordenador rounded figure-img img-thumbnail" alt="Coordenador">
+                            {% endif %}
+                            <figcaption class="figure-caption"> {{ uc.coordenador }}</figcaption>
+                        </figure>
+                    </fieldset>
+
+                    <fieldset class="border rounded">
+                        <legend class="border rounded"> Equipa Docente </legend>
                         <div class="ps-2">
-                            <p> Esta Unidade tem as seguintes competências: </p>
+                            <p> Esta Unidade é composta pelos seguintes membros: </p>
                             <ul>
-                                {% for skill in uc.skills.all %}
-                                    <li>{{ skill.designacao }}</li>
+                                {% for membro in equipa %}
+                                    <li><a href="mailto:{{ membro.professor.user.email }}" class="link-underline link-underline-opacity-0"> {{ membro.professor }} </a></li>
                                 {% endfor %}
                             </ul>
                         </div>

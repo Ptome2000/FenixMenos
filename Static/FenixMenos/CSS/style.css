@@ -13,6 +13,16 @@ position: fixed;
     padding: 8px 12px; /* Ajuste conforme necessário para centralizar verticalmente */
 }
 
+.bar{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+.nav-link {
+    padding: 8px 12px;
+}
+
 .nav-link {
     padding: 8px 12px;
 }

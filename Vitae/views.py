@@ -1,42 +1,16 @@
-
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import Aluno, Professor, Skills, UC, Curso, Nota, Recomendacao, PlanoCurricular, Matricula
 
+
 def perfil(request):
     user = request.user
-    context = {}
-    if user.is_authenticated:
-        if hasattr(user, 'aluno'):
-            aluno = get_object_or_404(Aluno, user=user)
-            aluno_skills = Skills.objects.filter(aluno=aluno)
-            matriculas = Matricula.objects.filter(aluno=aluno).select_related('curso')
-            notas = Nota.objects.filter(aluno=aluno).select_related('uc')
-            uc_notas = {nota.uc.acronimo: nota.nota for nota in notas}
-            recomendacoes = Recomendacao.objects.filter(aluno=aluno)
-            curso = aluno.curso
-            context = {
-                'usuario': aluno,
-                'skills': aluno_skills,
-                'matriculas': matriculas,
-                'notas': uc_notas,  # pass this dictionary to the template
-                'recomendacoes': recomendacoes,
-                'curso': curso,
-            }
-        elif hasattr(user, 'professor'):
-            professor = get_object_or_404(Professor, user=user)
-            ucs = UC.objects.filter(coordenador=professor)
-            gabinete = professor.gabinete
-            context = {
-                'usuario': professor,
-                'gabinete': gabinete,
-                'ucs': ucs,
-            }
-    else:
-        return HttpResponseRedirect(reverse('login'))
-    return render(request, 'perfil.html', context)
+    context = {'user': user}
+    return render(request, 'Vitae/perfil.html', context)
+
 
 
 def detalhes_curso(request, codigo):
@@ -71,3 +45,6 @@ def fazer_upload(request):
     else:
         messages.error(request, "Erro ao fazer o upload.")
         return redirect(reverse('Vitae:perfil'))
+
+
+

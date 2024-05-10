@@ -1,0 +1,60 @@
+{% extends "skeleton.html" %}
+{% load static %}
+
+{% block content %}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Detalhes do Usuário -->
+            <div class="col-md-5">
+                <div class="user-data">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Username</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ request.user.username }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ request.user.email }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p class="mb-0">Curso</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ request.user.aluno.curso }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Foto do Perfil -->
+            <div class="col-md-4 text-center">
+                <fieldset>
+                    <legend>Perfil</legend>
+                    <figure class="figure d-inline-block mx-auto">
+                        {% if request.user.aluno.foto %}
+                            <img src="{{ request.user.aluno.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
+                        {% else %}
+                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
+                        {% endif %}
+                    </figure>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
