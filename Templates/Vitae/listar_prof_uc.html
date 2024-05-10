@@ -1,0 +1,32 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block title %} Unidades de {{ request.user }}{% endblock %}
+
+{% block content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col"> Unidade Curricular </th>
+                    <th scope="col" class="text-center"> Créditos </th>
+                    <th scope="col" class="text-center"> Nº de Alunos </th>
+                    <th scope="col" class="text-center"> Alunos </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for plano in unidades %}
+                    <tr>
+                        <td><a href="{% url 'Vitae:detalhes_uc' plano.uc.acronimo %}" class="link-underline link-underline-opacity-0"> {{ plano.uc }} </a></td>
+                        <td class="text-center"> {{ plano.uc.creditos }} </td>
+                        <td class="text-center">  </td>
+                        <td class="text-center"> <button> Consultar </button> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
