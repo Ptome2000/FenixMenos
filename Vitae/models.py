@@ -33,7 +33,8 @@ class Professor(models.Model):
 
 
 class Curso(models.Model):
-    codigo = models.CharField(max_length=4, primary_key=True)
+    codigo = models.IntegerField( primary_key=True)
+    acronimo = models.CharField(max_length=4, unique=True)
     designacao = models.CharField(max_length=100)
     creditos = models.IntegerField()
     descricao = models.TextField()
