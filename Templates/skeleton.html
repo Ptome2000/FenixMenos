@@ -41,8 +41,16 @@
                     <button id="toggleDark" class="btn btn-primary"> Dark Mode </button>
                     </div>
                     <li class="nav-item dropdown ml-3">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="me-2">
+                                        {% load static %}
+                                        {% if request.user.aluno.foto %}
+                                            <img id="AlunofotoIcon" src="{{ aluno.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
+                                        {% else %}
+                                            <img src="{% static '/alunos/th.jpg' %}" alt="User Photo" class="rounded-circle" style="width: 25px; height: 25px;">
+                                        {% endif %}
+                            </span>
+                            {{ user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Action</a></li>
