@@ -45,9 +45,9 @@
                             <span class="me-2">
                                         {% load static %}
                                         {% if request.user.aluno.foto %}
-                                            <img id="AlunofotoIcon" src="{{ aluno.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
+                                            <img id="AlunofotoIcon" src="{{ request.user.aluno.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
                                         {% else %}
-                                            <img src="{% static '/alunos/th.jpg' %}" alt="User Photo" class="rounded-circle" style="width: 25px; height: 25px;">
+                                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" alt="User Photo" class="rounded-circle" style="width: 45px; height: 45px;">
                                         {% endif %}
                             </span>
                             {{ user.username }}
