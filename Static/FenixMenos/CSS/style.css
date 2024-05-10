@@ -22,6 +22,26 @@
     padding: 8px 12px;
 }
 
+
+.custom-buttonn {
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho do texto */
+    color: white; /* Cor do texto */
+    background-image: linear-gradient(to right, #4b6cb7, #182848); /* Gradiente de fundo */
+    border: none; /* Sem borda */
+    border-radius: 20px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor do mouse como ponteiro */
+    outline: none; /* Remover contorno ao focar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: all 0.3s; /* Transição suave para efeitos de hover */
+}
+
+.custom-buttonn:hover {
+    background-image: linear-gradient(to right, #6b8dbb, #2a3a68); /* Gradiente mais claro ao passar o mouse */
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.2); /* Sombra maior */
+}
+
+
 /* dropdown */
 .dropdown-menu {
     min-width: 200px;

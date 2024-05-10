@@ -35,12 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
         let mode = elem.attr('data-bs-theme');
         if (mode === undefined) {
             elem.attr('data-bs-theme', 'dark');
+            $('#toggleDark').text('White Mode');
             localStorage.setItem('data-bs-theme', 'dark');
         } else {
             elem.removeAttr('data-bs-theme');
+            $('#toggleDark').text('Dark Mode');
             localStorage.removeItem('data-bs-theme');
+
         }
     });
+
+
 
     let mode = localStorage.getItem('data-bs-theme');
     if (mode === 'dark') {
