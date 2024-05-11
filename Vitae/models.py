@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
@@ -137,12 +138,15 @@ class Recomendacao(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     descricao = models.TextField()
 
-'''
+
 class Sugestao(models.Model):
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sugerido_por')
     assunto = models.CharField(max_length=100)
     descricao = models.TextField()
     data = models.DateField(auto_now_add=True)
-    estado = enum.EnumField(EstadoSub)
-'''
+    estado = enum.EnumField(EstadoSub, default=0)
+
+    def clean(self):
+        if self.admin and not self.admin.is_superuser:
+            raise ValidationError("Para avaliar sugestões, é necessário ser administrador")

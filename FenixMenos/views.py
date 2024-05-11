@@ -83,3 +83,7 @@ def registo(request):
             return render(request, 'registar.html', {'cursos': cursos})
     else:
         return render(request, 'registar.html', {'cursos': cursos})
+
+
+def sugestoes(request):
+    return render(request, 'sugestoes.html')

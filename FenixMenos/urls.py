@@ -38,6 +38,7 @@ urlpatterns = [
     path("FenixMenos/logout", views.logoutForm, name="logout"),
     path('api/', include(router.urls)),
     path('register/', RegistoAluno, name='register'),
+    path('FenixMenos/sugestoes', views.sugestoes, name="sugestoes"),
 ]
 
 if settings.DEBUG:
