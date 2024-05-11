@@ -4,6 +4,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
 from .models import *
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
+from .models import Aluno
 
 
 def perfil(request):
@@ -27,12 +30,23 @@ def detalhes_uc(request, acronimo):
     context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa}
     return render(request, 'Vitae/detalhes_uc.html', context)
 
-def detalhes_cv(request, utilizador):
 
-    utilizador = get_object_or_404(UC, acronimo=utilizador)
+def detalhes_cv(request, utilizador_id):
+    user = get_object_or_404(User, pk=utilizador_id)
 
-    context = {'uc': utilizador}
-    return render(request, 'Vitae/detalhes_uc.html', context)
+    try:
+        aluno = user.aluno
+
+    except Aluno.DoesNotExist:
+        aluno = None
+
+    if aluno:
+        alunotest = user
+        context = {'aluno': alunotest}
+    else:
+        context = {'error': 'No aluno profile found for this user.'}
+
+    return render(request, 'Vitae/cv.html', context)
 
 
 # Adicionar validaão que tem que ser prof
@@ -75,7 +89,6 @@ def alunosInscritos(request, acronimo):
     return render(request, 'Vitae/listar_alunos_uc.html', context)
 
 
-
 def fazer_upload(request):
     user = request.user
     if request.method == 'POST' and request.FILES.get('myfile'):
@@ -110,6 +123,7 @@ def salvar_perfil(request):
         # Redirecionar para alguma página de sucesso ou de volta ao perfil
         return redirect('Vitae:perfil')
 
+
 @login_required
 def editar_perfil(request):
     if request.method == 'POST':
@@ -122,4 +136,3 @@ def editar_perfil(request):
         return redirect('Vitae:perfil')
     else:
         return render(request, 'Vitae/editar_perfil.html', {'user': request.user})
-
