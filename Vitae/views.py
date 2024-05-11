@@ -88,7 +88,6 @@ def alunosInscritos(request, acronimo):
     context = {'alunos': alunos, 'uc': uc}
     return render(request, 'Vitae/listar_alunos_uc.html', context)
 
-
 def fazer_upload(request):
     user = request.user
     if request.method == 'POST' and request.FILES.get('myfile'):
@@ -98,13 +97,13 @@ def fazer_upload(request):
         if aluno:
             aluno.avatar = myfile
             aluno.save()
-            messages.success(request, "A sua foto foi carregada com sucesso!")
+            messages.success(request, "Foto carregada com sucesso!")
         elif professor:
             professor.avatar = myfile
             professor.save()
-            messages.success(request, "A sua foto foi carregada com sucesso!")
+            messages.success(request, "Foto carregada com sucesso!")
         else:
-            messages.error(request, "Perfil não encontrado para carregar a foto.")
+            messages.error(request, "Perfil não encontrado.")
 
         return redirect(reverse('Vitae:perfil'))
     else:
