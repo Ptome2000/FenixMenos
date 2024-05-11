@@ -4,52 +4,108 @@
 {% block content %}
 <div id="page-content-wrapper">
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="user-data card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">Detalhes do Usuário</h2>
-                        <!-- Botão de Editar -->
-                        <button id="editBtn" class="btn btn-primary">Editar</button>
-                        <button id="saveBtn" class="btn btn-success" style="display:none;">Salvar</button>
-                        <hr>
-                        <form id="profileForm" style="display:none;" method="post" action="{% url 'Vitae:salvar_perfil' %}">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="firstName" name="first_name" value="{{ request.user.first_name }}">
+        <div class="row justify-content-center"> <!-- Adiciona centralização horizontal -->
+            <!-- Coluna vazia para espaçamento -->
+            <div class="col-md-1"></div>
+
+            <!-- Detalhes do Usuário -->
+            <div class="col-md-6">
+                <div class="user-data">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Username</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">{{ request.user.username }}</p>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="lastName" class="form-label">Sobrenome</label>
-                                <input type="text" class="form-control" id="lastName" name="last_name" value="{{ request.user.last_name }}">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">{{ request.user.email }}</p>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Nome</p>
+                                </div>
+                                <div class="col-sm-7">
+                                   <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                </div>
                             </div>
-                            <!-- Campos adicionais podem ser incluídos aqui -->
-                        </form>
-                        <div id="profileDetails">
-                            <p><strong>Nome:</strong> <span id="fullName">{{ request.user.first_name }} {{ request.user.last_name }}</span></p>
-                            <p><strong>Email:</strong> <span id="emailText">{{ request.user.email }}</span></p>
-                            <!-- Detalhes adicionais podem ser incluídos aqui -->
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Foto do Perfil -->
+            <div class="col-md-4 text-center">
+                <fieldset>
+                    <legend>Perfil</legend>
+                    <figure class="figure d-inline-block mx-auto">
+                        {% if request.user.aluno.foto %}
+                            <img src="{{ request.user.aluno.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
+                        {% else %}
+                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
+                        {% endif %}
+                    </figure>
+                </fieldset>
+
+                        <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
+                            {% csrf_token %}
+                        <input type="file" name="myfile" class="mt-2">
+                        <input class="btn btn-info" role="button" type="submit" value="Upload">
+                    </form>
+            </div>
+
+
+
+            <!-- Detalhes do Usuário -->
+            <div class="col-md-6">
+                <div class="user-data">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Curso</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">{{ request.user.aluno.curso.designacao }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="mb-0">Numero de Aluno</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="text-muted mb-0">{{ request.user.aluno.numeroAluno }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Nome</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
         </div>
     </div>
 </div>
-<script>
-document.getElementById('editBtn').addEventListener('click', function() {
-    document.getElementById('profileForm').style.display = 'block';
-    document.getElementById('profileDetails').style.display = 'none';
-    document.getElementById('editBtn').style.display = 'none';
-    document.getElementById('saveBtn').style.display = 'inline-block';
-});
 
-document.getElementById('saveBtn').addEventListener('click', function() {
-    document.getElementById('profileForm').submit();
-});
-</script>
+
 {% endblock %}
