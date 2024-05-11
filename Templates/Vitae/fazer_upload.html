@@ -1,5 +1,5 @@
 {% load static %}
-<form method="post" enctype="multipart/form-data" action="{% url 'votacao:fazer_upload' %}">
+<form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
     {% csrf_token %}  <!-- Token de segurança para prevenir ataques de CSRF -->
     <input type="file" name="myfile">  <!-- Campo de seleção de arquivo -->
     <input type="submit" value="Upload">  <!-- Botão para enviar o formulário -->

@@ -57,4 +57,16 @@ def fazer_upload(request):
         return redirect(reverse('Vitae:perfil'))
 
 
+@login_required
+def salvar_perfil(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.email = request.POST.get('email', '')
+        user.save()
+        # Redirecionar para alguma página de sucesso ou de volta ao perfil
+        return redirect('Vitae:perfil')
+
+
 
