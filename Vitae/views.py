@@ -67,17 +67,6 @@ def alunosInscritos(request, acronimo):
     return render(request, 'Vitae/listar_alunos_uc.html', context)
 
 
-from django import template
-
-register = template.Library()
-
-@register.filter
-def filter_aluno(notas, aluno):
-    try:
-        return notas.get(aluno=aluno)
-    except Nota.DoesNotExist:
-        return None
-
 def fazer_upload(request):
     user = request.user
     if request.method == 'POST' and request.FILES.get('myfile') is not None:
