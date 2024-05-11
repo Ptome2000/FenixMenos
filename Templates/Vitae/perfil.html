@@ -2,110 +2,113 @@
 {% load static %}
 
 {% block content %}
-<div id="page-content-wrapper">
-    <div class="container-fluid">
-        <div class="row justify-content-center"> <!-- Adiciona centralização horizontal -->
-            <!-- Coluna vazia para espaçamento -->
-            <div class="col-md-1"></div>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row justify-content-center"> <!-- Adiciona centralização horizontal -->
+                <!-- Coluna vazia para espaçamento -->
+                <div class="col-md-1"></div>
 
-            <!-- Detalhes do Usuário -->
-            <div class="col-md-6">
-                <div class="user-data">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <p class="mb-0">Username</p>
+                <!-- Detalhes do Usuário -->
+                <div class="col-md-6">
+                    <div class="user-data">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Username</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.username }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-7">
-                                    <p class="text-muted mb-0">{{ request.user.username }}</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.email }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <p class="mb-0">Email</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Nome</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-7">
-                                    <p class="text-muted mb-0">{{ request.user.email }}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <p class="mb-0">Nome</p>
-                                </div>
-                                <div class="col-sm-7">
-                                   <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                <div class="text-center">
+                                    <a href="{% url 'Vitae:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Foto do Perfil -->
-            <div class="col-md-4 text-center">
-                <fieldset>
-                    <legend>Perfil</legend>
-                    <figure class="figure d-inline-block mx-auto">
-                        {% if request.user.aluno.foto %}
-                            <img src="{{ request.user.aluno.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
-                        {% else %}
-                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
-                        {% endif %}
-                    </figure>
-                </fieldset>
+                <!-- Foto do Perfil -->
+                <div class="col-md-4 text-center">
+                    <fieldset>
+                        <legend>Perfil</legend>
+                        <figure class="figure d-inline-block mx-auto">
+                            {% if request.user.aluno.foto %}
+                                <img src="{{ request.user.aluno.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
+                            {% else %}
+                                <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
+                            {% endif %}
+                        </figure>
+                    </fieldset>
 
-                        <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
-                            {% csrf_token %}
+                    <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
+                        {% csrf_token %}
                         <input type="file" name="myfile" class="mt-2">
                         <input class="btn btn-info" role="button" type="submit" value="Upload">
                     </form>
-            </div>
+                </div>
 
 
 
-            <!-- Detalhes do Usuário -->
-            <div class="col-md-6">
-                <div class="user-data">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <p class="mb-0">Curso</p>
+                <!-- Detalhes do Usuário -->
+                <div class="col-md-6">
+                    <div class="user-data">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Curso</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.curso.designacao }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-7">
-                                    <p class="text-muted mb-0">{{ request.user.aluno.curso.designacao }}</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Numero de Aluno</p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.numeroAluno }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <p class="mb-0">Numero de Aluno</p>
-                                </div>
-                                <div class="col-sm-3">
-                                    <p class="text-muted mb-0">{{ request.user.aluno.numeroAluno }}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Nome</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Nome</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        
+
+            </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

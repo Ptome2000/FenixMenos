@@ -1,0 +1,27 @@
+{% extends "skeleton.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Editar Perfil</h2>
+    <form method="POST" action="{% url 'Vitae:salvar_perfil' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="firstName">Nome</label>
+            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ user.first_name }}">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Sobrenome</label>
+            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ user.last_name }}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+        </div>
+        <div class="form-group">
+            <label for="numeroAluno">Número de Aluno</label>
+            <input type="text" class="form-control" id="numeroAluno" value="{{ user.aluno.numeroAluno }}" readonly>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+    </form>
+</div>
+{% endblock %}

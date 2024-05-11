@@ -37,10 +37,10 @@ def detalhes_cv(request, utilizador):
 
 # Adicionar validaão que tem que ser prof
 def UnidadesCurriculares(request):
-        unidades = EquipaDocente.objects.filter(professor=request.user.professor)
+    unidades = EquipaDocente.objects.filter(professor=request.user.professor)
 
-        context = {'unidades': unidades}
-        return render(request, 'Vitae/listar_prof_uc.html', context)
+    context = {'unidades': unidades}
+    return render(request, 'Vitae/listar_prof_uc.html', context)
 
 
 def alunosInscritos(request, acronimo):
@@ -106,5 +106,16 @@ def salvar_perfil(request):
         # Redirecionar para alguma página de sucesso ou de volta ao perfil
         return redirect('Vitae:perfil')
 
-
+@login_required
+def editar_perfil(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.email = request.POST.get('email', '')
+        user.save()
+        messages.success(request, "Perfil atualizado com sucesso!")
+        return redirect('Vitae:perfil')
+    else:
+        return render(request, 'Vitae/editar_perfil.html', {'user': request.user})
 
