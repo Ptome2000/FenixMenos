@@ -32,17 +32,21 @@ def detalhes_uc(request, acronimo):
 
 
 def detalhes_cv(request, utilizador_id):
+    global uc_skills_aluno_corrente
     user = get_object_or_404(User, pk=utilizador_id)
 
     try:
         aluno = user.aluno
+        uc_skills_aluno_corrente = UC_Skills_Aluno.objects.filter(alunOo_id=aluno.numeroAluno)
+
 
     except Aluno.DoesNotExist:
         aluno = None
 
     if aluno:
+
         alunotest = user
-        context = {'aluno': alunotest}
+        context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente}
     else:
         context = {'error': 'No aluno profile found for this user.'}
 
@@ -87,6 +91,7 @@ def alunosInscritos(request, acronimo):
 
     context = {'alunos': alunos, 'uc': uc}
     return render(request, 'Vitae/listar_alunos_uc.html', context)
+
 
 def fazer_upload(request):
     user = request.user

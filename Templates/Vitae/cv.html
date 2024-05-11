@@ -1,96 +1,164 @@
-{% extends "skeleton.html" %}
+{% extends 'skeleton.html' %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'Vitae/CSS/stylevitae.css' %}">
 
-{% block title %}
-    Página de Perfil
-{% endblock %}
+{% block title %}Perfil do Aluno{% endblock %}
 
-{% block content %}
-<div class="container mt-4">
-    {% if user.is_authenticated %}
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    {% if user.aluno and user.aluno.foto %}
-                        <img src="{{ user.aluno.foto.url }}" alt="Foto do aluno" class="img-fluid img-thumbnail">
-                    {% elif user.professor and user.professor.foto %}
-                        <img src="{{ user.professor.foto.url }}" alt="Foto do professor" class="img-fluid img-thumbnail">
-                    {% else %}
-                        <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Imagem padrão" class="img-fluid img-thumbnail">
-                    {% endif %}
+
+<div id="page-content-wrapper">
+    {% block content %}
+        {% if aluno.aluno %}
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                    <!-- Breadcrumb -->
+                    <div class="row">
+                        <div class="col">
+                            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Alunos</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">{{ aluno.get_full_name }}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <img src="{% if aluno.aluno.foto %}{{ aluno.aluno.foto.url }}{% else %}{% static 'FenixMenos/Imagens/th.jpg' %}{% endif %}" alt="Foto do Aluno" class="rounded-circle img-fluid" style="width: 150px;">
+                                    <h5 class="my-3">{{ aluno.get_full_name }}</h5>
+                                    <p class="text-muted mb-1">{{ aluno.aluno.curso.nome }}</p>
+                                    <p class="text-muted mb-4">{{ aluno.aluno.endereco }}</p>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <button type="button" class="btn btn-primary">Seguir</button>
+                                        <button type="button" class="btn btn-outline-primary ms-1">Mensagem</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Nome Completo</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ aluno.get_full_name }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Email</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ aluno.email }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">a
+                                            <p class="mb-0">Telefone</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ aluno.aluno.telefone }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Endereço</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ aluno.aluno.endereco }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumb -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush rounded-3">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fas fa-globe fa-lg text-warning"></i>
+                                            <p class="mb-0">https://mdbootstrap.com</p>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fab fa-github fa-lg text-body"></i>
+                                            <p class="mb-0">mdbootstrap</p>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                            <p class="mb-0">@mdbootstrap</p>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                            <p class="mb-0">mdbootstrap</p>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                            <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                            <p class="mb-0">mdbootstrap</p>
+                                        </li>
+                                        <!-- Additional social media links -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <!-- Primeira sub-coluna dentro de col-lg-8 -->
+                                <div class="col-lg-6">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Hard Skills</h5>
+                                            <br>
+                                            <div class="progress-container">
+                                                {% for skill_aluno in uc_skills_aluno %}
+                                                    {% if skill_aluno.uc_skills_id.skills_id.tipo == TipoSkills.Hard.value %}
+                                                        <div class="row align-items-center mb-4">
+                                                            <div class="col-sm-5">
+                                                                <p class="mb-0">{{ skill_aluno.uc_skills.skills.designacao }}</p>
+                                                            </div>
+                                                            <progress class="progress-bar1" value="{{ skill_aluno.progresso }}" max="100" style="width: 50%;"></progress>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Segunda sub-coluna dentro de col-lg-8 -->
+                                <div class="col-lg-6">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Soft Skills</h5>
+                                            <!-- Conteúdo -->
+                                            <p class="mb-0">Endereço: {{ aluno.aluno.endereco }}</p>
+                                            <!-- Outros detalhes podem ser adicionados aqui -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
-                    {% csrf_token %}
-                    <input type="file" name="myfile" class="form-control mt-3">
-                    <button type="submit" class="btn btn-info mt-2">Upload Foto</button>
-                </form>
+            </section>
+        {% else %}
+            <div class="container py-5">
+                <p>{{ error }}</p>
             </div>
-            <div class="col-md-8">
-                <div class="profile-details">
-                    <h2>Informações do {{ user.get_full_name }}</h2>
-                    <div class="mb-3"><strong>Username:</strong> {{ user.username }}</div>
-                    <div class="mb-3"><strong>Email:</strong> {{ user.email }}</div>
-                    {% if user.professor %}
-                        <div class="mb-3"><strong>Gênero:</strong> {{ user.professor.genero.get_label_display }}</div>
-                        <div class="mb-3"><strong>Número:</strong> {{ user.professor.numeroProfessor }}</div>
-                        <div class="mb-3"><strong>Gabinete:</strong> {{ user.professor.gabinete }}</div>
-                        <div class="mb-4">
-                            <strong>Unidades Curriculares:</strong>
-                            <ul>
-                                {% for uc in user.professor.uc_set.all %}
-                                    <li>{{ uc.designacao }} ({{ uc.acronimo }})</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <!-- Form for professors to assign skills to students -->
-                    {% elif user.aluno %}
-                        <div class="mb-3"><strong>Gênero:</strong> {{ user.aluno.genero.get_label_display }}</div>
-                        <div class="mb-3"><strong>Curso:</strong> {{ user.aluno.curso.designacao }}</div>
-                        <div class="mb-3"><strong>Skills:</strong>
-                            <ul>
-                                {% for skill in user.aluno.skills %}
-                                    <li>{{ skill.skill.designacao }} - Level: {{ skill.nivel }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="mb-4">
-                            <strong>Unidades Curriculares e Notas:</strong>
-                            <ul>
-                                {% for uc in user.aluno.curso.uc_set.all %}
-                                    <li>{{ uc.designacao }} ({{ uc.acronimo }}) - Nota: {{ notas|get_digit:uc.acronimo|default:"Não Avaliado" }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                    <button type="button" class="btn btn-primary">Editar Perfil</button>
-                </div>
-            </div>
+        {% endif %}
         </div>
-    {% else %}
-        <a href="{% url 'login' %}" class="alert alert-warning">Faça Login!</a>
-    {% endif %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    function loadUCs(courseCode, courseElement) {
-        fetch(`/api/curso/${courseCode}/ucs/`)
-            .then(response => response.json())
-            .then(ucs => {
-                const submenu = courseElement.nextElementSibling;
-                submenu.innerHTML = '';
-                ucs.forEach(uc => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = `/detalhes_uc/${uc.acronimo}`;
-                    a.classList.add('dropdown-item');
-                    a.textContent = uc.designacao;
-                    li.appendChild(a);
-                    submenu.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error loading UCs:', error));
-    }
-</script>
-{% endblock %}
+    {% endblock %}
