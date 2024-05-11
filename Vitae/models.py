@@ -161,7 +161,7 @@ class Recomendacao(models.Model):
 
 
 class Sugestao(models.Model):
-    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', blank=True)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', null=True, default=None, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sugerido_por')
     assunto = models.CharField(max_length=100)
     descricao = models.TextField()

@@ -1,0 +1,76 @@
+<h1> Sugestões submetidas </h1>
+<hr class="mt-2">
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col"> Assunto </th>
+        <th scope="col" class="text-center"> Sugerido por </th>
+        <th scope="col" class="text-center"> Data </th>
+        <th scope="col" class="text-center"> Estado </th>
+        <th scope="col" class="text-center"> Operações </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for sugestao in sugestoes %}
+        <tr>
+            <td> {{ sugestao.assunto }} </td>
+            <td class="text-center"> {{ sugestao.user }} </td>
+            <td class="text-center"> {{ sugestao.data }} </td>
+            {% if sugestao.estado == 0 %}
+                <td class="text-center"> Em avaliação </td>
+            {% elif sugestao.estado == 1 %}
+                <td class="table-success text-center"> Aprovado </td>
+            {% else %}
+                <td class="table-danger text-center"> Recusado </td>
+            {% endif %}
+            <td class="text-center"><button id="GradeSuggestion{{ forloop.counter }}" class="btn btn-outline-primary btn-sm"> Consultar </button></td>
+        </tr>
+
+        <div id="GradeSuggestionModal{{ forloop.counter }}" class="modalBox modal">
+            <div class="modal-content w-50">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Sugestão: {{ sugestao.assunto }} </h5>
+                        <button type="button" class="btn-close float-end" id="closeGradeSuggestionModal{{ forloop.counter }}" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="input-group mb-3 w-75">
+                            <p> {{ sugestao.descricao }} </p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-3">
+                            <p class="text-startfw-light"> Assim que atualizar, não poderá voltar a mudar este </p>
+                        </div>
+                        <div class="col-8">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm"> Estado </span>
+                                {% if sugestao.estado == 0 %}
+                                    <select class="form-select" name="estado" aria-label="Default select example">
+                                        {% for estado in estados %}
+                                            <option value="{{ estado.1 }}"> {{ estado.0 }} </option>
+                                        {% endfor %}
+                                    </select>
+                                {% else %}
+                                    <select class="form-select" name="estado" aria-label="Default select example" disabled>
+                                        <option> {{ sugestao.estado }} </option>
+                                    </select>
+                                {% endif %}
+                                <button class="btn btn-outline-primary" name="action" value="Atualizar" type="submit"> Atualizar </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="id" value="{{ sugestao.id }}">
+
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    </tbody>
+</table>
+

@@ -25,7 +25,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light ">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'index' %}">
                 <img src="{% static 'FenixMenos/Imagens/Iscte-logo.png' %}" alt="ISCTE Logo" style="height: 50px;">
             </a>
             <ul class="navbar-nav ms-auto">
@@ -54,7 +54,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'Vitae:perfil' %}">Perfil</a></li>
-                            <li><a class="dropdown-item" href="{% url 'Vitae:perfil' %}">Mudar</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sugestoes' %}"> Sugestões </a></li>
                             <hr class="bar" >
                             <li><a id ="dropdown" class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
                         </ul>

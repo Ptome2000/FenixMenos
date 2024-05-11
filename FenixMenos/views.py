@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from Vitae.models import Aluno, Curso, Genero
+from Vitae.models import Aluno, Curso, Sugestao, EstadoSub
 from FenixMenos import settings
 from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
 import json
@@ -86,4 +86,26 @@ def registo(request):
 
 
 def sugestoes(request):
-    return render(request, 'sugestoes.html')
+    if request.method == 'POST' and 'action' in request.POST:
+        action = request.POST['action']
+        if action == 'Criar':
+            assunto = request.POST['topic']
+            mensagem = request.POST['message']
+            Sugestao.objects.create(assunto=assunto, descricao=mensagem, user=request.user)
+            messages.success(request, 'Sugestão criada com sucesso')
+        elif action == 'Atualizar':
+            id = request.POST['id']
+            estado = request.POST['estado']
+            s = Sugestao.objects.get(id=id)
+            s.admin = request.user
+            s.estado = int(estado)
+            s.save()
+            messages.success(request, 'Sugestão avaliada com sucesso')
+    if request.user.is_superuser:
+        sugs = Sugestao.objects.all()
+        estados = EstadoSub.items()
+        context = {'sugestoes': sugs, 'estados': estados}
+    else:
+        sugs = Sugestao.objects.filter(user=request.user)
+        context = {'sugestoes': sugs}
+    return render(request, 'sugestoes.html', context)

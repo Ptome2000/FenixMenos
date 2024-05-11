@@ -45,8 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
-
     let mode = localStorage.getItem('data-bs-theme');
     if (mode === 'dark') {
         $('html').attr('data-bs-theme', 'dark');
@@ -72,6 +70,14 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#DeleteModal').css('display', 'none');
     })
 
+    $('#CreateSuggestion').click(function() {
+        $('#SuggestionModal').css('display', 'block');
+    })
+
+    $('#closeSuggestionModal').click(function() {
+        $('#SuggestionModal').css('display', 'none');
+    })
+
     $('[id^="GradeStudent"]').click(function() {
         let buttonId = $(this).attr('id');
         let modalId = buttonId.replace('GradeStudent', 'GradingModal');
@@ -84,6 +90,18 @@ document.addEventListener('DOMContentLoaded', function() {
             $('#' + modalId).css('display', 'none');
         });
 
+    $('[id^="GradeSuggestion"]').click(function() {
+        let buttonId = $(this).attr('id');
+        let modalId = buttonId.replace('GradeSuggestion', 'GradeSuggestionModal');
+        $('#' + modalId).css('display', 'block');
+    });
+
+    $('[id^="closeGradeSuggestionModal"]').click(function() {
+            var buttonId = $(this).attr('id');
+            var modalId = buttonId.replace('closeGradeSuggestionModal', 'GradeSuggestionModal');
+            $('#' + modalId).css('display', 'none');
+        });
+
     $('#DeleteComments').click(function() {
         $('#DeleteCommentsModal').css('display', 'block');
     })
@@ -91,10 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#closeDeleteCommentsModal').click(function() {
         $('#DeleteCommentsModal').css('display', 'none');
     })
-
-    if ($('.alert-success').length) {
-
-    }
 
     $('.btn-check').click(function() {
         let isChecked = $('.btn-check').is(':checked');

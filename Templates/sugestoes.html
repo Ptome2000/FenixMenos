@@ -1,0 +1,57 @@
+{% extends "skeleton.html" %}
+{% load static %}
+{% block title %} Sugestões FenixMenos {% endblock %}
+
+{% block content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            {% if request.user.is_superuser %}
+                {% include 'sugestoes_admin.html' %}
+            {% else %}
+
+                <div class="row">
+                    <div class="col d-flex align-items-start">
+                        <h1 class="display-6 pb-2"> As suas Sugestões </h1>
+                    </div>
+                    <div class="col d-flex align-items-end">
+                        <button id="CreateSuggestion" class="btn btn-outline-dark p-2">
+                            Criar nova Sugestão
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="mt-2">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col"> Assunto </th>
+                        <th scope="col" class="text-center"> Data </th>
+                        <th scope="col" class="text-center"> Estado </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sugestao in sugestoes %}
+                        <tr>
+                            <td> {{ sugestao.assunto }} </td>
+                            <td class="text-center"> {{ sugestao.data|date:"M j y" }} </td>
+                            {% if sugestao.estado == 0 %}
+                                <td class="text-center"> Em avaliação </td>
+                            {% elif sugestao.estado == 1 %}
+                                <td class="table-success text-center"> Aprovado </td>
+                            {% else %}
+                                <td class="table-danger text-center"> Recusado </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {% include 'criar_sugestao.html' %}
+
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
