@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, viewsets
-from Vitae.models import Curso, Aluno, Genero, Matricula
+from Vitae.models import Curso, Aluno, Genero
 
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
-        fields = ['codigo', 'designacao', 'creditos', 'descricao']
+        fields = ['codigo', 'designacao']
 
 
 class CursoViewSet(viewsets.ModelViewSet):
@@ -34,12 +34,12 @@ class UserAlunoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('foto', 'curso')
+        fields = ['curso', 'foto']
 
     def create(self, validated_data):
         curso = validated_data.pop('curso')
+        #genero = validated_data.pop('genero')
         foto = validated_data.pop('foto', None)
         user = User.objects.create_user(**validated_data)
         Aluno.objects.create(user=user, curso=curso, foto=foto)
-        Matricula.objects.create(user=user, curso=curso)
         return user

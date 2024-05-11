@@ -23,8 +23,7 @@ from serializers import CursoViewSet
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-#from frontend import build
-from .views import register, RegistoAluno
+from .views import RegistoAluno
 
 router = DefaultRouter()
 router.register(r'cursos', CursoViewSet)
