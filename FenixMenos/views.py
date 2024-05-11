@@ -20,25 +20,13 @@ from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
 import json
 
 
-@api_view(['POST'])
-def register(request):
-    if request.method == 'POST':
-        serializer = UserSerializer(request.data.get('username'), request.data.get('email'))
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['POST'])  # (2)
 def RegistoAluno(request):
     user_serializer = UserSerializer(data=request.data)
     if user_serializer.is_valid():
         user = user_serializer.save()
-        # Obtém curso e foto dos dados recebidos
         curso_codigo = request.data.get('curso')
-        #curso = Curso.objects.get(codigo=curso_codigo)
-        curso = Curso.objects.get(codigo=1)
+        curso = Curso.objects.get(designacao=curso_codigo)
         foto = request.FILES.get('foto')
         aluno = Aluno(user=user, curso=curso, foto=foto)
         aluno.save()
