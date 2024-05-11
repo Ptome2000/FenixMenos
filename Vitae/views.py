@@ -27,12 +27,20 @@ def detalhes_uc(request, acronimo):
     context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa}
     return render(request, 'Vitae/detalhes_uc.html', context)
 
+def detalhes_cv(request, utilizador):
+
+    utilizador = get_object_or_404(UC, acronimo=utilizador)
+
+    context = {'uc': utilizador}
+    return render(request, 'Vitae/detalhes_uc.html', context)
+
 
 # Adicionar validaão que tem que ser prof
 def UnidadesCurriculares(request):
-    unidades = EquipaDocente.objects.filter(professor=request.user.professor)
-    context = {'unidades': unidades}
-    return render(request, 'Vitae/listar_prof_uc.html', context)
+        unidades = EquipaDocente.objects.filter(professor=request.user.professor)
+
+        context = {'unidades': unidades}
+        return render(request, 'Vitae/listar_prof_uc.html', context)
 
 
 def alunosInscritos(request, acronimo):
@@ -65,6 +73,7 @@ def alunosInscritos(request, acronimo):
 
     context = {'alunos': alunos, 'uc': uc}
     return render(request, 'Vitae/listar_alunos_uc.html', context)
+
 
 
 def fazer_upload(request):
