@@ -47,6 +47,7 @@ class Curso(models.Model):
     def get_count_uc(self):
         return PlanoCurricular.objects.filter(curso=self).count()
 
+
 class Skills(models.Model):
     designacao = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -62,7 +63,6 @@ class UC(models.Model):
     creditos = models.IntegerField()
     descricao = models.TextField()
     coordenador = models.ForeignKey(Professor, on_delete=models.CASCADE)
-    skills = models.ManyToManyField(Skills)
 
     def __str__(self):
         return self.designacao
@@ -91,6 +91,7 @@ class PlanoCurricular(models.Model):
     def __str__(self):
         return self.curso.designacao + " - " + self.uc.designacao
 
+
 class EquipaDocente(models.Model):
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
@@ -109,7 +110,7 @@ class Aluno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.first_name + " " +  self.user.last_name
+        return self.user.first_name + " " + self.user.last_name
 
 
 class Matricula(models.Model):
@@ -131,6 +132,26 @@ class Nota(models.Model):
 
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
+
+
+class UC_Skills(models.Model):
+    skills = models.ForeignKey(Skills, on_delete=models.CASCADE)
+    uc = models.ForeignKey(UC, on_delete=models.CASCADE)
+    nivel = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
+
+    def clean(self):
+        if self.skills.tipo != TipoSkills.Hard.value and self.nivel is not None:
+            raise ValidationError("Nível só pode ser definido para skills do tipo 'Hard'.")
+
+
+class UC_Skills_Aluno(models.Model):
+    alunOo = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    uc_skills = models.ForeignKey(UC_Skills, on_delete=models.CASCADE)
+    progresso = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
+
+    def clean(self):
+        if self.uc_skills.skills.tipo != TipoSkills.Hard.value and self.progresso is not None:
+            raise ValidationError("Progresso só pode ser definido para skills do tipo 'Hard'.")
 
 
 class Recomendacao(models.Model):
