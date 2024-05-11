@@ -78,17 +78,21 @@ def alunosInscritos(request, acronimo):
 
 def fazer_upload(request):
     user = request.user
-    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+    if request.method == 'POST' and request.FILES.get('myfile'):
         myfile = request.FILES['myfile']
-        if hasattr(user, 'aluno'):
-            aluno = Aluno.objects.get(user=request.user)
+        aluno = Aluno.objects.filter(user=user).first()
+        professor = Professor.objects.filter(user=user).first()
+        if aluno:
             aluno.avatar = myfile
             aluno.save()
-        elif hasattr(user, 'professor'):
-            professor = Professor.objects.get(user=request.user)
+            messages.success(request, "A sua foto foi carregada com sucesso!")
+        elif professor:
             professor.avatar = myfile
             professor.save()
-        messages.success(request, "A sua foto foi carregada com sucesso!")
+            messages.success(request, "A sua foto foi carregada com sucesso!")
+        else:
+            messages.error(request, "Perfil não encontrado para carregar a foto.")
+
         return redirect(reverse('Vitae:perfil'))
     else:
         messages.error(request, "Erro ao fazer o upload.")
