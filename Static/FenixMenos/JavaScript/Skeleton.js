@@ -72,6 +72,18 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#DeleteModal').css('display', 'none');
     })
 
+    $('[id^="GradeStudent"]').click(function() {
+        let buttonId = $(this).attr('id');
+        let modalId = buttonId.replace('GradeStudent', 'GradingModal');
+        $('#' + modalId).css('display', 'block');
+    });
+
+    $('[id^="closeGradingModal"]').click(function() {
+            var buttonId = $(this).attr('id');
+            var modalId = buttonId.replace('closeGradingModal', 'GradingModal');
+            $('#' + modalId).css('display', 'none');
+        });
+
     $('#DeleteComments').click(function() {
         $('#DeleteCommentsModal').css('display', 'block');
     })

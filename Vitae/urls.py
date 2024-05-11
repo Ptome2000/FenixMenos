@@ -4,8 +4,9 @@ app_name = 'Vitae'
 
 urlpatterns = [
     path("perfil", views.perfil, name="perfil"),
-    path('curso/<str:codigo>/', views.detalhes_curso, name='detalhes_curso'),
-    path('uc/<str:acronimo>/', views.detalhes_uc, name='detalhes_uc'),
+    path('Curso/<str:acronimo>/', views.detalhes_curso, name='detalhes_curso'),
+    path('UC/<str:acronimo>/', views.detalhes_uc, name='detalhes_uc'),
     path('fazer_upload/', views.fazer_upload, name='fazer_upload'),
-    path('Unidades/', views.UnidadesCurriculares, name='UnidadesCurriculares'),
+    path('UC/Listagem', views.UnidadesCurriculares, name='UnidadesCurriculares'),
+    path('UC/<str:acronimo>/Alunos', views.alunosInscritos, name='alunosInscritos'),
 ]

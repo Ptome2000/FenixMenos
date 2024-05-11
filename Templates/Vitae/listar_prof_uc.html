@@ -1,10 +1,13 @@
 {% extends 'skeleton.html' %}
 {% load static %}
-{% block title %} Unidades de {{ request.user }}{% endblock %}
+{% block title %} Lista de Unidades {% endblock %}
 
 {% block content %}
     <div id="page-content-wrapper">
         <div class="container-fluid">
+
+            <h1> Unidades do professor {{ request.user.get_full_name }} </h1>
+            <hr class="mt-2">
 
             <table class="table table-hover">
                 <thead>
@@ -20,8 +23,8 @@
                     <tr>
                         <td><a href="{% url 'Vitae:detalhes_uc' plano.uc.acronimo %}" class="link-underline link-underline-opacity-0"> {{ plano.uc }} </a></td>
                         <td class="text-center"> {{ plano.uc.creditos }} </td>
-                        <td class="text-center">  </td>
-                        <td class="text-center"> <button> Consultar </button> </td>
+                        <td class="text-center"> {{ plano.uc.get_count_alunos_inscritos }} </td>
+                        <td class="text-center"> <a href="{% url 'Vitae:alunosInscritos' plano.uc.acronimo %}"><button class="btn btn-outline-primary btn-sm"> Consultar </button></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

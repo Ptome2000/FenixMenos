@@ -50,7 +50,7 @@
                                 <tbody>
                                 {% for plano in planos_curriculares %}
                                     <tr>
-                                        <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.codigo %}" class="link-underline link-underline-opacity-0"> {{ plano.curso }} </a></td>
+                                        <td><a href="{% url 'Vitae:detalhes_curso' plano.curso.acronimo %}" class="link-underline link-underline-opacity-0"> {{ plano.curso }} </a></td>
                                         <td class="text-center"> {{ plano.ano }}</td>
                                         <td class="text-center"> {{ plano.semestre }}</td>
                                     </tr>

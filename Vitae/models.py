@@ -33,7 +33,7 @@ class Professor(models.Model):
 
 
 class Curso(models.Model):
-    codigo = models.IntegerField( primary_key=True)
+    codigo = models.IntegerField(primary_key=True)
     acronimo = models.CharField(max_length=4, unique=True)
     designacao = models.CharField(max_length=100)
     creditos = models.IntegerField()
@@ -73,6 +73,13 @@ class UC(models.Model):
         super().save(*args, **kwargs)
         EquipaDocente.objects.get_or_create(uc=self, professor=self.coordenador)
 
+    def get_count_alunos_inscritos(self):
+        plano = PlanoCurricular.objects.filter(uc=self)
+        count = 0
+        for uc in plano:
+            count += Matricula.objects.filter(curso=uc.curso, ano=uc.ano).count()
+        return count
+
 
 class PlanoCurricular(models.Model):
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
@@ -82,7 +89,6 @@ class PlanoCurricular(models.Model):
 
     def __str__(self):
         return self.curso.designacao + " - " + self.uc.designacao
-
 
 class EquipaDocente(models.Model):
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
@@ -104,6 +110,7 @@ class Aluno(models.Model):
     def __str__(self):
         return self.user.first_name + " " +  self.user.last_name
 
+
 class Matricula(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
@@ -120,6 +127,9 @@ class Nota(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
     nota = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(20)])
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
 
 
 class Recomendacao(models.Model):
