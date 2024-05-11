@@ -1,0 +1,49 @@
+{% extends 'skeleton.html' %}
+{% load static %}
+{% block title %} Avaliação de Inscritos {% endblock %}
+
+{% block content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h1> Alunos inscritos a {{ uc.designacao }} </h1>
+            <hr class="mt-2">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col"> Nº Aluno </th>
+                    <th scope="col" class="text-center"> Nome </th>
+                    <th scope="col" class="text-center"> Curso </th>
+                    <th scope="col" class="text-center"> Nota </th>
+                    <th scope="col" class="text-center"> Operação </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if alunos %}
+                    {% for a in alunos %}
+                        <tr>
+                            <td> {{ a.aluno.numeroAluno }}</td>
+                            <td class="text-center"> {{ a.aluno.user.get_full_name }} </td>
+                            <td class="text-center"> {{ a.curso }} </td>
+                                {% if a.nota %}
+                                    <td class="text-center"> {{ a.nota }} </td>
+                                    <td class="text-center"><button id="GradeStudent{{ forloop.counter }}" class="btn btn-outline-primary btn-sm"> Reavaliar </button></td>
+                                {% else %}
+                                    <td class="text-center"> - </td>
+                                    <td class="text-center"><button id="GradeStudent{{ forloop.counter }}" class="btn btn-outline-primary btn-sm"> Avaliar </button></td>
+                                {% endif %}
+                        </tr>
+                        {% include 'Vitae/avaliar.html' with a=a counter=forloop.counter %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center"> Ainda não existem alunos inscritos </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+<div id="GradingModal{{ counter }}" class="modalBox modal">
+    <div class="modal-content w-50">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="modal-header">
+                <h5 class="modal-title"> Avaliação do(a) aluno(a) {{ a.aluno.user.get_full_name }} </h5>
+                <button type="button" class="btn-close float-end" id="closeGradingModal{{ counter }}" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="input-group mb-3 w-75">
+                    <input type="number" name="nota" id="nota" placeholder="Nota" class="form-control" min="10" max="20" aria-describedby="button-addon1" required>
+                    <button class="btn btn-outline-success" type="submit" name="action" value="Responder"> Submeter Nota </button>
+                </div>
+                
+                <input type="hidden" name="aluno" value="{{ a.aluno.numeroAluno }}">
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
