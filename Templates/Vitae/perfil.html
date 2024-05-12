@@ -5,12 +5,8 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <!-- Empty column for spacing -->
                 <div class="col-md-1"></div>
-
-                <!-- User Details in one column -->
                 <div class="col-md-6">
-                    <!-- User Details Block 1 -->
                     <div class="user-data">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -40,114 +36,138 @@
                                         <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
                                     </div>
                                 </div>
+                                <hr>
+                                {% if request.user.professor %}
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p class="mb-0">Gabinete</p>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <p class="text-muted mb-0">{{ request.user.professor.gabinete }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p class="mb-0">Número de Professor</p>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <p class="text-muted mb-0">{{ request.user.professor.numeroProfessor }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a href="{% url 'Vitae:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                                    </div>
+                                {% elif request.user.aluno %}
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p class="mb-0">Curso</p>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <p class="text-muted mb-0">{{ request.user.aluno.curso.designacao }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p class="mb-0">Número de Aluno</p>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <p class="text-muted mb-0">{{ request.user.aluno.numeroAluno }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="user-data">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Telefone</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.telefone }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Morada</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.morada }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Instagram</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.instagram }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">GitHub</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.github }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Facebook</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.facebook }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="mb-0">Data de Nascimento</p>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <p class="text-muted mb-0">{{ request.user.aluno.data_de_nascimento|date:"d/m/Y" }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="{% url 'Vitae:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                                            <a href="{% url 'Vitae:certficacaoprojecto' %}" class="btn btn-secondary">Certificações e Projetos</a>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- User Details Block 2 -->
-                    <div class="user-data">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Curso</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.curso.designacao }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Numero de Aluno</p>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.numeroAluno }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Telefone</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.telefone }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Morada</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.morada }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Instagram</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.instagram }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">GitHub</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.github }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Facebook</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.facebook }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p class="mb-0">Data de Nascimento</p>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.aluno.data_de_nascimento|date:"d/m/Y" }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="{% url 'Vitae:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
-                            <a href="{% url 'Vitae:certficacaoprojecto' %}" class="btn btn-secondary">Certificações e Projetos</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Profile Picture Section -->
                 <div class="col-md-4 text-center">
                     <fieldset>
                         <legend>Perfil</legend>
                         <figure class="figure d-inline-block mx-auto">
-                            {% if request.user.aluno.foto %}
-                                <img src="{{ request.user.aluno.foto.url }}?{{ request.user.aluno.foto.last_modified }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
+                            {% if request.user.professor and request.user.professor.foto %}
+                                <img src="{{ request.user.professor.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil do professor">
+                            {% elif request.user.aluno and request.user.aluno.foto %}
+                                <img src="{{ request.user.aluno.foto.url }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil do aluno">
                             {% else %}
                                 <img src="{% static 'FenixMenos/Imagens/th.jpg' %}?{{ now }}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
                             {% endif %}
                         </figure>
+                        <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
+                            {% csrf_token %}
+                            <input type="file" name="myfile" class="mt-2">
+                            <input class="btn btn-info" role="button" type="submit" value="Upload">
+                        </form>
                     </fieldset>
-
-                    <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
-                        {% csrf_token %}
-                        <input type="file" name="myfile" class="mt-2">
-                        <input class="btn btn-info" role="button" type="submit" value="Upload">
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
