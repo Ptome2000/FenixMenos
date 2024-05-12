@@ -1,27 +1,44 @@
 {% extends 'skeleton.html' %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-    .carousel-caption {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        bottom: initial;
-        right: initial;
-    }
-    .carousel {
-        position: relative;
-        margin: auto;
-    }
-    .welcome-text {
-        font-size: 2rem;
-        color: white; 
-        text-shadow: 2px 2px 4px #000000; 
-    }
-</style>
-
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCTE FENIX-</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            bottom: initial;
+            right: initial;
+        }
+        .carousel {
+            position: relative;
+            margin: auto;
+        }
+        .welcome-text {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        .fixed-right {
+            position: sticky;
+            top: 0; 
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
 {% block content %}
     <main>
         <div id="page-content-wrapper">
@@ -64,14 +81,45 @@
             {% else %}
                 <div class="container-fluid">
                     <div class="row">
-                        
-                        <!-- Conteúdo Principal -->
+                        <!-- News Section -->
                         <div class="col-lg-8">
+                            <h2>News</h2>
+                            <div class="row">
+                                <!-- News Item 1 -->
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/phaseOfApplicationNews.jpg' %}" class="card-img-top" alt="1st phase of application">
+                                        <div class="card-body">
+                                            <h5 class="card-title">1st phase of application - Academic Year 2024/2025</h5>
+                                            <a href="https://www.iscte-iul.pt/news/2367/1st-phase-of-application-academic-year-20242025" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- News Item 2 -->
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/imCitiesConsortiumNews.jpg' %}" class="card-img-top" alt="Iscte leads European InCITIES Consortium">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Iscte leads European InCITIES Consortium</h5>
+                                            <a href="https://www.iscte-iul.pt/news/2044/iscte-leads-european-incities-consortium" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- News Item 3 -->
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/ukranianStudentsNews.jpg' %}" class="card-img-top" alt="Information for Ukrainian students">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Information for Ukrainian students</h5>
+                                            <a href="https://www.iscte-iul.pt/news/1982/information-ukranian-students" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col-lg-4">
-                            <!-- Widget 1 -->
-                            <div class="card mb-4 shadow-sm" style="margin-top: 20px;"> <!-- Ajuste '20px' conforme necessário -->
+                        <!-- Sidebar for Community Posts and Top Students -->
+                        <div class="col-lg-4 fixed-right">
+                            <div class="card mb-4 shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title">Ultimos Posts da Comunidade?</h5>
                                     <ul class="list-unstyled">
@@ -81,8 +129,6 @@
                                     </ul>
                                 </div>
                             </div>
-
-                            <!-- Widget 2 -->
                             <div class="card mb-4 shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title">Top Alunos</h5>
@@ -92,18 +138,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <fieldset>
-                        Top Alunos
-                    </fieldset>
-
-                </div>
                 </div>
             {% endif %}
         </div>
     </main>
 {% endblock %}
-
+</body>
+</html>
 
 <!-- Adicionar slideshow com imagens do iscte? -->
 <!--
