@@ -104,7 +104,7 @@
             </ul>
         </li>
         {% if request.user.is_superuser %}
-            <li><a href=""><i class="fa fa-gear"></i><span> Registar Professores </span></a></li>
+            <li><a href="{% url 'registarProfessor ' %}"><i class="fa fa-gear"></i><span> Registar Professores </span></a></li>
         {% endif %}
         <li><a href="{% url 'sugestoes' %}"><i class="bi bi-ticket"></i><span> Sugestões </span></a></li>
     </ul>
