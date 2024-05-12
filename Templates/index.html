@@ -114,27 +114,37 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar for Community Posts and Top Students -->
                         <div class="col-lg-4 fixed-right">
                             <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Ultimos Posts da Comunidade</h5>
-                                <ul class="list-unstyled">
-                                    {% for post in latest_posts %}
-                                        <li>{{ post.user.username }} - {{ post.titulo }}</li> 
-                                    {% endfor %}
-                                </ul>
+                                <div class="card-body">
+                                    <h5 class="card-title">Últimos Posts da Comunidade</h5>
+                                    <ul class="list-unstyled">
+                                        {% for post in latest_posts %}
+                                            <div class="w3-card-4" style="margin-bottom: 20px;">
+                                                <header class="w3-container w3-light-grey">
+                                                    <h3>Post: {{ post.titulo }}</h3>
+                                                </header>
+                                                <div class="w3-container">
+                                                    <p><strong>Last Comment:</strong> {{ post.latest_comment }}</p>
+                                                    <p><strong>by:</strong> {{ post.latest_comment_user }} <strong>at</strong> {{ post.latest_comment_date|date:"d M Y H:i" }}</p>
+                                                </div>
+                                                <footer class="w3-container w3-blue">
+                                                    <h5>Posted by {{ post.user.username }}</h5>
+                                                </footer>
+                                            </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Top Alunos</h5>
-                                <p>Ten questions you should answer truthfully</p>
-                                <p>Five unbelievable facts about money</p>
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Top Alunos</h5>
+                                    <p>Ten questions you should answer truthfully</p>
+                                    <p>Five unbelievable facts about money</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             {% endif %}
         </div>

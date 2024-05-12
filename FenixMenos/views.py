@@ -49,6 +49,16 @@ def RegistoAluno(request):
 
 def index(request):
     latest_posts = Post.objects.order_by('-id')[:3]
+    for post in latest_posts:
+        latest_comment = post.comentario_set.order_by('-data').first()
+        if latest_comment:
+            post.latest_comment = latest_comment.texto
+            post.latest_comment_date = latest_comment.data
+            post.latest_comment_user = latest_comment.user.username
+        else:
+            post.latest_comment = "No comments yet"
+            post.latest_comment_date = "N/A"
+            post.latest_comment_user = "N/A"
     context = {
         'latest_posts': latest_posts
     }
