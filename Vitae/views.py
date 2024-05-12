@@ -95,27 +95,28 @@ def alunosInscritos(request, acronimo):
     return render(request, 'Vitae/listar_alunos_uc.html', context)
 
 
+@login_required
 def fazer_upload(request):
-    user = request.user
     if request.method == 'POST' and request.FILES.get('myfile'):
         myfile = request.FILES['myfile']
-        aluno = Aluno.objects.filter(user=user).first()
-        professor = Professor.objects.filter(user=user).first()
+        aluno = Aluno.objects.filter(user=request.user).first()
+        professor = Professor.objects.filter(user=request.user).first()
         if aluno:
-            aluno.avatar = myfile
+            aluno.foto = myfile
             aluno.save()
-            messages.success(request, "Foto carregada com sucesso!")
-        elif professor:
-            professor.avatar = myfile
-            professor.save()
-            messages.success(request, "Foto carregada com sucesso!")
-        else:
-            messages.error(request, "Perfil não encontrado.")
+            messages.success(request, "Foto de perfil atualizada com sucesso!")
 
-        return redirect(reverse('Vitae:perfil'))
+        elif professor:
+            professor.foto = myfile
+            professor.save()
+            messages.success(request, "Foto de perfil atualizada com sucesso!")
+        else:
+            messages.error(request, "Perfil não encontrado")
+
+        return redirect('Vitae:perfil')
     else:
-        messages.error(request, "Erro ao fazer o upload.")
-        return redirect(reverse('Vitae:perfil'))
+        messages.error(request, "Nenhum arquivo foi enviado.")
+        return redirect('Vitae:perfil')
 
 
 @login_required
@@ -150,7 +151,10 @@ def recomendar(request, numeroAluno):
         aluno = Aluno.objects.get(numeroAluno=numeroAluno)
         if request.method == 'POST':
             recomendacao = request.POST.get('recomendacao')
-            Recomendacao.objects.create(aluno=aluno, descricao=recomendacao, professor=request.user)
+            professor = Professor.objects.get(user=request.user)
+            Recomendacao.objects.create(aluno=aluno, descricao=recomendacao, professor=professor)
+            messages.success(request, 'Recomendação feita com sucesso')
+            return HttpResponseRedirect(reverse('Vitae:cv', args=[aluno.user.username]))
         else:
             return render(request, 'Vitae/recomendar.html', {'aluno': aluno})
     except KeyError:
