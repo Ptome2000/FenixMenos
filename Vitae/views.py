@@ -36,7 +36,7 @@ def detalhes_uc(request, acronimo):
 
 
 def detalhes_cv(request, utilizador):
-    global uc_skills_aluno_corrente, certificacoes, projectos
+    global uc_skills_aluno_corrente, certificacoes, projectos, recomendacoes
     user = get_object_or_404(User, username=utilizador)
 
     try:
@@ -44,7 +44,7 @@ def detalhes_cv(request, utilizador):
         uc_skills_aluno_corrente = UC_Skills_Aluno.objects.filter(alunOo_id=aluno.numeroAluno)
         certificacoes = Certificacao.objects.filter(aluno=aluno.numeroAluno)
         projectos = Projecto.objects.filter(aluno=aluno.numeroAluno)
-
+        recomendacoes = Recomendacao.objects.filter(aluno=aluno.numeroAluno)
 
     except Aluno.DoesNotExist:
         aluno = None
@@ -53,7 +53,7 @@ def detalhes_cv(request, utilizador):
 
         alunotest = user
         context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente, 'certificacoes': certificacoes,
-                   'projectos': projectos}
+                   'projectos': projectos ,   'recomendacoes': recomendacoes }
     else:
         context = {'error': 'No aluno profile found for this user.'}
 

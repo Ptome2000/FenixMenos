@@ -39,6 +39,7 @@ class Curso(models.Model):
     creditos = models.IntegerField()
     descricao = models.TextField()
     coordenador = models.OneToOneField(Professor, on_delete=models.CASCADE)
+
     #anos = models.IntegerField(default=3)
 
     def __str__(self):
@@ -162,6 +163,7 @@ class Nota(models.Model):
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
 
+
 '''
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -213,10 +215,12 @@ class Projecto(models.Model):
     data = models.DateField()
     descricao = models.TextField()
 
-class Certificacao (models.Model):
+
+class Certificacao(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
     nome = models.CharField(max_length=50)
     url = models.URLField()
+
 
 class Recomendacao(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)

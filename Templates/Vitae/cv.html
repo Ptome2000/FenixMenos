@@ -32,9 +32,11 @@
                                     <p class="text-muted mb-1">{{ aluno.aluno.curso.nome }}</p>
                                     <p class="text-muted mb-4">{{ aluno.aluno.endereco }}</p>
                                     <div class="d-flex justify-content-center mb-2">
-                                        <a href="{% url 'Vitae:recomendar' aluno.aluno.numeroAluno %}">
-                                        <button type="button" class="btn btn-primary">Recomendação</button>
-                                        </a>
+                                        {% if request.user.professor %}
+                                            <a href="{% url 'Vitae:recomendar' aluno.aluno.numeroAluno %}">
+                                                <button type="button" class="btn btn-primary">Recomendação</button>
+                                            </a>
+                                        {% endif %}
                                         <form action="{% url 'Vitae:generate-pdf' aluno.username  %}" method="post">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-primary ms-1">Download</button>
@@ -141,7 +143,8 @@
                                                             <progress class="progress-bar1" value="{{ skill_aluno.progresso }}" max="100" style="width: 50%;"></progress>
                                                         </div>
                                                     {% endif %}
-
+                                                {% empty %}
+                                                    <p>Não há habilidades do tipo 'Hard' registradas.</p>
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -175,49 +178,85 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card mb-4">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Certificacoes</h5>
-                                    {% for certificacao in certificacoes %}
-                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <div>
-                                                <p class="mb-0"><strong>{{ certificacao.nome }}</strong></p>
-                                            </div>
-                                        </li>
-                                    {% endfor %}
+                        {% if certificacoes %}
+                            <div class="col-lg-4">
+                                <div class="card mb-4">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Certificacoes</h5>
+                                        {% for certificacao in certificacoes %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <div>
+                                                    <p class="mb-0"><strong>{{ certificacao.nome }}</strong></p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
+
+                        {% if projectos %}
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Projectos</h5>
+                                            <br>
+                                            <div class="progress-container">
+                                                {% for projecto  in projectos %}
+                                                    <div class="row align-items-center mb-4">
+                                                        <div class="col-sm-5">
+                                                            <p class="mb-0">{{ projecto.nome }}</p>
+                                                            <small class="text-muted">{{ projecto.data }}</small>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">{{ projecto.descricao }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
 
 
+                    {% if recomendacoes %}
+                        <div class="row justify-content-end">
                         <div class="col-lg-8">
-                            <div class="row">
-                                <div class="card mb-4">
+                            <div class="row ">
+                                <div class="card mb-4 ">
                                     <div class="card-body">
-                                        <h5 class="card-title">Projectos</h5>
+                                        <h5 class="card-title">Recomendações</h5>
                                         <br>
                                         <div class="progress-container">
-                                            {% for projecto  in projectos %}
+                                            {% for recomendacao  in recomendacoes %}
                                                 <div class="row align-items-center mb-4">
                                                     <div class="col-sm-5">
-                                                        <p class="mb-0">{{ projecto.nome }}</p>
-                                                        <small class="text-muted">{{ projecto.data }}</small> <!-- Adicione esta linha para a data -->
+                                                        <p class="mb-0">{{ recomendacao.professor.user.get_full_name }}</p>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <div class="card">
                                                             <div class="card-body">
-                                                                <p class="card-text">{{ projecto.descricao }}</p>
+                                                                <p class="card-text">{{ recomendacao.descricao }}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
-                    </div>
+                            </div>
+                        </div>
+                        </div>
+                    {% endif %}
                 </div>
             </section>
         {% else %}
