@@ -23,7 +23,7 @@
         <div class="container-fluid text-center mt-4">
         <h1>CURRICULUM VITAE</h1>
     </div>
-    
+
     {% if aluno.aluno %}
         <section style="background-color: #eee;">
             <div class="container py-5">
@@ -173,52 +173,89 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card mb-4">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Certificacoes</h5>
-                                {% for certificacao in certificacoes %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <div>
-                                            <p class="mb-0"><strong>{{ certificacao.nome }}</strong></p>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
 
-
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Projectos</h5>
-                                    <br>
-                                    <div class="container">
-                                        {% for projecto  in projectos %}
-                                            <div class="row align-items-center mb-4">
-                                                <div class="col-sm-5">
-                                                    <p class="mb-0">{{ projecto.nome }}</p>
-                                                    <small class="text-muted">{{ projecto.data }}</small> <!-- Adicione esta linha para a data -->
+                    <div class="row">
+                        {% if certificacoes %}
+                            <div class="col-lg-4">
+                                <div class="card mb-4">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Certificacoes</h5>
+                                        {% for certificacao in certificacoes %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <div>
+                                                    <p class="mb-0"><strong>{{ certificacao.nome }}</strong></p>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <p class="card-text">{{ projecto.descricao }}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            </li>
                                         {% endfor %}
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
+
+                        {% if projectos %}
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Projectos</h5>
+                                            <br>
+                                            <div class="progress-container">
+                                                {% for projecto  in projectos %}
+                                                    <div class="row align-items-center mb-4">
+                                                        <div class="col-sm-5">
+                                                            <p class="mb-0">{{ projecto.nome }}</p>
+                                                            <small class="text-muted">{{ projecto.data }}</small>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">{{ projecto.descricao }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-        </section>
+
+
+                    {% if recomendacoes %}
+                        <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="row ">
+                                <div class="card mb-4 ">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Recomendações</h5>
+                                        <br>
+                                        <div class="progress-container">
+                                            {% for recomendacao  in recomendacoes %}
+                                                <div class="row align-items-center mb-4">
+                                                    <div class="col-sm-5">
+                                                        <p class="mb-0">{{ recomendacao.professor.user.get_full_name }}</p>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <p class="card-text">{{ recomendacao.descricao }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
     {% else %}
         <div class="container py-5">
             <p>{{ error }}</p>
