@@ -8,35 +8,6 @@
     <title>ISCTE FENIX-</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .carousel-caption {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            bottom: initial;
-            right: initial;
-        }
-        .carousel {
-            position: relative;
-            margin: auto;
-        }
-        .welcome-text {
-            font-size: 2rem;
-            color: white;
-            text-shadow: 2px 2px 4px #000000;
-        }
-        .fixed-right {
-            position: sticky;
-            top: 0; 
-            height: 100vh;
-            overflow-y: auto;
-        }
-        .card-img-top {
-            height: 180px;
-            object-fit: cover;
-        }
-    </style>
 </head>
 <body>
 {% block content %}
@@ -85,33 +56,59 @@
                         <div class="col-lg-8">
                             <h2>News</h2>
                             <div class="row">
-                                <!-- News Item 1 -->
+                                <!-- First row of News Items -->
                                 <div class="col-md-4 mb-4">
                                     <div class="card">
-                                        <img src="{% static '/FenixMenos/Imagens/News/phaseOfApplicationNews.jpg' %}" class="card-img-top" alt="1st phase of application">
+                                        <img src="{% static '/FenixMenos/Imagens/News/phaseOfApplicationNews.jpg' %}" class="card-img-top" alt="1st phase of application" width="350" height="250">
                                         <div class="card-body">
                                             <h5 class="card-title">1st phase of application - Academic Year 2024/2025</h5>
-                                            <a href="https://www.iscte-iul.pt/news/2367/1st-phase-of-application-academic-year-20242025" class="btn btn-primary">Read More</a>
+                                            <a href="https://www.iscte-iul.pt/news/2367/1st-phase-of-application-academic-year-20242025" class="btn btn-primary">Leia Mais</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- News Item 2 -->
                                 <div class="col-md-4 mb-4">
                                     <div class="card">
-                                        <img src="{% static '/FenixMenos/Imagens/News/imCitiesConsortiumNews.jpg' %}" class="card-img-top" alt="Iscte leads European InCITIES Consortium">
+                                        <img src="{% static '/FenixMenos/Imagens/News/imCitiesConsortiumNews.jpg' %}" class="card-img-top" alt="Iscte leads European InCITIES Consortium" width="350" height="250">
                                         <div class="card-body">
                                             <h5 class="card-title">Iscte leads European InCITIES Consortium</h5>
-                                            <a href="https://www.iscte-iul.pt/news/2044/iscte-leads-european-incities-consortium" class="btn btn-primary">Read More</a>
+                                            <a href="https://www.iscte-iul.pt/news/2044/iscte-leads-european-incities-consortium" class="btn btn-primary">Leia Mais</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- News Item 3 -->
                                 <div class="col-md-4 mb-4">
                                     <div class="card">
-                                        <img src="{% static '/FenixMenos/Imagens/News/ukranianStudentsNews.jpg' %}" class="card-img-top" alt="Information for Ukrainian students">
+                                        <img src="{% static '/FenixMenos/Imagens/News/ukranianStudentsNews.jpg' %}" class="card-img-top" alt="Information for Ukrainian students" width="350" height="250">
                                         <div class="card-body">
                                             <h5 class="card-title">Information for Ukrainian students</h5>
-                                            <a href="https://www.iscte-iul.pt/news/1982/information-ukranian-students" class="btn btn-primary">Read More</a>
+                                            <a href="https://www.iscte-iul.pt/news/1982/information-ukranian-students" class="btn btn-primary">Leia Mais</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Second row of News Items -->
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/ReserchConnectPlatformNews.jpg' %}" class="card-img-top" alt="Iscte subscribes the Research Connect platform" width="350" height="250">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Iscte subscribes the Research Connect platform</h5>
+                                            <a href="https://www.iscte-iul.pt/news/2103/iscte-subscribes-the-research-connect-pla" class="btn btn-primary">Leia Mais</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/internationalStudentsNews.jpg' %}" class="card-img-top" alt="Iscte welcomes 350 international students" width="350" height="250">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Iscte welcomes 350 international students</h5>
+                                            <a href="https://www.iscte-iul.pt/news/2060/iscte-welcomes-350-international-students" class="btn btn-primary">Leia Mais</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="{% static '/FenixMenos/Imagens/News/creatingNewResidencesNews.jpg' %}" class="card-img-top" alt="Iscte on the vanguard in creating new residences" width="350" height="250">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Iscte on the vanguard in creating new residences</h5>
+                                            <a href="https://www.iscte-iul.pt/news/1582/iscte-on-the-vanguard-in-creating-new-residences" class="btn btn-primary">Leia Mais</a>
                                         </div>
                                     </div>
                                 </div>
@@ -146,14 +143,7 @@
 </body>
 </html>
 
-<!-- Adicionar slideshow com imagens do iscte? -->
-<!--
-    <form>
 
-    <fieldset>
-        O que se passa na Comunidade?
-    </fieldset>
- -->
 
 <!-- Adicionar os 3 mais recentes posts do forum aqui -->
 <!--
