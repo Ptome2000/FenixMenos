@@ -1,0 +1,228 @@
+<head>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- -->
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/7f8c1f8b68.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    {% load static %}
+    <title> {% block title %} Template {% endblock %} </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'FenixMenos/CSS/style.css' %}">
+    <script src="{% static 'FenixMenos/JavaScript/Skeleton.js' %}" defer></script>
+
+
+</head>
+
+<body>
+{% block content %}
+        <div class="container-fluid text-center mt-4">
+        <h1>CURRICULUM VITAE</h1>
+    </div>
+    
+    {% if aluno.aluno %}
+        <section style="background-color: #eee;">
+            <div class="container py-5">
+                <!-- Breadcrumb -->
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <img src="{% if aluno.aluno.foto %}{{ aluno.aluno.foto.url }}{% else %}{% static 'FenixMenos/Imagens/th.jpg' %}{% endif %}" alt="Foto do Aluno" class="rounded-circle img-fluid" style="width: 150px;">
+                                <h5 class="my-3">{{ aluno.get_full_name }}</h5>
+                                <p class="text-muted mb-1">{{ aluno.aluno.curso.nome }}</p>
+                                <p class="text-muted mb-4">{{ aluno.aluno.endereco }}</p>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Nome Completo</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ aluno.get_full_name }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ aluno.email }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Telefone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ aluno.aluno.telefone }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Endereço</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ aluno.aluno.morada }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Data de Nascimento</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{ aluno.aluno.data_de_nascimento }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breadcrumb -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush rounded-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-github fa-lg text-body"></i>
+                                        <p class="mb-0">{{ aluno.aluno.github }}</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                        <p class="mb-0">{{ aluno.aluno.github }}</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                        <p class="mb-0">{{ aluno.aluno.instagram }}</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                        <p class="mb-0">{{ aluno.aluno.facebook }}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <!-- Primeira sub-coluna dentro de col-lg-8 -->
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Hard Skills</h5>
+                                        <br>
+                                        <div  class="progress-container">
+                                            {% for skill_aluno in uc_skills_aluno %}
+                                                {% if skill_aluno.uc_skills.skills.tipo == 0 %}
+                                                    <div class="row align-items-center mb-4">
+                                                        <div class="col-sm-5">
+                                                            <p class="mb-0">{{ skill_aluno.uc_skills.skills.designacao }}</p>
+                                                        </div>
+                                                        <progress class="progress-bar1" value="{{ skill_aluno.progresso }}" max="100" style="width: 50%;"></progress>
+                                                    </div>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Segunda sub-coluna dentro de col-lg-8 -->
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Soft Skills</h5>
+                                        <br>
+                                        <div  class="progress-container">
+                                            {% for skill_aluno in uc_skills_aluno %}
+                                                {% if skill_aluno.uc_skills.skills.tipo == 1 %}
+                                                    <div class="row align-items-center mb-4">
+                                                        <div class="col-sm-5">
+                                                            <p class="mb-0">{{ skill_aluno.uc_skills.skills.designacao }}</p>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% empty %}
+                                                <p>Não há habilidades do tipo 'Soft' registradas.</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Certificacoes</h5>
+                                {% for certificacao in certificacoes %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <p class="mb-0"><strong>{{ certificacao.nome }}</strong></p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Projectos</h5>
+                                    <br>
+                                    <div class="container">
+                                        {% for projecto  in projectos %}
+                                            <div class="row align-items-center mb-4">
+                                                <div class="col-sm-5">
+                                                    <p class="mb-0">{{ projecto.nome }}</p>
+                                                    <small class="text-muted">{{ projecto.data }}</small> <!-- Adicione esta linha para a data -->
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <p class="card-text">{{ projecto.descricao }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+    {% else %}
+        <div class="container py-5">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    </body>
+{% endblock %}

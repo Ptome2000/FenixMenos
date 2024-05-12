@@ -16,7 +16,7 @@
                             <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Alunos</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'Vitae:listarAlunos' %}">Alunos</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">{{ aluno.get_full_name }}</li>
                                 </ol>
                             </nav>
@@ -35,7 +35,10 @@
                                         <a href="{% url 'Vitae:recomendar' aluno.aluno.numeroAluno %}">
                                         <button type="button" class="btn btn-primary">Recomendação</button>
                                         </a>
-                                            <button type="button" class="btn btn-outline-primary ms-1">Download</button>
+                                        <form action="{% url 'Vitae:generate-pdf' aluno.username  %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary ms-1">Download</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
