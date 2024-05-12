@@ -3,8 +3,9 @@ import logging
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.views import View
@@ -14,11 +15,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from Vitae.models import Aluno, Curso, Sugestao, EstadoSub
+from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor
 from FenixMenos import settings
 from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
 import json
 
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
+
+def is_professor(user):
+    return user.is_authenticated and Professor.objects.filter(user=user).exists()
+
+def is_aluno(user):
+    return user.is_authenticated and Aluno.objects.filter(user=user).exists()
 
 @api_view(['POST'])  # (2)
 def RegistoAluno(request):
@@ -85,6 +94,7 @@ def registo(request):
         return render(request, 'registar.html', {'cursos': cursos})
 
 
+@login_required(login_url=reverse_lazy('login'))
 def sugestoes(request):
     if request.method == 'POST' and 'action' in request.POST:
         action = request.POST['action']

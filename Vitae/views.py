@@ -1,12 +1,12 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .models import *
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Aluno
+from FenixMenos.views import is_admin, is_professor, is_aluno
 
 
 def perfil(request):
@@ -140,3 +140,20 @@ def editar_perfil(request):
         return redirect('Vitae:perfil')
     else:
         return render(request, 'Vitae/editar_perfil.html', {'user': request.user})
+
+
+@user_passes_test(is_professor, login_url=reverse_lazy('index'))
+def recomendar(request, numeroAluno):
+    try:
+        aluno = Aluno.objects.get(numeroAluno=numeroAluno)
+        if request.method == 'POST':
+            recomendacao = request.POST.get('recomendacao')
+            professor = Professor.objects.get(user=request.user)
+            Recomendacao.objects.create(aluno=aluno, descricao=recomendacao, professor=professor)
+            messages.success(request, 'Recomendação feita com sucesso')
+            return HttpResponseRedirect(reverse('Vitae:cv', args=[aluno.user.username]))
+        else:
+            return render(request, 'Vitae/recomendar.html', {'aluno': aluno})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro durante o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
