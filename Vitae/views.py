@@ -126,8 +126,8 @@ def salvar_perfil(request):
         user.first_name = request.POST.get('first_name', '')
         user.last_name = request.POST.get('last_name', '')
         user.email = request.POST.get('email', '')
+        user.gabinete = request.POST.get('email', '')
         user.save()
-        # Redirecionar para alguma página de sucesso ou de volta ao perfil
         return redirect('Vitae:perfil')
 
 
@@ -138,6 +138,19 @@ def editar_perfil(request):
         user.first_name = request.POST.get('first_name', '')
         user.last_name = request.POST.get('last_name', '')
         user.email = request.POST.get('email', '')
+        aluno = Aluno.objects.filter(user=request.user).first()
+        professor = Professor.objects.filter(user=request.user).first()
+        if professor:
+            professor.gabinete = request.POST.get('gabinete', '')
+            professor.save()
+        elif aluno:
+            aluno.instagram = request.POST.get('instagram', '')
+            aluno.data_de_nascimento = request.POST.get('data_de_nascimento', '')
+            aluno.morada = request.POST.get('morada', '')
+            aluno.github = request.POST.get('github', '')
+            aluno.telefone = request.POST.get('telefone', '')
+            aluno.facebook = request.POST.get('facebook', '')
+            aluno.save()
         user.save()
         messages.success(request, "Perfil atualizado com sucesso!")
         return redirect('Vitae:perfil')

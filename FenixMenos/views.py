@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from Community.models import Post
 from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor, UC, EquipaDocente
 from FenixMenos import settings
 from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
@@ -47,7 +48,11 @@ def RegistoAluno(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    latest_posts = Post.objects.order_by('-id')[:3]
+    context = {
+        'latest_posts': latest_posts
+    }
+    return render(request, 'index.html', context)
 
 
 def loginform(request):
