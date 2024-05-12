@@ -1,5 +1,7 @@
+import os
+
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
@@ -7,6 +9,8 @@ from .models import *
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from FenixMenos.views import is_admin, is_professor, is_aluno
+import subprocess
+from django.http import HttpResponse
 
 
 def perfil(request):
@@ -56,11 +60,37 @@ def detalhes_cv(request, utilizador):
     return render(request, 'Vitae/cv.html', context)
 
 
-# Adicionar validaão que tem que ser prof
+def detalhes_cvpdf(request, utilizador):
+    global uc_skills_aluno_corrente, certificacoes, projectos
+    user = get_object_or_404(User, username=utilizador)
+
+    try:
+        aluno = user.aluno
+        uc_skills_aluno_corrente = UC_Skills_Aluno.objects.filter(alunOo_id=aluno.numeroAluno)
+        certificacoes = Certificacao.objects.filter(aluno=aluno.numeroAluno)
+        projectos = Projecto.objects.filter(aluno=aluno.numeroAluno)
+
+
+    except Aluno.DoesNotExist:
+        aluno = None
+
+    if aluno:
+
+        alunotest = user
+        context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente, 'certificacoes': certificacoes,
+                   'projectos': projectos}
+    else:
+        context = {'error': 'No aluno profile found for this user.'}
+
+    return render(request, 'Vitae/cv_pdf.html', context)
+
+
+@user_passes_test(is_professor, login_url=reverse_lazy('index'))
 def UnidadesCurriculares(request):
     unidades = EquipaDocente.objects.filter(professor=request.user.professor)
     context = {'unidades': unidades}
     return render(request, 'Vitae/listar_prof_uc.html', context)
+
 
 
 def alunosInscritos(request, acronimo):
@@ -199,3 +229,51 @@ def certficacaoprojecto(request):
         'certificacoes': certificacoes,
         'projetos': projetos
     })
+
+
+@login_required()
+def listarAlunos(request):
+    try:
+        matriculados = Matricula.objects.all()
+        return render(request, 'Vitae/listar_alunos.html', {'matriculados': matriculados})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
+
+
+def listarCursos(request):
+    try:
+        cursos = Curso.objects.all()
+        return render(request, 'Vitae/listar_cursos.html', {'cursos': cursos})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
+
+
+def generate_pdf_view(request, utilizador):
+    # Caminho para o seu script Node.js
+    script_path = 'node_app/generatePdf.js'
+    pdf_output_path = 'output.pdf'
+
+    base_url = 'http://localhost:8000/Vitae/cv/'
+    end_url = '/cvpdf'
+
+    url = f"{base_url}{utilizador}{end_url}";
+
+    if os.path.exists(script_path):
+        # Chamar o script Node.js
+        result = subprocess.run(['node', script_path, url, pdf_output_path], capture_output=True, text=True)
+
+        if result.returncode == 0:
+            try:
+                pdf_file = open(pdf_output_path, 'rb')
+                response = FileResponse(pdf_file, as_attachment=True, filename='downloaded_pdf.pdf')
+                response['Content-Type'] = 'application/pdf'
+                response['Content-Disposition'] = f'attachment; filename="{utilizador}_downloaded_pdf.pdf"'
+                return response
+            except Exception as e:
+                return HttpResponse(f"Erro ao abrir o PDF: {str(e)}", status=500)
+        else:
+            return HttpResponse(f"Falha ao gerar PDF: {result.stderr}", status=500)
+    else:
+        return HttpResponse("Script de geração de PDF não encontrado.", status=404)

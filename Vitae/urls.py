@@ -16,4 +16,9 @@ urlpatterns = [
     path('editar_perfil/', views.editar_perfil, name='editar_perfil'),
     path('CV/Recomendar/<int:numeroAluno>', views.recomendar, name='recomendar'),
     path('perfil/certificacoesprojecto', views.certficacaoprojecto, name='certficacaoprojecto'),
+    path('Alunos', views.listarAlunos, name='listarAlunos'),
+    path('Cursos', views.listarCursos, name='listarCursos'),
+    path('cv/<str:utilizador>/generate-pdf/', views.generate_pdf_view, name='generate-pdf'),
+    path('cv/<str:utilizador>/cvpdf', views.detalhes_cvpdf, name='togenerate-pdf'),
+
 ]

@@ -20,12 +20,12 @@
                 <h1 class="display-6 pb-2"> {{ categoria }} </h1>
             </div>
             <div class="col">
-                <button id="togglePostOptions" class="btn btn-outline-dark dropdown-toggle mx-auto p-2" type="button">
+                <button id="togglePostOptions" class="btn btn-primary btn-lg dropdown-toggle mx-auto p-2" type="button" style="width:500px">
                     Criar novo Post
                 </button>
-                <div class="dropdown-menu" id="PostOptions">
-                    <a class="dropdown-item" href="{% url 'Community:criarDiscussao' categoria.designacao %}"> Criar Discussão </a>
-                    <a class="dropdown-item" href="{% url 'Community:criarVotacao' categoria.designacao %}"> Criar Poll </a>
+                <div class="dropdown-menu list-group" id="PostOptions">
+                    <a class="dropdown-item list-group-item list-group-item-action list-group-item-info" href="{% url 'Community:criarDiscussao' categoria.designacao %}" style="width:500px"> Criar Discussão </a>
+                    <a class="dropdown-item list-group-item list-group-item-action list-group-item-info" href="{% url 'Community:criarVotacao' categoria.designacao %}" style="width:500px"> Criar Poll </a>
                 </div>
             </div>
         </div>
