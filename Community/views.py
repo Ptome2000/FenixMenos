@@ -76,13 +76,14 @@ def criarCategoria(request):
         if request.method == 'POST':
             designacao = request.POST.get('designacao')
             descricao = request.POST.get('descricao')
-            logo = request.FILES.get('logo')
-            grupo = request.POST.get('grupo')
+            logo = request.FILES.get('ImageFile')
+            grupo = int(request.POST.get('grupo'))
             Categoria.objects.create(designacao=designacao, descricao=descricao, logo=logo, grupo=grupo)
             messages.success(request, 'Categoria criada com sucesso')
             return HttpResponseRedirect(reverse('Community:categoria', args=[designacao]))
         else:
-            return render(request, 'community/criar_categoria.html')
+            grupos = GrupoCategoria.items()
+            return render(request, 'community/criar_categoria.html', context={'grupos': grupos})
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
         return HttpResponseRedirect(reverse('Community:community'))

@@ -266,7 +266,7 @@ fieldset {
 }
 
 legend {
-    background-color: gray;
+    background-color: #0d28c2;
     color: white;
     padding: 5px 10px;
 }
@@ -285,6 +285,64 @@ legend {
 img.PostAvatar {
     width: 70px;
     height: 70px;
+}
+
+.CheckContainer {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 16px;
+    margin-left: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+}
+
+.CheckContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.CheckContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.CheckContainer input:checked ~ .checkmark {
+  background-color: #0d28c2;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.CheckContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.CheckContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 /************** Para modal dos Posts **************/
@@ -333,6 +391,7 @@ img.PostAvatar {
     /*    position: fixed; */
     left: 0;
     bottom: 0;
+    margin-top: auto;
     width: 100%;
     background-color: #343a40;
     color: white;

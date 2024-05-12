@@ -1,5 +1,7 @@
 {% extends 'skeleton.html' %}
 {% load static %}
+{% block title %} Postagem - {{ post.id }} {% endblock %}
+
 {% block content %}
 
     <div id="page-content-wrapper">
@@ -64,9 +66,6 @@
                                             {% elif cometario.user.is_professor %}
                                                 <p class="lead text-danger fw-bold fs-5"> {{ comentario.user }} </p>
                                             {% else %}
-
-                                                <!--  ADICIONAR CAMINHO PARA PERFIL DO UTILIZADOR  -->
-
                                                 <a> <p class="fs-5"> {{ comentario.user }} </p> </a>
                                             {% endif %}
                                         </blockquote>
@@ -91,8 +90,10 @@
                                 <span> #{{ forloop.counter }} | </span>
                                 <span> {{ comentario.data|date:"M j" }} </span>
                                 {% if request.user.is_superuser %}
-                                    <input type="checkbox" id="btn-check-{{ comentario.id }}" name="selectedPost" class="btn-check" autocomplete="off" value="{{ comentario.id }}">
-                                    <label class="btn btn-outline-warning ms-4" for="btn-check-{{ comentario.id }}"> X </label>
+                                    <label class="CheckContainer">
+                                        <input class="btn-check" type="checkbox" id="btn-check-{{ comentario.id }}" name="selectedPost" value="{{ comentario.id }}">
+                                        <span class="checkmark"></span>
+                                    </label>
                                 {% endif %}
                             </td>
                         </tr>

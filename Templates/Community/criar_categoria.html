@@ -1,0 +1,47 @@
+x{% extends 'skeleton.html' %}
+{% load static %}
+{% block title %} Criar Categoria {% endblock %}
+
+{% block content %}
+
+    <div id="page-content-wrapper">
+
+        <div class="row">
+            <div class="col d-flex align-items-start">
+                <h2 class="display-6 pb-2"> Criar nova Categoria </h2>
+            </div>
+        </div>
+
+        <hr class="my-2">
+
+        <div class="container p-3">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="designacao"> Designação da Categoria: </label>
+                    <input type="text" name="designacao" class="form-control" id="designacao" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="descricao"> Descrição: </label>
+                    <textarea name="descricao" class="form-control" id="descricao" rows="10" required></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="ImageFile" class="form-label"> Inserir imagem caso necessário </label>
+                    <input class="form-control" name="ImageFile" type="file" id="ImageFile">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="grupo" class="form-label"> Grupo: </label>
+                    <select class="form-select" name="grupo" aria-label="Default select example">
+                        {% for grupo in grupos %}
+                            <option value="{{ grupo.1 }}"> {{ grupo.0 }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="w-100 btn btn-outline-success btn-lg" type="submit"> Submeter </button>
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'skeleton.html' %}
 {% load static %}
+{% block title %} Community {% endblock %}
+
 {% block content %}
 
     <div id="page-content-wrapper">
-    
+
         <div class="row">
             <div class="col d-flex align-items-start">
                 <h1 class="display-6 pb-2"> Categorias </h1>
             </div>
             {% if request.user.is_superuser %}
-                <div class="col">
-                    <button class="btn btn-outline-dark mx-auto p-2" type="button">
-                        <a href="{% url 'Community:criarCategoria' %}"> Criar Categoria </a>
-                    </button>
+                <div class="col d-flex justify-content-end m-2">
+                    <a href="{% url 'Community:criarCategoria' %}" class="btn btn-outline-primary btn-lg mx-2"> Criar Categoria </a>
                 </div>
             {% endif %}
         </div>
@@ -38,7 +38,7 @@
                             {% for categoria in lista_categorias %}
                                 {% if categoria.grupo == grupo.1 %}
 
-                                    <div class="col">
+                                    <div class="col mb-2">
                                         <a href="{% url 'Community:categoria' categoria.designacao %}" class="link-offset-2 link-underline link-underline-opacity-0">
                                             <div class="card border-dark h-100">
                                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
