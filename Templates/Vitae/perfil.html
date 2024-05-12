@@ -123,6 +123,7 @@
                         </div>
                         <div class="text-center">
                             <a href="{% url 'Vitae:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                            <a href="{% url 'Vitae:certficacaoprojecto' %}" class="btn btn-secondary">Certificações e Projetos</a>
                         </div>
                     </div>
                 </div>
@@ -131,13 +132,13 @@
                 <div class="col-md-4 text-center">
                     <fieldset>
                         <legend>Perfil</legend>
-                         <figure class="figure d-inline-block mx-auto">
-                        {% if request.user.aluno.foto %}
-                            <img src="{{ request.user.aluno.foto.url }}?{{ request.user.aluno.foto.last_modified }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
-                        {% else %}
-                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}?{{ now }}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
-                        {% endif %}
-                    </figure>
+                        <figure class="figure d-inline-block mx-auto">
+                            {% if request.user.aluno.foto %}
+                                <img src="{{ request.user.aluno.foto.url }}?{{ request.user.aluno.foto.last_modified }}" class="fotoPerfil figure-img rounded img-thumbnail" alt="Foto de perfil">
+                            {% else %}
+                                <img src="{% static 'FenixMenos/Imagens/th.jpg' %}?{{ now }}" class="fotoPerfil rounded figure-img img-thumbnail" alt="Foto de perfil">
+                            {% endif %}
+                        </figure>
                     </fieldset>
 
                     <form method="post" enctype="multipart/form-data" action="{% url 'Vitae:fazer_upload' %}">
