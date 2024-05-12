@@ -88,6 +88,12 @@ class PlanoCurricular(models.Model):
     ano = models.IntegerField()
     semestre = models.IntegerField()
 
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['uc', 'curso'], name='unique_plano_curricular'),
+        ]
+
     def __str__(self):
         return self.curso.designacao + " - " + self.uc.designacao
 
@@ -113,10 +119,16 @@ class Aluno(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
+
 class Matricula(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
     ano = models.IntegerField(default=1)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['curso', 'aluno'], name='unique_matricula'),
+        ]
 
     def passar_ano(self):
         self.ano = self.ano + 1
@@ -124,10 +136,20 @@ class Matricula(models.Model):
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + self.curso.designacao
 
+    def get_media(self):
+        ucs = PlanoCurricular.objects.filter(uc=self.curso)
+        notas = Nota.objects.filter(aluno=self.aluno, uc__in=ucs)
+        count_nota = 0
+        count_creditos = 0
+        for nota in notas:
+            creds = nota.uc.creditos
+            count_nota += (nota.nota * creds)
+            count_creditos += creds
+        return count_nota / count_creditos
 
 class Nota(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
-    nota = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(20)])
+    nota = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(20)], null=True, blank=True)
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -138,6 +160,11 @@ class UC_Skills(models.Model):
     skills = models.ForeignKey(Skills, on_delete=models.CASCADE)
     uc = models.ForeignKey(UC, on_delete=models.CASCADE)
     nivel = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['skills', 'uc'], name='unique_UC_Skills'),
+        ]
 
     def clean(self):
         if self.skills.tipo != TipoSkills.Hard.value and self.nivel is not None:
@@ -159,6 +186,11 @@ class Recomendacao(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     descricao = models.TextField()
 
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['aluno', 'professor'], name='unique_recomendacao'),
+        ]
 
 class Sugestao(models.Model):
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', null=True, default=None, blank=True)

@@ -56,7 +56,6 @@ def detalhes_cv(request, utilizador_id):
 # Adicionar validaão que tem que ser prof
 def UnidadesCurriculares(request):
     unidades = EquipaDocente.objects.filter(professor=request.user.professor)
-
     context = {'unidades': unidades}
     return render(request, 'Vitae/listar_prof_uc.html', context)
 
@@ -66,7 +65,7 @@ def alunosInscritos(request, acronimo):
     if request.method == 'POST':
         aluno = Aluno.objects.get(numeroAluno=request.POST.get('aluno'))
         nota = request.POST.get('nota')
-        n, created = Nota.objects.get_or_create(aluno=aluno, uc=uc)
+        n, created = Nota.objects.get_or_create(aluno_id=aluno.numeroAluno, uc=uc)
         n.nota = nota
         n.save()
         if created:
