@@ -15,7 +15,7 @@
                         <div class="col">
                             <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
                                 <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
                                     <li class="breadcrumb-item"><a href="#">Alunos</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">{{ aluno.get_full_name }}</li>
                                 </ol>
@@ -32,7 +32,7 @@
                                     <p class="text-muted mb-1">{{ aluno.aluno.curso.nome }}</p>
                                     <p class="text-muted mb-4">{{ aluno.aluno.endereco }}</p>
                                     <div class="d-flex justify-content-center mb-2">
-                                        <button type="button" class="btn btn-primary">Seguir</button>
+                                        <button type="button" class="btn btn-primary">Recomendação</button>
                                         <button type="button" class="btn btn-outline-primary ms-1">Mensagem</button>
                                     </div>
                                 </div>
@@ -77,6 +77,15 @@
                                             <p class="text-muted mb-0">{{ aluno.aluno.morada }}</p>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Data de Nascimento</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ aluno.aluno.data_de_nascimento }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,26 +98,21 @@
                                 <div class="card-body p-0">
                                     <ul class="list-group list-group-flush rounded-3">
                                         <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                            <i class="fas fa-globe fa-lg text-warning"></i>
-                                            <p class="mb-0">https://mdbootstrap.com</p>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                             <i class="fab fa-github fa-lg text-body"></i>
-                                            <p class="mb-0">mdbootstrap</p>
+                                            <p class="mb-0">{{ aluno.aluno.github }}</p>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                             <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                            <p class="mb-0">@mdbootstrap</p>
+                                            <p class="mb-0">{{ aluno.aluno.github }}</p>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                             <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                            <p class="mb-0">mdbootstrap</p>
+                                            <p class="mb-0">{{ aluno.aluno.instagram }}</p>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                             <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                            <p class="mb-0">mdbootstrap</p>
+                                            <p class="mb-0">{{ aluno.aluno.facebook }}</p>
                                         </li>
-                                        <!-- Additional social media links -->
                                     </ul>
                                 </div>
                             </div>
@@ -132,7 +136,7 @@
                                                             <progress class="progress-bar1" value="{{ skill_aluno.progresso }}" max="100" style="width: 50%;"></progress>
                                                         </div>
                                                     {% endif %}
-                                                    
+
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -155,12 +159,7 @@
                                                         </div>
                                                     {% endif %}
                                                 {% empty %}
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            f
-                                                            <p class="mb-0">N/A</p>
-                                                        </div>
-                                                    </div>
+                                                    <p>Não há habilidades do tipo 'Soft' registradas.</p>
                                                 {% endfor %}
                                             </div>
                                         </div>
