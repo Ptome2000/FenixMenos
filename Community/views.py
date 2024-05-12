@@ -71,6 +71,23 @@ def criarVotacao(request, categoria_dgn):
     return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
 
 
+def criarCategoria(request):
+    try:
+        if request.method == 'POST':
+            designacao = request.POST.get('designacao')
+            descricao = request.POST.get('descricao')
+            logo = request.FILES.get('logo')
+            grupo = request.POST.get('grupo')
+            Categoria.objects.create(designacao=designacao, descricao=descricao, logo=logo, grupo=grupo)
+            messages.success(request, 'Categoria criada com sucesso')
+            return HttpResponseRedirect(reverse('Community:categoria', args=[designacao]))
+        else:
+            return render(request, 'community/criar_categoria.html')
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('Community:community'))
+
+
 def apagarComentarios(request, post_Id):
     p = get_object_or_404(Post, id=post_Id)
     try:
