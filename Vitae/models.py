@@ -165,28 +165,6 @@ class Nota(models.Model):
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
 
-    def save(self, *args, **kwargs):
-        is_new = self._state.adding
-        super().save(*args, **kwargs)
-        if is_new:
-            uc_skills = UC_Skills.objects.filter(uc=self.uc)
-            for uc_skill in uc_skills:
-                if uc_skill.skills.tipo == 0:
-                    max_grade = 20
-                    progresso = (self.nota / max_grade) * uc_skill.nivel
-                    UC_Skills_Aluno.objects.update_or_create(
-                        aluno=self.aluno,
-                        uc_skills=uc_skill,
-                        defaults={'progresso': progresso}
-                    )
-                else:
-                    UC_Skills_Aluno.objects.update_or_create(
-                        aluno=self.aluno,
-                        uc_skills=uc_skill,
-                        defaults={'progresso': 0}
-                    )
-
-
 
 '''
     def save(self, *args, **kwargs):

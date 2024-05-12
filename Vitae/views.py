@@ -101,7 +101,7 @@ def UnidadesCurriculares(request):
         context = {'unidades': unidades}
         return render(request, 'Vitae/listar_prof_uc.html', context)
     except KeyError:
-     messages.warning(request, "Ocorreu um erro durante o seu pedido")
+        messages.warning(request, "Ocorreu um erro durante o seu pedido")
     return HttpResponseRedirect(reverse('FenixMenos'))
 
 
@@ -115,7 +115,23 @@ def alunosInscritos(request, acronimo):
             nota = request.POST.get('nota')
             n, created = Nota.objects.get_or_create(aluno_id=aluno.numeroAluno, uc=uc)
             n.nota = nota
-            n.save()
+            uc_skills = UC_Skills.objects.filter(uc=uc)
+            for uc_skill in uc_skills:
+                if uc_skill.skills.tipo == 0:
+                    max_grade = Nota.objects.filter().aggregate(Max('nota'))['nota__max']
+                    progresso = (int(n.nota) / max_grade) * uc_skill.nivel
+                    UC_Skills_Aluno.objects.update_or_create(
+                        alunOo_id=aluno.numeroAluno,
+                        uc_skills=uc_skill,
+                        defaults={'progresso': progresso}
+                    )
+                else:
+                    UC_Skills_Aluno.objects.update_or_create(
+                        alunOo_id=aluno.numeroAluno,
+                        uc_skills=uc_skill,
+                        defaults={'progresso': 0}
+                    )
+
             if created:
                 messages.success(request, "Aluno " + aluno.user.first_name + " avaliado com sucesso!")
             else:
@@ -304,32 +320,32 @@ def listarCursos(request):
 @user_passes_test(is_aluno, login_url=reverse_lazy('index'))
 def generate_pdf_view(request, utilizador):
     try:
-            # Caminho para o seu script Node.js
-            script_path = 'node_app/generatePdf.js'
-            pdf_output_path = 'output.pdf'
+        # Caminho para o seu script Node.js
+        script_path = 'node_app/generatePdf.js'
+        pdf_output_path = 'output.pdf'
 
-            base_url = 'http://localhost:8000/Vitae/cv/'
-            end_url = '/cvpdf'
+        base_url = 'http://localhost:8000/Vitae/cv/'
+        end_url = '/cvpdf'
 
-            url = f"{base_url}{utilizador}{end_url}"
+        url = f"{base_url}{utilizador}{end_url}"
 
-            if os.path.exists(script_path):
-                # Chamar o script Node.js
-                result = subprocess.run(['node', script_path, url, pdf_output_path], capture_output=True, text=True)
+        if os.path.exists(script_path):
+            # Chamar o script Node.js
+            result = subprocess.run(['node', script_path, url, pdf_output_path], capture_output=True, text=True)
 
-                if result.returncode == 0:
-                    try:
-                        pdf_file = open(pdf_output_path, 'rb')
-                        response = FileResponse(pdf_file, as_attachment=True, filename='downloaded_pdf.pdf')
-                        response['Content-Type'] = 'application/pdf'
-                        response['Content-Disposition'] = f'attachment; filename="{utilizador}_downloaded_pdf.pdf"'
-                        return response
-                    except Exception as e:
-                        return HttpResponse(f"Erro ao abrir o PDF: {str(e)}", status=500)
-                else:
-                    return HttpResponse(f"Falha ao gerar PDF: {result.stderr}", status=500)
+            if result.returncode == 0:
+                try:
+                    pdf_file = open(pdf_output_path, 'rb')
+                    response = FileResponse(pdf_file, as_attachment=True, filename='downloaded_pdf.pdf')
+                    response['Content-Type'] = 'application/pdf'
+                    response['Content-Disposition'] = f'attachment; filename="{utilizador}_downloaded_pdf.pdf"'
+                    return response
+                except Exception as e:
+                    return HttpResponse(f"Erro ao abrir o PDF: {str(e)}", status=500)
             else:
-                return HttpResponse("Script de geração de PDF não encontrado.", status=404)
+                return HttpResponse(f"Falha ao gerar PDF: {result.stderr}", status=500)
+        else:
+            return HttpResponse("Script de geração de PDF não encontrado.", status=404)
     except KeyError:
         messages.warning(request, "Ocorreu um erro durante o seu pedido")
         return HttpResponseRedirect(reverse('FenixMenos'))
