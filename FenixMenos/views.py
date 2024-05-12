@@ -55,7 +55,7 @@ def RegistoAluno(request):
 
 
 def index(request):
-    latest_posts = Post.objects.order_by('-id')[:3]
+    latest_posts = Post.objects.all().order_by('-id')[:3]
     for post in latest_posts:
         latest_comment = post.comentario_set.order_by('-data').first()
         if latest_comment:
