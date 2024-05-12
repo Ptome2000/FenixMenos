@@ -119,30 +119,29 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Últimos Posts da Comunidade</h5>
                                     <ul class="list-unstyled">
-                                        {% for post in latest_posts %}
-                                            <div class="row align-items-center mb-4">
-                                                <div class="col-md-8">
-                                                    <div>
-                                                        <h5 class="mb-0">{{ post.titulo }} Posted by {{ post.user.username }}</h5>
-                                                    </div>
-                                                    <div class="card mt-2"> 
-                                                        <div class="card-body">
-                                                            <p class="card-text"><strong>Last Comment:</strong> {{ post.latest_comment }}</p>
-                                                            <p class="card-text"><strong>by:</strong> {{ post.latest_comment_user }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <small class="text-muted">{{ post.latest_comment_date|date:"d M Y" }}</small> <!-- Moved the date to be below the card -->
-                                                </div>
-                                            </div>
-                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
+                            {% for post in latest_posts %}
+    
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header">
+                                                <h5 class="mb-0">{{ post.titulo }} Posted by {{ post.user.username }}</h5>
+                                            </div>
+                                            <div class="card-body">
+                                            <p class="card-text"><strong>Last Comment:</strong> {{ post.latest_comment }}</p>
+                                            <p class="card-text"><strong>by:</strong> {{ post.latest_comment_user }}</p>
+                                        </div>
+                                        <small class="text-muted">{{ post.latest_comment_date|date:"d M Y" }}</small> <!-- Moved the date to be below the card -->
+                                    </div>
+                                <br>
+                            {% endfor %}
                             <div class="card mb-4 shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title">Top Alunos</h5>
-                                    <p>Ten questions you should answer truthfully</p>
-                                    <p>Five unbelievable facts about money</p>
+                                    <h5 class="card-title">Novidades</h5>
+                                    <br>
+                                    <p>Em breve......</p>
+                                    <br>
                                 </div>
                             </div>
                         </div>

@@ -54,8 +54,10 @@
                                 <div class="d-flex align-items-center">
                                     {% if comentario.user.is_superuser %}
                                         <img src="{% static 'Community/Imagens/Dev.png' %}" alt="Avatar" class="PostAvatar">
-                                    {% elif comentario.user.professor.avatar or comentario.user.aluno.avatar %}
-                                        <img src="{{ comentario.user.foto.url }}" alt="Avatar" class="PostAvatar" >
+                                    {% elif  comentario.user.aluno.avatar %}
+                                        <img src="{{ comentario.user.aluno.foto.url }}" alt="Avatar" class="PostAvatar" >
+                                    {% elif comentario.user.professor.avatar %}
+                                        <img src="{{ comentario.user.professor.foto.url }}" alt="Avatar" class="PostAvatar" >    
                                     {% else %}
                                         <img src="{% static 'Vitae/Images/PerfilDefault.png' %}" alt="Avatar" class="PostAvatar">
                                     {% endif %}
