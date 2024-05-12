@@ -3,7 +3,7 @@ import logging
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
@@ -15,7 +15,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor
+from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor, UC, EquipaDocente
 from FenixMenos import settings
 from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
 import json
@@ -119,3 +119,30 @@ def sugestoes(request):
         sugs = Sugestao.objects.filter(user=request.user)
         context = {'sugestoes': sugs}
     return render(request, 'sugestoes.html', context)
+
+
+@user_passes_test(is_admin, login_url=reverse_lazy('index'))
+def registarProf(request):
+    ucs = UC.objects.all()
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        if password == request.POST.get('passwordConfirm'):
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            foto = request.FILES.get('foto')
+            cadeiras = request.POST.getlist('unidades')
+            u = User.objects.create_user(username, email, password)
+            Professor.objects.create(user=u, foto=foto)
+            p = Professor.objects.get(user=u)
+            count = 0
+            for uc in cadeiras:
+                unidade = UC.objects.get(id=uc)
+                EquipaDocente.objects.create(uc=unidade, professor=p)
+                count += 1
+            messages.success(request, "Professor criado com sucesso a lecionar " + str(count) + " unidades curriculares")
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            messages.warning(request, 'Passwords não correspondem')
+            return render(request, 'registar_prof.html', {'ucs': ucs})
+    else:
+        return render(request, 'registar_prof.html', {'ucs': ucs})
