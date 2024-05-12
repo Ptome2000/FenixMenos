@@ -40,8 +40,6 @@ class Curso(models.Model):
     descricao = models.TextField()
     coordenador = models.OneToOneField(Professor, on_delete=models.CASCADE)
 
-    #anos = models.IntegerField(default=3)
-
     def __str__(self):
         return self.designacao
 
@@ -162,6 +160,8 @@ class Nota(models.Model):
 
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
+
+
 
 
 '''

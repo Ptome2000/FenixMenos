@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, viewsets
-from Vitae.models import Curso, Aluno, Genero
+from Vitae.models import Curso, Aluno, Genero, Matricula
 
 
 class CursoSerializer(serializers.ModelSerializer):
@@ -28,6 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+
 class UserAlunoSerializer(serializers.ModelSerializer):
     curso = serializers.PrimaryKeyRelatedField(queryset=Curso.objects.all())
     foto = serializers.ImageField(required=False)
@@ -38,7 +39,6 @@ class UserAlunoSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         curso = validated_data.pop('curso')
-        #genero = validated_data.pop('genero')
         foto = validated_data.pop('foto', None)
         user = User.objects.create_user(**validated_data)
         Aluno.objects.create(user=user, curso=curso, foto=foto)

@@ -1,5 +1,6 @@
 import logging
 
+from django.db import transaction
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -16,35 +17,41 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from Community.models import Post
-from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor, UC, EquipaDocente
+from Vitae.models import Aluno, Curso, Sugestao, EstadoSub, Professor, UC, EquipaDocente, Matricula
 from FenixMenos import settings
 from serializers import UserAlunoSerializer, UserSerializer, CursoSerializer
 import json
 
+
 def is_admin(user):
     return user.is_authenticated and user.is_superuser
+
 
 def is_professor(user):
     return user.is_authenticated and Professor.objects.filter(user=user).exists()
 
+
 def is_aluno(user):
     return user.is_authenticated and Aluno.objects.filter(user=user).exists()
 
+
 @api_view(['POST'])  # (2)
 def RegistoAluno(request):
-    user_serializer = UserSerializer(data=request.data)
-    if user_serializer.is_valid():
-        user = user_serializer.save()
-        curso_codigo = request.data.get('curso')
-        curso = Curso.objects.get(designacao=curso_codigo)
-        foto = request.FILES.get('foto')
-        aluno = Aluno(user=user, curso=curso, foto=foto)
-        aluno.save()
+    with transaction.atomic():
+        user_serializer = UserSerializer(data=request.data)
+        if user_serializer.is_valid():
+            user = user_serializer.save()
+            curso_codigo = request.data.get('curso')
+            curso = Curso.objects.get(designacao=curso_codigo)
+            foto = request.FILES.get('foto')
+            aluno = Aluno(user=user, curso=curso, foto=foto)
+            aluno.save()
 
-        aluno_serializer = UserAlunoSerializer(aluno)
-        return Response(aluno_serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            aluno_serializer = UserAlunoSerializer(aluno)
+
+            return Response(aluno_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):
@@ -72,6 +79,8 @@ def loginform(request):
         user = authenticate(username=username, password=passwd)
         if user is not None:
             login(request, user)
+            if not Matricula.objects.filter(aluno=user.aluno).exists():
+                Matricula.objects.create(aluno=user.aluno, curso=user.aluno.curso)
             return HttpResponseRedirect(reverse('index'))
         else:
             messages.warning(request, 'Username ou Password incorretos')
@@ -154,7 +163,8 @@ def registarProf(request):
                 unidade = UC.objects.get(id=uc)
                 EquipaDocente.objects.create(uc=unidade, professor=p)
                 count += 1
-            messages.success(request, "Professor criado com sucesso a lecionar " + str(count) + " unidades curriculares")
+            messages.success(request,
+                             "Professor criado com sucesso a lecionar " + str(count) + " unidades curriculares")
             return HttpResponseRedirect(reverse('index'))
         else:
             messages.warning(request, 'Passwords não correspondem')
