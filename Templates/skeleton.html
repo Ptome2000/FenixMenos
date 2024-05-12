@@ -78,22 +78,34 @@
 
 
 <div class="sidebar" id="mySidebar">
+<br>
     <ul>
-        <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
         <li class="submenu">
-            <a href="#"><i class="fa fa-user"></i><span>ISCTE.solutions</span></a>
+            <a href=""><i class="fa fa-user"></i><span> Vitae </span></a>
             <ul>
-                <li><a href="#">Subitem 1</a></li>
-                <li><a href="#">Subitem 2</a></li>
+                {% if request.user.aluno %}
+                    <li><a href="{% url 'Vitae:cv' request.user.username %}"> Curriculum </a></li>
+                    <li><a href="{% url 'Vitae:certficacaoprojecto' %}"> Certificações e Projetos </a></li>
+                {% endif %}
+                <li><a href="{% url 'Vitae:listarCursos' %}"> Cursos </a></li>
+                <li><a href="{% url 'Vitae:listarAlunos' %}"> Alunos </a></li>
+                {% if request.user.professor %}
+                    <li><a href="{% url 'Vitae:UnidadesCurriculares' %}"> Unidades Curriculares </a></li>
+                {% endif %}
             </ul>
         </li>
         <li class="submenu">
-            <a href="#"><i class="fa fa-envelope"></i><span>Candidato</span></a>
+            <a href="{% url 'Community:community' %}"><i class="fa fa-envelope"></i><span> Community </span></a>
             <ul>
-                <li><a href="#">Candidaturas</a></li>
+                {% if request.user.is_superuser %}
+                    <li><a href="{% url 'Community:criarCategoria' %}"> Criar Categoria </a></li>
+                {% endif %}
             </ul>
         </li>
-        <li><a href="#"><i class="fa fa-gear"></i><span>myFenix</span></a></li>
+        {% if request.user.is_superuser %}
+            <li><a href=""><i class="fa fa-gear"></i><span> Registar Professores </span></a></li>
+        {% endif %}
+        <li><a href="{% url 'sugestoes' %}"><i class="bi bi-ticket"></i><span> Sugestões </span></a></li>
     </ul>
 </div>
 

@@ -20,5 +20,5 @@ urlpatterns = [
     path('Cursos', views.listarCursos, name='listarCursos'),
     path('cv/<str:utilizador>/generate-pdf/', views.generate_pdf_view, name='generate-pdf'),
     path('cv/<str:utilizador>/cvpdf', views.detalhes_cvpdf, name='togenerate-pdf'),
-
+    path('Pesquisar-aluno/', views.pesquisarAlunos, name='pesquisarAlunos'),
 ]
