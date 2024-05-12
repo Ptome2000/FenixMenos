@@ -32,12 +32,14 @@ def detalhes_uc(request, acronimo):
 
 
 def detalhes_cv(request, utilizador):
-    global uc_skills_aluno_corrente
+    global uc_skills_aluno_corrente, certificacoes, projectos
     user = get_object_or_404(User, username=utilizador)
 
     try:
         aluno = user.aluno
         uc_skills_aluno_corrente = UC_Skills_Aluno.objects.filter(alunOo_id=aluno.numeroAluno)
+        certificacoes = Certificacao.objects.filter(aluno=aluno.numeroAluno)
+        projectos = Projecto.objects.filter(aluno=aluno.numeroAluno)
 
 
     except Aluno.DoesNotExist:
@@ -46,7 +48,8 @@ def detalhes_cv(request, utilizador):
     if aluno:
 
         alunotest = user
-        context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente}
+        context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente, 'certificacoes': certificacoes,
+                   'projectos': projectos}
     else:
         context = {'error': 'No aluno profile found for this user.'}
 
@@ -157,3 +160,29 @@ def recomendar(request, numeroAluno):
     except KeyError:
         messages.warning(request, "Ocorreu um erro durante o seu pedido")
         return HttpResponseRedirect(reverse('FenixMenos'))
+
+
+def certficacaoprojecto(request):
+    if request.method == 'POST':
+        aluno = request.user.aluno  # Assumindo que Aluno tem uma relação OneToOne com User
+        if 'add_certificacao' in request.POST:
+            nome = request.POST.get('nome_cert')
+            url = request.POST.get('url_cert')
+            if nome and url:
+                Certificacao.objects.create(aluno=aluno, nome=nome, url=url)
+
+        elif 'add_projecto' in request.POST:
+            nome = request.POST.get('nome_proj')
+            data = request.POST.get('data_proj')
+            descricao = request.POST.get('descricao_proj')
+            if nome and data and descricao:
+                Projecto.objects.create(aluno=aluno, nome=nome, data=data, descricao=descricao)
+
+        return HttpResponseRedirect(request.path_info)
+
+    certificacoes = Certificacao.objects.filter(aluno=request.user.aluno)
+    projetos = Projecto.objects.filter(aluno=request.user.aluno)
+    return render(request, 'Vitae/certificacaoprojecto.html', {
+        'certificacoes': certificacoes,
+        'projetos': projetos
+    })

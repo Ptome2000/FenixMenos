@@ -434,6 +434,14 @@ body {
     min-height: 100vh;
 }
 
+.modal-backdrop.show {
+    z-index: 1040;
+}
+
+.modal {
+    z-index: 1050;
+
+
 
 /* CSS para o container do carrossel */
 #carouselExampleIndicators {
@@ -456,3 +464,6 @@ body {
         width: 100%; /* Ocupa 100% da largura em dispositivos menores */
     }
 }
+
+
+

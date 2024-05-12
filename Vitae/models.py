@@ -111,7 +111,7 @@ class Aluno(models.Model):
     foto = models.ImageField(upload_to='alunos', default='', blank=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    telefone = models.IntegerField( blank=True, null=True)
+    telefone = models.IntegerField(blank=True, null=True)
     morada = models.CharField(max_length=20, blank=True, null=True)
     instagram = models.CharField(max_length=20, blank=True, null=True)
     github = models.CharField(max_length=20, blank=True, null=True)
@@ -183,6 +183,17 @@ class UC_Skills_Aluno(models.Model):
         if self.uc_skills.skills.tipo != 0 and self.progresso is not None:
             raise ValidationError("Progresso só pode ser definido para skills do tipo 'Hard'.")
 
+
+class Projecto(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=50)
+    data = models.DateField()
+    descricao = models.TextField()
+
+class Certificacao (models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=50)
+    url = models.URLField()
 
 class Recomendacao(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
