@@ -88,7 +88,6 @@ class PlanoCurricular(models.Model):
     ano = models.IntegerField()
     semestre = models.IntegerField()
 
-
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['uc', 'curso'], name='unique_plano_curricular'),
@@ -119,7 +118,6 @@ class Aluno(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
-
 class Matricula(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
@@ -147,6 +145,7 @@ class Matricula(models.Model):
             count_creditos += creds
         return count_nota / count_creditos
 
+
 class Nota(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
     nota = models.IntegerField(validators=[MinValueValidator(10), MaxValueValidator(20)], null=True, blank=True)
@@ -167,7 +166,7 @@ class UC_Skills(models.Model):
         ]
 
     def clean(self):
-        if self.skills.tipo != TipoSkills.Hard.value and self.nivel is not None:
+        if self.skills.tipo != 0 and self.nivel is not None:
             raise ValidationError("Nível só pode ser definido para skills do tipo 'Hard'.")
 
 
@@ -177,7 +176,7 @@ class UC_Skills_Aluno(models.Model):
     progresso = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
 
     def clean(self):
-        if self.uc_skills.skills.tipo != TipoSkills.Hard.value and self.progresso is not None:
+        if self.uc_skills.skills.tipo != 0 and self.progresso is not None:
             raise ValidationError("Progresso só pode ser definido para skills do tipo 'Hard'.")
 
 
@@ -186,14 +185,15 @@ class Recomendacao(models.Model):
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     descricao = models.TextField()
 
-
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['aluno', 'professor'], name='unique_recomendacao'),
         ]
 
+
 class Sugestao(models.Model):
-    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', null=True, default=None, blank=True)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='avaliado_por', null=True, default=None,
+                              blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sugerido_por')
     assunto = models.CharField(max_length=100)
     descricao = models.TextField()

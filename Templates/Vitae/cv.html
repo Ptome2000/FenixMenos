@@ -61,7 +61,7 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-sm-3">a
+                                        <div class="col-sm-3">
                                             <p class="mb-0">Telefone</p>
                                         </div>
                                         <div class="col-sm-9">
@@ -124,7 +124,7 @@
                                             <br>
                                             <div class="progress-container">
                                                 {% for skill_aluno in uc_skills_aluno %}
-                                                    {% if skill_aluno.uc_skills_id.skills_id.tipo == TipoSkills.Hard.value %}
+                                                    {% if skill_aluno.uc_skills.skills.tipo == 0 %}
                                                         <div class="row align-items-center mb-4">
                                                             <div class="col-sm-5">
                                                                 <p class="mb-0">{{ skill_aluno.uc_skills.skills.designacao }}</p>
@@ -139,13 +139,29 @@
                                 </div>
 
                                 <!-- Segunda sub-coluna dentro de col-lg-8 -->
-                                <div class="col-lg-6">
+                                <div class="col-lg-6">tenho de faze
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <h5 class="card-title">Soft Skills</h5>
-                                            <!-- Conteúdo -->
-                                            <p class="mb-0">Endereço: {{ aluno.aluno.endereco }}</p>
-                                            <!-- Outros detalhes podem ser adicionados aqui -->
+                                            <br>
+                                            <div class="progress-container">
+                                                {% for skill_aluno in uc_skills_aluno %}
+                                                    {% if skill_aluno.uc_skills.skills.tipo == 1 %}
+                                                        <div class="row align-items-center mb-4">
+                                                            <div class="col-sm-5">
+                                                                <p class="mb-0">{{ skill_aluno.uc_skills.skills.designacao }}</p>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% empty %}
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            f
+                                                            <p class="mb-0">N/A</p>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
