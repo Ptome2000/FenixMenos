@@ -2,28 +2,41 @@ import datetime as dt
 from django.shortcuts import render, get_object_or_404
 from Community.models import *
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
+from FenixMenos.views import is_admin
 
 
+@login_required(login_url='login')
 def community(request):
-    grupos = GrupoCategoria.items()
-    lista_categorias = Categoria.objects.all()
-    context = {'lista_categorias': lista_categorias, 'grupos_categorias': grupos}
-    return render(request, "community/community.html", context)
-
-
-def categoria(request, categoria_dgn):
-    c = get_object_or_404(Categoria, designacao=categoria_dgn)
-    lista_posts = Post.objects.filter(categoria=c)
-    context = {'categoria': c, 'lista_posts': lista_posts}
-    return render(request, 'community/categoria.html', context)
-
-
-def post(request, categoria_dgn, post_Id):
-    c = get_object_or_404(Categoria, designacao=categoria_dgn)
-    p = get_object_or_404(Post, id=post_Id)
     try:
+        grupos = GrupoCategoria.items()
+        lista_categorias = Categoria.objects.all()
+        context = {'lista_categorias': lista_categorias, 'grupos_categorias': grupos}
+        return render(request, "community/community.html", context)
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('Community:community'))
+
+
+@login_required(login_url='login')
+def categoria(request, categoria_dgn):
+    try:
+        c = get_object_or_404(Categoria, designacao=categoria_dgn)
+        lista_posts = Post.objects.filter(categoria=c)
+        context = {'categoria': c, 'lista_posts': lista_posts}
+        return render(request, 'community/categoria.html', context)
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('Community:community'))
+
+
+@login_required(login_url='login')
+def post(request, categoria_dgn, post_Id):
+    try:
+        c = get_object_or_404(Categoria, designacao=categoria_dgn)
+        p = get_object_or_404(Post, id=post_Id)
         if request.method == 'POST' and 'action' in request.POST:
             action = request.POST['action']
             if action == 'Apagar':
@@ -39,7 +52,6 @@ def post(request, categoria_dgn, post_Id):
                 imagem = request.FILES.get('ImageFile')
                 Comentario.objects.create(post=p, user=request.user, texto=texto, data=dt.datetime.now(), imagem=imagem)
                 messages.success(request, 'Resposta publicada com sucesso')
-
         context = {'post': p, 'categoria': c}
         return render(request, 'community/post.html', context)
     except KeyError:
@@ -47,9 +59,10 @@ def post(request, categoria_dgn, post_Id):
         return HttpResponseRedirect(reverse('Community:community'))
 
 
+@login_required(login_url='login')
 def criarDiscussao(request, categoria_dgn):
-    c = get_object_or_404(Categoria, designacao=categoria_dgn)
     try:
+        c = get_object_or_404(Categoria, designacao=categoria_dgn)
         if request.method == 'POST':
             titulo = request.POST.get('title')
             texto = request.POST.get('message')
@@ -62,15 +75,17 @@ def criarDiscussao(request, categoria_dgn):
             return render(request, 'community/novaDiscussion.html', {'categoria': c})
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
-        return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
+        return HttpResponseRedirect(reverse('Community:community'))
 
 
+@login_required(login_url='login')
 def criarVotacao(request, categoria_dgn):
     c = get_object_or_404(Categoria, designacao=categoria_dgn)
     messages.warning(request, "Recurso a ser implementado em breve. Pedimos desculpa pelo incómodo")
     return HttpResponseRedirect(reverse('Community:categoria', args=[c.designacao]))
 
 
+@user_passes_test(is_admin, login_url=reverse_lazy('Community:community'))
 def criarCategoria(request):
     try:
         if request.method == 'POST':
@@ -89,9 +104,10 @@ def criarCategoria(request):
         return HttpResponseRedirect(reverse('Community:community'))
 
 
+@user_passes_test(is_admin, login_url=reverse_lazy('Community:community'))
 def apagarComentarios(request, post_Id):
-    p = get_object_or_404(Post, id=post_Id)
     try:
+        p = get_object_or_404(Post, id=post_Id)
         selected = request.session.get('commentsToDelete')
         if request.method == 'POST':
             first = p.comentario_set.first()
@@ -112,4 +128,4 @@ def apagarComentarios(request, post_Id):
             return render(request, 'community/apagarComentarios.html', context)
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
-        return HttpResponseRedirect(reverse('Community:categoria', args=[p.categoria.designacao]))
+        return HttpResponseRedirect(reverse('Community:community'))

@@ -85,12 +85,12 @@ def detalhes_cvpdf(request, utilizador):
     return render(request, 'Vitae/cv_pdf.html', context)
 
 
-
-# Adicionar validaão que tem que ser prof
+@user_passes_test(is_professor, login_url=reverse_lazy('index'))
 def UnidadesCurriculares(request):
     unidades = EquipaDocente.objects.filter(professor=request.user.professor)
     context = {'unidades': unidades}
     return render(request, 'Vitae/listar_prof_uc.html', context)
+
 
 
 def alunosInscritos(request, acronimo):

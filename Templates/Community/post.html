@@ -23,11 +23,11 @@
 
             <div class="col d-flex justify-content-end m-2">
 
-                {% if request.user.is_superuser and request.user == post.user %}
-                    <button id="DeletePost" class="btn btn-outline-danger mx-2"> Apagar Post </button>
+                {% if request.user.is_superuser or request.user == post.user %}
+                    <button id="DeletePost" class="btn btn-outline-danger btn-lg mx-2"> Apagar Post </button>
                 {% endif %}
 
-                <button id="AnswerPost" class="btn btn-outline-dark mx-2">
+                <button id="AnswerPost" class="btn btn-primary btn-lg mx-2 p-2" type="button" style="width:500px">
                     Responder
                 </button>
 
@@ -39,7 +39,7 @@
             <div class="row">
                 {% if request.user.is_superuser %}
                     <div class="col align-self-end">
-                        <button id="DeleteComments" type="submit" name="action" value="ApagarLista" class="btn btn-outline-warning mx-2 float-end" style="display: none;"> Apagar Comentários </button>
+                        <button id="DeleteComments" type="submit" name="action" value="ApagarLista" class="btn btn-outline-warning float-end btn-lg mx-3 p-2" style="display: none; width:500px"> Apagar Comentários </button>
                     </div>
                 {% endif %}
                 <hr class="my-2">
