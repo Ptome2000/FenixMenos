@@ -79,9 +79,14 @@ def loginform(request):
         user = authenticate(username=username, password=passwd)
         if user is not None:
             login(request, user)
-            if not Matricula.objects.filter(aluno=user.aluno).exists():
-                Matricula.objects.create(aluno=user.aluno, curso=user.aluno.curso)
-            return HttpResponseRedirect(reverse('index'))
+            if hasattr(user, 'aluno'):
+                if not Matricula.objects.filter(aluno=user.aluno).exists():
+                    Matricula.objects.create(aluno=user.aluno, curso=user.aluno.curso)
+                    return HttpResponseRedirect(reverse('index'))
+                else:
+                    return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponseRedirect(reverse('index'))
         else:
             messages.warning(request, 'Username ou Password incorretos')
             return render(request, 'login.html')

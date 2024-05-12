@@ -57,7 +57,7 @@ def detalhes_cv(request, utilizador):
 
         alunotest = user
         context = {'aluno': alunotest, 'uc_skills_aluno': uc_skills_aluno_corrente, 'certificacoes': certificacoes,
-                   'projectos': projectos ,   'recomendacoes': recomendacoes }
+                   'projectos': projectos, 'recomendacoes': recomendacoes}
     else:
         context = {'error': 'No aluno profile found for this user.'}
 
