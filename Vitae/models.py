@@ -151,7 +151,10 @@ class Matricula(models.Model):
             creds = nota.uc.creditos
             count_nota += (nota.nota * creds)
             count_creditos += creds
-        return count_nota / count_creditos
+        if count_creditos > 0:
+            return count_nota / count_creditos
+        else:
+            return 0
 
 
 class Nota(models.Model):
