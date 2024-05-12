@@ -16,6 +16,10 @@
                         <label for="gabinete">Gabinete</label>
                         <input type="text" class="form-control" id="gabinete" name="gabinete" value="{{ user.professor.gabinete }}" required>
                     </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" value="{{ user.professor.email }}" required>
+                    </div>
                 </div>
             </div>
         {% else %}
