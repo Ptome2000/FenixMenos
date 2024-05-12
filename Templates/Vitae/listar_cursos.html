@@ -6,6 +6,29 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
 
+            <h1> Cursos do ISCTE </h1>
+            <hr class="mt-2">
+        
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col"> Curso </th>
+                    <th scope="col" class="text-center"> Total de Créditos </th>
+                    <th scope="col" class="text-center"> Coordenador </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for curso in cursos %}
+                    <tr>
+                        <td><a href="{% url 'Vitae:detalhes_curso' curso.acronimo %}" class="link-underline link-underline-opacity-0"> {{ curso.acronimo }} - {{ curso.designacao }} </a></td>
+                        <td class="text-center"> {{ curso.creditos }} </td>
+                        <td class="text-center"> {{ curso.coordenador }} </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
         </div>
     </div>
 {% endblock %}

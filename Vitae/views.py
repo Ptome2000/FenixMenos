@@ -230,8 +230,8 @@ def listarAlunos(request):
 
 def listarCursos(request):
     try:
-        unidades = UC.objects.all()
-        return render(request, 'Vitae/listar_cursos.html', {'unidades': unidades})
+        cursos = Curso.objects.all()
+        return render(request, 'Vitae/listar_cursos.html', {'cursos': cursos})
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
         return HttpResponseRedirect(reverse('FenixMenos'))
