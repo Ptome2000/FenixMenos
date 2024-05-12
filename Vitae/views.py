@@ -17,7 +17,7 @@ def perfil(request):
 
 def detalhes_curso(request, acronimo):
     curso = get_object_or_404(Curso, acronimo=acronimo)
-    planos_curriculares = PlanoCurricular.objects.filter(curso=curso)
+    planos_curriculares = PlanoCurricular.objects.filter(curso=curso).order_by('ano', 'acronimo')
     context = {'curso': curso, 'planos_curriculares': planos_curriculares}
     return render(request, 'Vitae/detalhes_curso.html', context)
 
