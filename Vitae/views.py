@@ -147,7 +147,10 @@ def recomendar(request, numeroAluno):
         aluno = Aluno.objects.get(numeroAluno=numeroAluno)
         if request.method == 'POST':
             recomendacao = request.POST.get('recomendacao')
-            Recomendacao.objects.create(aluno=aluno, descricao=recomendacao, professor=request.user)
+            professor = Professor.objects.get(user=request.user)
+            Recomendacao.objects.create(aluno=aluno, descricao=recomendacao, professor=professor)
+            messages.success(request, 'Recomendação feita com sucesso')
+            return HttpResponseRedirect(reverse('Vitae:cv', args=[aluno.user.username]))
         else:
             return render(request, 'Vitae/recomendar.html', {'aluno': aluno})
     except KeyError:
