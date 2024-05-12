@@ -311,7 +311,7 @@ def generate_pdf_view(request, utilizador):
             base_url = 'http://localhost:8000/Vitae/cv/'
             end_url = '/cvpdf'
 
-            url = f"{base_url}{utilizador}{end_url}";
+            url = f"{base_url}{utilizador}{end_url}"
 
             if os.path.exists(script_path):
                 # Chamar o script Node.js
