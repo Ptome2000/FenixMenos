@@ -82,8 +82,9 @@
 
 
 
+{% if user.is_authenticated %}
 <div class="sidebar" id="mySidebar">
-<br>
+    <br>
     <ul>
         <li class="submenu">
             <a href=""><i class="fa fa-user"></i><span> Vitae </span></a>
@@ -114,6 +115,7 @@
     </ul>
 </div>
 
+ {% endif %}
 
 
 
