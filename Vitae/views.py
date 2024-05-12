@@ -31,9 +31,9 @@ def detalhes_uc(request, acronimo):
     return render(request, 'Vitae/detalhes_uc.html', context)
 
 
-def detalhes_cv(request, utilizador_id):
+def detalhes_cv(request, utilizador):
     global uc_skills_aluno_corrente
-    user = get_object_or_404(User, pk=utilizador_id)
+    user = get_object_or_404(User, username=utilizador)
 
     try:
         aluno = user.aluno
