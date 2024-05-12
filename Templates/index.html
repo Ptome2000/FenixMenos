@@ -120,17 +120,19 @@
                                     <h5 class="card-title">Últimos Posts da Comunidade</h5>
                                     <ul class="list-unstyled">
                                         {% for post in latest_posts %}
-                                            <div class="w3-card-4" style="margin-bottom: 20px;">
-                                                <header class="w3-container w3-light-grey">
-                                                    <h3>Post: {{ post.titulo }}</h3>
-                                                </header>
-                                                <div class="w3-container">
-                                                    <p><strong>Last Comment:</strong> {{ post.latest_comment }}</p>
-                                                    <p><strong>by:</strong> {{ post.latest_comment_user }} <strong>at</strong> {{ post.latest_comment_date|date:"d M Y H:i" }}</p>
+                                            <div class="row align-items-center mb-4">
+                                                <div class="col-md-8">
+                                                    <div>
+                                                        <h5 class="mb-0">{{ post.titulo }} Posted by {{ post.user.username }}</h5>
+                                                    </div>
+                                                    <div class="card mt-2"> 
+                                                        <div class="card-body">
+                                                            <p class="card-text"><strong>Last Comment:</strong> {{ post.latest_comment }}</p>
+                                                            <p class="card-text"><strong>by:</strong> {{ post.latest_comment_user }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <small class="text-muted">{{ post.latest_comment_date|date:"d M Y" }}</small> <!-- Moved the date to be below the card -->
                                                 </div>
-                                                <footer class="w3-container w3-blue">
-                                                    <h5>Posted by {{ post.user.username }}</h5>
-                                                </footer>
                                             </div>
                                         {% endfor %}
                                     </ul>
