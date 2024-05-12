@@ -15,4 +15,5 @@ urlpatterns = [
     path('cv/<str:utilizador>/', views.detalhes_cv, name='cv'),
     path('editar_perfil/', views.editar_perfil, name='editar_perfil'),
     path('CV/Recomendar/<int:numeroAluno>', views.recomendar, name='recomendar'),
+    path('perfil/certificacoesprojecto', views.certficacaoprojecto, name='certficacaoprojecto'),
 ]
