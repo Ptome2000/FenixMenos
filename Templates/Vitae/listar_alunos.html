@@ -1,0 +1,37 @@
+{% extends "skeleton.html" %}
+{% load static %}
+{% block title %} Registo Professor {% endblock %}
+
+{% block content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h1> Alunos do Iscte </h1>
+            <hr class="mt-2">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col"> Nº Aluno </th>
+                    <th scope="col" class="text-center"> Nome </th>
+                    <th scope="col" class="text-center"> Ano </th>
+                    <th scope="col" class="text-center"> Curso </th>
+                    <th scope="col" class="text-center"> Média </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for matricula in matriculados %}
+                    <tr>
+                        <td> {{ matricula.aluno.numeroAluno }}</td>
+                        <td class="text-center"><a href="{% url 'Vitae:cv' matricula.aluno.user.username %}" class="link-underline link-underline-opacity-0">{{ matricula.aluno.user.get_full_name }} </a></td>
+                        <td class="text-center"> {{ matricula.ano }}</td>
+                        <td class="text-center"><a href="{% url 'Vitae:detalhes_curso' matricula.curso.acronimo %}" class="link-underline link-underline-opacity-0"> {{ matricula.curso }} </a></td>
+                        <td class="text-center"> {{ matricula.get_media }} </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

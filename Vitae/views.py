@@ -218,6 +218,25 @@ def certficacaoprojecto(request):
     })
 
 
+@login_required()
+def listarAlunos(request):
+    try:
+        matriculados = Matricula.objects.all()
+        return render(request, 'Vitae/listar_alunos.html', {'matriculados': matriculados})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
+
+
+def listarCursos(request):
+    try:
+        cursos = Curso.objects.all()
+        return render(request, 'Vitae/listar_cursos.html', {'cursos': cursos})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
+
+
 def generate_pdf_view(request, utilizador):
     # Caminho para o seu script Node.js
     script_path = 'node_app/generatePdf.js'
