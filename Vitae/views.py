@@ -222,11 +222,7 @@ def generate_pdf_view(request, utilizador):
     # Caminho para o seu script Node.js
     script_path = 'node_app/generatePdf.js'
     pdf_output_path = 'output.pdf'
-
-    base_url = 'http://localhost:8000/Vitae/cv/'
-    end_url = '/cvpdf'
-
-    url = f"{base_url}{utilizador}{end_url}";
+    url = 'http://localhost:8000/Vitae/cv/pipsromaofgggggjbbhb/cvpdf';
 
     if os.path.exists(script_path):
         # Chamar o script Node.js
