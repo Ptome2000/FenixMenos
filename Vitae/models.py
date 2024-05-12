@@ -39,6 +39,7 @@ class Curso(models.Model):
     creditos = models.IntegerField()
     descricao = models.TextField()
     coordenador = models.OneToOneField(Professor, on_delete=models.CASCADE)
+    #anos = models.IntegerField(default=3)
 
     def __str__(self):
         return self.designacao
@@ -139,7 +140,10 @@ class Matricula(models.Model):
         return str(self.aluno.numeroAluno) + " - " + self.curso.designacao
 
     def get_media(self):
-        ucs = PlanoCurricular.objects.filter(uc=self.curso)
+        planos = PlanoCurricular.objects.filter(curso=self.curso)
+        ucs = []
+        for uc in planos:
+            ucs.append(uc.uc)
         notas = Nota.objects.filter(aluno=self.aluno, uc__in=ucs)
         count_nota = 0
         count_creditos = 0
@@ -157,6 +161,25 @@ class Nota(models.Model):
 
     def __str__(self):
         return str(self.aluno.numeroAluno) + " - " + str(self.uc) + "(" + str(self.nota) + ")"
+
+'''
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        planos = PlanoCurricular.objects.filter(uc=self.uc)
+        cursos = []
+        ucs = []
+        for curso in planos:
+            cursos.append(curso.curso)
+        for uc in planos:
+            ucs.append(uc.uc)
+        matricula = Matricula.objects.filter(aluno=self.aluno, curso__in=cursos)
+        notas = self.objects.filter(aluno=matricula.aluno, uc__in=ucs)
+        count_creditos = 0
+        for nota in notas:
+            creds = nota.uc.creditos
+            count_creditos += creds
+        credits_per_year = matricula.curso.creditos / matricula.curso.anos
+'''
 
 
 class UC_Skills(models.Model):
