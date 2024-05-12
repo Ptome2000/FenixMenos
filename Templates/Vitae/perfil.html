@@ -5,12 +5,12 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <!-- Coluna vazia para espaçamento -->
+                <!-- Empty column for spacing -->
                 <div class="col-md-1"></div>
 
-                <!-- Detalhes do Usuário em uma coluna -->
+                <!-- User Details in one column -->
                 <div class="col-md-6">
-                    <!-- Detalhes do Usuário 1 -->
+                    <!-- User Details Block 1 -->
                     <div class="user-data">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <!-- Detalhes do Usuário 2 -->
+                    <!-- User Details Block 2 -->
                     <div class="user-data">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -67,11 +67,56 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Nome</p>
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Telefone</p>
                                     </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.telefone }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Morada</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.morada }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Instagram</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.instagram }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">GitHub</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.github }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Facebook</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.facebook }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="mb-0">Data de Nascimento</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="text-muted mb-0">{{ request.user.aluno.data_de_nascimento|date:"d/m/Y" }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +127,7 @@
                     </div>
                 </div>
 
-                <!-- Foto do Perfil -->
+                <!-- Profile Picture Section -->
                 <div class="col-md-4 text-center">
                     <fieldset>
                         <legend>Perfil</legend>

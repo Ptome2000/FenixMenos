@@ -3,8 +3,9 @@
 {% block content %}
 <div class="container">
     <h2>Editar Perfil</h2>
-    <form method="POST" action="{% url 'Vitae:salvar_perfil' %}">
+    <form method="POST" action="{% url 'Vitae:editar_perfil' %}">
         {% csrf_token %}
+        <!-- Existing fields -->
         <div class="form-group">
             <label for="firstName">Nome</label>
             <input type="text" class="form-control" id="firstName" name="first_name" value="{{ user.first_name }}">
@@ -18,8 +19,28 @@
             <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
         </div>
         <div class="form-group">
-            <label for="numeroAluno">Número de Aluno</label>
-            <input type="text" class="form-control" id="numeroAluno" value="{{ user.aluno.numeroAluno }}" readonly>
+            <label for="telefone">Telefone</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" value="{{ aluno.telefone }}">
+        </div>
+        <div class="form-group">
+            <label for="morada">Morada</label>
+            <input type="text" class="form-control" id="morada" name="morada" value="{{ aluno.morada }}">
+        </div>
+        <div class="form-group">
+            <label for="instagram">Instagram</label>
+            <input type="text" class="form-control" id="instagram" name="instagram" value="{{ aluno.instagram }}">
+        </div>
+        <div class="form-group">
+            <label for="github">GitHub</label>
+            <input type="text" class="form-control" id="github" name="github" value="{{ aluno.github }}">
+        </div>
+        <div class="form-group">
+            <label for="facebook">Facebook</label>
+            <input type="text" class="form-control" id="facebook" name="facebook" value="{{ aluno.facebook }}">
+        </div>
+        <div class="form-group">
+            <label for="data_de_nascimento">Data de Nascimento</label>
+            <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento" value="{{ aluno.data_de_nascimento|date:'Y-m-d' }}">
         </div>
         <button type="submit" class="btn btn-success">Salvar Alterações</button>
     </form>
