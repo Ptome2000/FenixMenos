@@ -13,12 +13,14 @@ import subprocess
 from django.http import HttpResponse
 
 
+@login_required(login_url='login')
 def perfil(request):
     user = request.user
     context = {'user': user}
     return render(request, 'Vitae/perfil.html', context)
 
 
+@login_required(login_url='login')
 def detalhes_curso(request, acronimo):
     curso = get_object_or_404(Curso, acronimo=acronimo)
     planos_curriculares = PlanoCurricular.objects.filter(curso=curso).order_by('ano')
@@ -26,6 +28,7 @@ def detalhes_curso(request, acronimo):
     return render(request, 'Vitae/detalhes_curso.html', context)
 
 
+@login_required(login_url='login')
 def detalhes_uc(request, acronimo):
     uc = get_object_or_404(UC, acronimo=acronimo)
     planos_curriculares = PlanoCurricular.objects.filter(uc=uc)
@@ -35,6 +38,7 @@ def detalhes_uc(request, acronimo):
     return render(request, 'Vitae/detalhes_uc.html', context)
 
 
+@login_required(login_url='login')
 def detalhes_cv(request, utilizador):
     global uc_skills_aluno_corrente, certificacoes, projectos, recomendacoes
     user = get_object_or_404(User, username=utilizador)
@@ -60,6 +64,7 @@ def detalhes_cv(request, utilizador):
     return render(request, 'Vitae/cv.html', context)
 
 
+@login_required(login_url='login')
 def detalhes_cvpdf(request, utilizador):
     global uc_skills_aluno_corrente, certificacoes, projectos
     user = get_object_or_404(User, username=utilizador)
@@ -92,7 +97,7 @@ def UnidadesCurriculares(request):
     return render(request, 'Vitae/listar_prof_uc.html', context)
 
 
-
+@user_passes_test(is_professor, login_url=reverse_lazy('index'))
 def alunosInscritos(request, acronimo):
     uc = get_object_or_404(UC, acronimo=acronimo)
     if request.method == 'POST':
@@ -125,7 +130,7 @@ def alunosInscritos(request, acronimo):
     return render(request, 'Vitae/listar_alunos_uc.html', context)
 
 
-@login_required
+@login_required(login_url='login')
 def fazer_upload(request):
     if request.method == 'POST' and request.FILES.get('myfile'):
         myfile = request.FILES['myfile']
@@ -149,7 +154,7 @@ def fazer_upload(request):
         return redirect('Vitae:perfil')
 
 
-@login_required
+@login_required(login_url='login')
 def salvar_perfil(request):
     if request.method == 'POST':
         user = request.user
@@ -161,7 +166,7 @@ def salvar_perfil(request):
         return redirect('Vitae:perfil')
 
 
-@login_required
+@login_required(login_url='login')
 def editar_perfil(request):
     if request.method == 'POST':
         user = request.user
@@ -205,6 +210,7 @@ def recomendar(request, numeroAluno):
         return HttpResponseRedirect(reverse('FenixMenos'))
 
 
+@user_passes_test(is_aluno, login_url=reverse_lazy('index'))
 def certficacaoprojecto(request):
     if request.method == 'POST':
         aluno = request.user.aluno  # Assumindo que Aluno tem uma relação OneToOne com User
@@ -231,16 +237,35 @@ def certficacaoprojecto(request):
     })
 
 
-@login_required()
+@login_required(login_url='login')
 def listarAlunos(request):
     try:
-        matriculados = Matricula.objects.all()
+        pesquisa = request.GET.get('search')
+        if pesquisa:
+            aluno = Aluno.objects.filter(user__first_name__contains=pesquisa)
+            matriculados = Matricula.objects.filter(aluno__in=aluno)
+            return render(request, 'Vitae/listar_alunos.html', {'matriculados': matriculados})
+        else:
+            matriculados = Matricula.objects.all()
+            return render(request, 'Vitae/listar_alunos.html', {'matriculados': matriculados})
+    except KeyError:
+        messages.warning(request, "Ocorreu um erro com o seu pedido")
+        return HttpResponseRedirect(reverse('FenixMenos'))
+
+
+@login_required(login_url='login')
+def pesquisarAlunos(request):
+    try:
+        pesquisa = request.POST.get('pesquisa')
+        user = User.objects.filter(first_name__contains=pesquisa)
+        matriculados = Matricula.objects.filter(user__in=user)
         return render(request, 'Vitae/listar_alunos.html', {'matriculados': matriculados})
     except KeyError:
         messages.warning(request, "Ocorreu um erro com o seu pedido")
         return HttpResponseRedirect(reverse('FenixMenos'))
 
 
+@login_required(login_url='login')
 def listarCursos(request):
     try:
         cursos = Curso.objects.all()
@@ -250,6 +275,7 @@ def listarCursos(request):
         return HttpResponseRedirect(reverse('FenixMenos'))
 
 
+@user_passes_test(is_aluno, login_url=reverse_lazy('index'))
 def generate_pdf_view(request, utilizador):
     # Caminho para o seu script Node.js
     script_path = 'node_app/generatePdf.js'

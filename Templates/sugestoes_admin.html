@@ -28,12 +28,11 @@
         </tr>
 
         <div id="GradeSuggestionModal{{ forloop.counter }}" class="modalBox modal">
-            <div class="modal-content w-50">
+            <div class="modal-content w-50 text-dark">
                 <form method="post">
                     {% csrf_token %}
-                    <div class="modal-header">
+                    <div class="modal-header text-dark">
                         <h5 class="modal-title"> Sugestão: {{ sugestao.assunto }} </h5>
-                        <button type="button" class="btn-close float-end" id="closeGradeSuggestionModal{{ forloop.counter }}" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
@@ -61,6 +60,7 @@
                                     </select>
                                 {% endif %}
                                 <button class="btn btn-outline-primary" name="action" value="Atualizar" type="submit"> Atualizar </button>
+                                <button type="button" class="btn btn-outline-secondary" id="closeGradeSuggestionModal{{ forloop.counter }}" aria-label="Close"> Cancelar </button>
                             </div>
                         </div>
                     </div>

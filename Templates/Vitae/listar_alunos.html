@@ -6,8 +6,15 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
 
+
             <h1> Alunos do Iscte </h1>
             <hr class="mt-2">
+
+            <form method="get">
+                {% csrf_token %}
+                <input type="search" class="form-control" id="search" placeholder="Pesquisar por Nome de Aluno" name="search" style="width: 500px">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
+            </form>
 
             <table class="table table-hover">
                 <thead>

@@ -1,11 +1,10 @@
 <div id="SuggestionModal" class="modalBox modal">
-    <div class="modal-content">
+    <div class="modal-content text-dark">
         <form method="post">
             {% csrf_token %}
 
             <div class="modal-header">
                 <h5 class="modal-title"> Deixe uma sugestão </h5>
-                <button type="button" class="btn-close float-end" id="closeSuggestionModal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -24,9 +23,10 @@
 
             <div class="modal-footer">
                 <button class="w-100 btn btn-outline-success btn-lg" type="submit" name="action" value="Criar"> Submeter </button>
+                <button type="button" id="closeSuggestionModal" class="w-100 btn btn-outline-secondary btn-lg"> Cancelar </button>
             </div>
-
         </form>
+        
 
     </div>
 </div>
