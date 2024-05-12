@@ -115,24 +115,24 @@ def alunosInscritos(request, acronimo):
             nota = request.POST.get('nota')
             n, created = Nota.objects.get_or_create(aluno_id=aluno.numeroAluno, uc=uc)
             n.nota = nota
-            uc_skills = UC_Skills.objects.filter(uc=uc)
-            for uc_skill in uc_skills:
-                if uc_skill.skills.tipo == 0:
-                    max_grade = Nota.objects.filter().aggregate(Max('nota'))['nota__max']
-                    progresso = (int(n.nota) / max_grade) * uc_skill.nivel
-                    UC_Skills_Aluno.objects.update_or_create(
-                        alunOo_id=aluno.numeroAluno,
-                        uc_skills=uc_skill,
-                        defaults={'progresso': progresso}
-                    )
-                else:
-                    UC_Skills_Aluno.objects.update_or_create(
-                        alunOo_id=aluno.numeroAluno,
-                        uc_skills=uc_skill,
-                        defaults={'progresso': 0}
-                    )
-
+            n.save()
             if created:
+                uc_skills = UC_Skills.objects.filter(uc=uc)
+                for uc_skill in uc_skills:
+                    if uc_skill.skills.tipo == 0:
+                        max_grade = Nota.objects.filter().aggregate(Max('nota'))['nota__max']
+                        progresso = (int(n.nota) / max_grade) * uc_skill.nivel
+                        UC_Skills_Aluno.objects.update_or_create(
+                            alunOo_id=aluno.numeroAluno,
+                            uc_skills=uc_skill,
+                            defaults={'progresso': progresso}
+                        )
+                    else:
+                        UC_Skills_Aluno.objects.update_or_create(
+                            alunOo_id=aluno.numeroAluno,
+                            uc_skills=uc_skill,
+                            defaults={'progresso': 0}
+                        )
                 messages.success(request, "Aluno " + aluno.user.first_name + " avaliado com sucesso!")
             else:
                 messages.success(request, "Nota do aluno " + aluno.user.first_name + " atualizada com sucesso!")
