@@ -1,0 +1,54 @@
+{% extends "skeleton.html" %}
+{% load static %}
+{% block title %} Registo Professor {% endblock %}
+
+{% block content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h1> Registar Professor </h1>
+            <hr class="mt-2">
+
+            <form method="post" class="row g-3" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label"> Username </label>
+                        <input type="text" name="username" class="form-control" id="username">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label"> Email</label>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label"> Password </label>
+                        <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="passwordConfirm" class="form-label"> Confirme a Password </label>
+                        <input type="password" name="passwordConfirm" class="form-control" id="passwordConfirm">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="input-group-text"> Unidades para lecionar </label>
+                        <select class="form-select" name="unidades" multiple aria-label="multiple select example" required>
+                            {% for uc in ucs %}
+                                <option value="{{ uc.id }}">{{ uc.designacao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="input-group-text" for="foto">Upload Foto (Opcional):</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
+                    </div>
+
+                    <div class="mb-3 d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-block"> Submeter Registo </button>
+                    </div>
+                </form>
+
+        </div>
+    </div>
+{% endblock %}

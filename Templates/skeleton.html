@@ -38,18 +38,21 @@
                 <!-- Dropdown -->
                 {% if user.is_authenticated %}
                     <div class="d-flex align-items-center">
-                    <button id="toggleDark" class="btn btn-primary"> Dark Mode </button>
+                        <button id="toggleDark" class="btn btn-primary"> Dark Mode </button>
                     </div>
                     <li class="nav-item dropdown ml-3">
-                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="me-2">
-                                        {% load static %}
-                                        {% if request.user.aluno.foto %}
-                                            <img id="AlunofotoIcon" src="{{ request.user.aluno.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
-                                        {% else %}
-                                            <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" alt="User Photo" class="rounded-circle" style="width: 45px; height: 45px;">
-                                        {% endif %}
-                            </span>
+                        <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="me-2">
+        {% if request.user.is_authenticated %}
+            {% if request.user.aluno and request.user.aluno.foto %}
+                <img id="AlunofotoIcon" src="{{ request.user.aluno.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
+            {% elif request.user.professor and request.user.professor.foto %}
+                <img id="ProfessorFotoIcon" src="{{ request.user.professor.foto.url }}" class="rounded-circle" style="width: 25px; height: 25px;">
+            {% else %}
+                <img src="{% static 'FenixMenos/Imagens/th.jpg' %}" alt="User Photo" class="rounded-circle" style="width: 45px; height: 45px;">
+            {% endif %}
+        {% endif %}
+    </span>
                             {{ user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

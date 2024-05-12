@@ -39,6 +39,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('register/', RegistoAluno, name='register'),
     path('FenixMenos/sugestoes', views.sugestoes, name="sugestoes"),
+    path('FenixMenos/registar-professor', views.registarProf, name="registarProfessor"),
 ]
 
 if settings.DEBUG:
