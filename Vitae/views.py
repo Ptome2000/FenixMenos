@@ -2,13 +2,13 @@ import os
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseRedirect, FileResponse
-from django.shortcuts import  redirect
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from .models import *
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from FenixMenos.views import  is_professor, is_aluno
+from FenixMenos.views import is_professor, is_aluno
 import subprocess
 from django.http import HttpResponse
 
@@ -42,7 +42,6 @@ def detalhes_uc(request, acronimo):
         return HttpResponseRedirect(reverse('FenixMenos'))
 
 
-@login_required(login_url='login')
 def detalhes_cv(request, utilizador):
     global uc_skills_aluno_corrente, certificacoes, projectos, recomendacoes
     user = get_object_or_404(User, username=utilizador)
@@ -68,7 +67,6 @@ def detalhes_cv(request, utilizador):
     return render(request, 'Vitae/cv.html', context)
 
 
-@login_required(login_url='login')
 def detalhes_cvpdf(request, utilizador):
     global uc_skills_aluno_corrente, certificacoes, projectos
     user = get_object_or_404(User, username=utilizador)
@@ -103,7 +101,6 @@ def UnidadesCurriculares(request):
     except KeyError:
         messages.warning(request, "Ocorreu um erro durante o seu pedido")
     return HttpResponseRedirect(reverse('FenixMenos'))
-
 
 
 @user_passes_test(is_professor, login_url=reverse_lazy('index'))
@@ -157,7 +154,6 @@ def alunosInscritos(request, acronimo):
     except KeyError:
         messages.warning(request, "Ocorreu um erro durante o seu pedido")
         return HttpResponseRedirect(reverse('FenixMenos'))
-
 
 
 @login_required(login_url='login')
@@ -317,17 +313,13 @@ def listarCursos(request):
         return HttpResponseRedirect(reverse('FenixMenos'))
 
 
-@user_passes_test(is_aluno, login_url=reverse_lazy('index'))
 def generate_pdf_view(request, utilizador):
     try:
         # Caminho para o seu script Node.js
         script_path = 'node_app/generatePdf.js'
         pdf_output_path = 'output.pdf'
 
-        base_url = 'http://localhost:8000/Vitae/cv/'
-        end_url = '/cvpdf'
-
-        url = f"{base_url}{utilizador}{end_url}"
+        url = 'http://localhost:8000/Vitae/cv/' + utilizador + 'cvpdf'
 
         if os.path.exists(script_path):
             # Chamar o script Node.js
