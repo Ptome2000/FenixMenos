@@ -188,7 +188,7 @@ def salvar_perfil(request):
             user.first_name = request.POST.get('first_name', '')
             user.last_name = request.POST.get('last_name', '')
             user.email = request.POST.get('email', '')
-            user.gabinete = request.POST.get('email', '')
+            user.gabinete = request.POST.get('gabinete', '')
             user.save()
             return redirect('Vitae:perfil')
     except KeyError:
@@ -203,19 +203,22 @@ def editar_perfil(request):
             user = request.user
             user.first_name = request.POST.get('first_name', '')
             user.last_name = request.POST.get('last_name', '')
-            user.email = request.POST.get('email', '')
+            user.email = request.POST.get('email', '@iscte.pt')
+            if not user.email:
+                messages.error(request, " O Email é obrigatório")
+                return render(request, 'Vitae/editar_perfil.html', {'user': request.user})
             aluno = Aluno.objects.filter(user=request.user).first()
             professor = Professor.objects.filter(user=request.user).first()
             if professor:
                 professor.gabinete = request.POST.get('gabinete', '')
                 professor.save()
             elif aluno:
-                aluno.instagram = request.POST.get('instagram', '')
-                aluno.data_de_nascimento = request.POST.get('data_de_nascimento', '')
-                aluno.morada = request.POST.get('morada', '')
-                aluno.github = request.POST.get('github', '')
-                aluno.telefone = request.POST.get('telefone', '')
-                aluno.facebook = request.POST.get('facebook', '')
+                aluno.instagram = request.POST.get('instagram', '') or None
+                aluno.data_de_nascimento = request.POST.get('data_de_nascimento', '') or None
+                aluno.morada = request.POST.get('morada', '') or None
+                aluno.github = request.POST.get('github', '') or None
+                aluno.telefone = request.POST.get('telefone', '') or '000000000'
+                aluno.facebook = request.POST.get('facebook', '') or None
                 aluno.save()
             user.save()
             messages.success(request, "Perfil atualizado com sucesso!")

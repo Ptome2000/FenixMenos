@@ -33,7 +33,22 @@
                                         <p class="mb-0">Nome</p>
                                     </div>
                                     <div class="col-sm-7">
-                                        <p class="text-muted mb-0">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                        {% if request.user.first_name or request.user.last_name %}
+                                            <p class="text-muted mb-0">
+                                                {% if request.user.first_name %}
+                                                    {{ request.user.first_name }}
+                                                {% else %}
+                                                    "Nome Padrão"
+                                                {% endif %}
+                                                {% if request.user.last_name %}
+                                                    {{ request.user.last_name }}
+                                                {% else %}
+                                                    "Sobrenome Padrão"
+                                                {% endif %}
+                                            </p>
+                                        {% else %}
+                                            <p class="text-muted mb-0">Nome Padrão Sobrenome Padrão</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <hr>
@@ -46,7 +61,7 @@
                                             {% if request.user.professor.gabinete %}
                                                 <p class="text-muted mb-0">{{ request.user.professor.gabinete }}</p>
                                             {% else %}
-                                                <p class="text-muted mb-0">N/A</p>
+                                                <p class="text-muted mb-0">PorDefenir</p>
                                             {% endif %}
                                         </div>
                                     </div>
