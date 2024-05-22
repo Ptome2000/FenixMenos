@@ -38,16 +38,14 @@
                                                 {% if request.user.first_name %}
                                                     {{ request.user.first_name }}
                                                 {% else %}
-                                                    "Nome Padrão"
+                                                    "Nome"
                                                 {% endif %}
                                                 {% if request.user.last_name %}
                                                     {{ request.user.last_name }}
-                                                {% else %}
-                                                    "Sobrenome Padrão"
                                                 {% endif %}
                                             </p>
                                         {% else %}
-                                            <p class="text-muted mb-0">Nome Padrão Sobrenome Padrão</p>
+                                            <p class="text-muted mb-0">Nome Sobrenome</p>
                                         {% endif %}
                                     </div>
                                 </div>
