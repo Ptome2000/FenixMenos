@@ -9,111 +9,109 @@
 
         <div class="container mt-16">
             <div class="container mt-5">
-                <h1>Certificações e Projectos</h1>
                 <div class="row">
-                    <div class="col-md-12">
-                    <div class="col-md-4>
+                    <div class="col">
+                        <h1>Certificações e Projectos</h1>
+                    </div>
 
-                        <div class="d-flex justify-content-between align-items-center">
-                            <!-- Botão para abrir modal de certificação -->
-                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#certificacaoModal">
-                                Adicionar Certificação
-                            </button>
+                    <div class="col d-flex align-items-center">
+                        <button type="button" class="btn btn-primary float-right me-3" data-toggle="modal" data-target="#certificacaoModal">
+                            Adicionar Certificação
+                        </button>
+                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#projetoModal">
+                            Adicionar Projeto
+                        </button>
+                    </div>
 
-
-                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#projetoModal">
-                                Adicionar Projeto
-                            </button>
-                        </div>
                 </div>
-
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <h2>Certificações</h2>
-                                <ul class="list-group">
-                                    {% for certificacao in certificacoes %}
-                                        <li class="list-group-item">
-                                            <a href="{{ certificacao.url }}" class="stretched-link">{{ certificacao.nome }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-
-                            </div>
-                            <div class="col-md-6">
-                                <h2>Projetos</h2>
-                                {% for projecto in projetos %}
-                                    <div class="card mb-2"> <!-- mb-2 adiciona margem abaixo de cada projeto para divisão visual -->
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ projecto.nome }}</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">{{ projecto.data }}</h6>
-                                            <p class="card-text">{{ projecto.descricao }}</p>
-                                        </div>
-                                    </div>
+                        <div class="col-md-6">
+                            <h2>Certificações</h2>
+                            <ul class="list-group">
+                                {% for certificacao in certificacoes %}
+                                    <li class="list-group-item">
+                                        <a href="{{ certificacao.url }}" class="stretched-link">{{ certificacao.nome }}</a>
+                                    </li>
                                 {% endfor %}
-                            </div>
+                            </ul>
+
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Projetos</h2>
+                            {% for projecto in projetos %}
+                                <div class="card mb-2"> <!-- mb-2 adiciona margem abaixo de cada projeto para divisão visual -->
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ projecto.nome }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ projecto.data }}</h6>
+                                        <p class="card-text">{{ projecto.descricao }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-
-                    <!-- Modais com botões no canto superior direito -->
-                    <div class="modal fade" id="certificacaoModal" tabindex="-1" role="dialog" aria-labelledby="certificacaoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="certificacaoModalLabel">Adicionar Certificação</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <label>
-                                            <input type="text" name="nome_cert" placeholder="Nome da Certificação" required class="form-control mb-2">
-                                        </label>
-                                        <label>
-                                            <input type="url" name="url_cert" placeholder="URL da Certificação" required class="form-control mb-2">
-                                        </label>
-                                        <button type="submit" name="add_certificacao" class="btn btn-primary">Adicionar Certificação</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="projetoModal" tabindex="-1" role="dialog" aria-labelledby="projetoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="projetoModalLabel">Adicionar Projeto</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <label>
-                                            <input type="text" name="nome_proj" placeholder="Nome do Projeto" required class="form-control mb-2">
-                                        </label>
-                                        <label>
-                                            <input type="date" name="data_proj" required class="form-control mb-2">
-                                        </label>
-                                        <label>
-                                            <textarea name="descricao_proj" placeholder="Descrição do Projeto" required class="form-control mb-2"></textarea>
-                                        </label>
-                                        <button type="submit" name="add_projecto" class="btn btn-primary">Adicionar Projeto</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
                 </div>
             </div>
+
+            <!-- Modais com botões no canto superior direito -->
+            <div class="modal fade" id="certificacaoModal" tabindex="-1" role="dialog" aria-labelledby="certificacaoModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="certificacaoModalLabel">Adicionar Certificação</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <label>
+                                    <input type="text" name="nome_cert" placeholder="Nome da Certificação" required class="form-control mb-2">
+                                </label>
+                                <label>
+                                    <input type="url" name="url_cert" placeholder="URL da Certificação" required class="form-control mb-2">
+                                </label>
+                                <button type="submit" name="add_certificacao" class="btn btn-primary">Adicionar Certificação</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="projetoModal" tabindex="-1" role="dialog" aria-labelledby="projetoModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="projetoModalLabel">Adicionar Projeto</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <label>
+                                    <input type="text" name="nome_proj" placeholder="Nome do Projeto" required class="form-control mb-2">
+                                </label>
+                                <label>
+                                    <input type="date" name="data_proj" required class="form-control mb-2">
+                                </label>
+                                <label>
+                                    <textarea name="descricao_proj" placeholder="Descrição do Projeto" required class="form-control mb-2"></textarea>
+                                </label>
+                                <button type="submit" name="add_projecto" class="btn btn-primary">Adicionar Projeto</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
         </div>
+    </div>
+    </div>
     </div>
 
 {% endblock %}

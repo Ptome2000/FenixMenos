@@ -34,8 +34,9 @@ def detalhes_uc(request, acronimo):
         uc = get_object_or_404(UC, acronimo=acronimo)
         planos_curriculares = PlanoCurricular.objects.filter(uc=uc)
         equipa = EquipaDocente.objects.filter(uc=uc)
+        skills = UC_Skills.objects.filter(uc=uc)
 
-        context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa}
+        context = {'uc': uc, 'planos_curriculares': planos_curriculares, 'equipa': equipa, 'skills': skills}
         return render(request, 'Vitae/detalhes_uc.html', context)
     except KeyError:
         messages.warning(request, "Ocorreu um erro durante o seu pedido")

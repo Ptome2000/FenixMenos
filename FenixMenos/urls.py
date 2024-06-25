@@ -31,6 +31,7 @@ router.register(r'cursos', CursoViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Vitae/', include('Vitae.urls')),
+    path('', views.index, name='index'),
     path('Community/', include('Community.urls')),
     path("FenixMenos/", views.index, name="index"),
     path("FenixMenos/login", views.loginform, name="login"),

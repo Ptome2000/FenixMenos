@@ -28,8 +28,8 @@
                         <div class="ps-2">
                             <p> Esta Unidade tem as seguintes competências: </p>
                             <ul>
-                                {% for skill in uc.skills.all %}
-                                    <li>{{ skill.designacao }}</li>
+                                {% for skill in skills %}
+                                    <li>{{ skill.skills.designacao }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
